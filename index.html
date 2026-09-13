@@ -1,0 +1,2005 @@
+<title>Odontologia Sem Barreiras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --porcelana:#F1F3F3; --surface:#FFFFFF; --surface2:#E7EBEB; --surface3:#DCE3E3;
+  --ink:#11201F; --ink2:#4E5F5E; --ink3:#758685;
+  --rule:#CFD8D7; --rule2:#B8C5C4;
+  --petroleo:#0A4A52; --petroleo2:#0F6A72; --petroleo-soft:#DCEAEB;
+  --latao:#9A6B22; --latao-soft:#F2E7D3;
+  --ciano:#0B7C89; --ciano-soft:#DAF0F2;
+  --alerta:#A63F26; --alerta-soft:#F6E2DC;
+  --ok:#2B6B4C; --ok-soft:#DCEDE3;
+  --shadow:0 .12rem .5rem rgba(10,40,42,.07), 0 .04rem .12rem rgba(10,40,42,.06);
+  --shadow-lift:0 .5rem 1.6rem rgba(10,40,42,.14);
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --porcelana:#0A1012; --surface:#111A1C; --surface2:#172124; --surface3:#1E2A2D;
+    --ink:#E9EFEE; --ink2:#A2B4B3; --ink3:#7B8D8C;
+    --rule:#253336; --rule2:#324346;
+    --petroleo:#63CFD6; --petroleo2:#8FE2E6; --petroleo-soft:#12292D;
+    --latao:#D9A75A; --latao-soft:#2A2113;
+    --ciano:#4FCEDA; --ciano-soft:#0F2A2E;
+    --alerta:#EE8D75; --alerta-soft:#2E1912;
+    --ok:#72C79B; --ok-soft:#12271D;
+    --shadow:0 .12rem .5rem rgba(0,0,0,.4), 0 .04rem .12rem rgba(0,0,0,.3);
+    --shadow-lift:0 .5rem 1.6rem rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --porcelana:#0A1012; --surface:#111A1C; --surface2:#172124; --surface3:#1E2A2D;
+  --ink:#E9EFEE; --ink2:#A2B4B3; --ink3:#7B8D8C;
+  --rule:#253336; --rule2:#324346;
+  --petroleo:#63CFD6; --petroleo2:#8FE2E6; --petroleo-soft:#12292D;
+  --latao:#D9A75A; --latao-soft:#2A2113;
+  --ciano:#4FCEDA; --ciano-soft:#0F2A2E;
+  --alerta:#EE8D75; --alerta-soft:#2E1912;
+  --ok:#72C79B; --ok-soft:#12271D;
+  --shadow:0 .12rem .5rem rgba(0,0,0,.4), 0 .04rem .12rem rgba(0,0,0,.3);
+  --shadow-lift:0 .5rem 1.6rem rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{font-size:10px}
+body{
+  margin:0; background:var(--porcelana); color:var(--ink);
+  font-family:var(--body); -webkit-font-smoothing:antialiased;
+  min-height:100vh; display:flex; flex-direction:column; align-items:center;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:.22rem solid var(--ciano); outline-offset:.2rem; border-radius:.2rem}
+
+/* ============ CHROME ============ */
+.topbar{
+  width:100%; display:flex; align-items:center; gap:1.4rem;
+  padding:.9rem clamp(12px,1.6rem,28px); background:var(--surface);
+  border-bottom:1px solid var(--rule); position:sticky; top:0; z-index:40;
+  font-family:var(--mono); font-size:1.22rem; letter-spacing:.02em;
+  flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:.7rem;font-weight:600;color:var(--petroleo);white-space:nowrap}
+.brand .mark{width:1.9rem;height:1.9rem;flex:none}
+.topbar .spacer{flex:1 1 auto;min-width:.4rem}
+.tb-btn{
+  padding:.42rem .82rem; border:1px solid var(--rule2); border-radius:.5rem;
+  color:var(--ink2); background:var(--surface); white-space:nowrap;
+  transition:background .16s,color .16s,border-color .16s;
+}
+.tb-btn:hover{background:var(--petroleo-soft);color:var(--petroleo);border-color:var(--petroleo)}
+.tb-btn[aria-pressed="true"]{background:var(--petroleo);color:var(--surface);border-color:var(--petroleo)}
+.tb-btn kbd{font:inherit;opacity:.55;margin-left:.35rem}
+#clock{font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap}
+#clock.warn{color:var(--latao)} #clock.over{color:var(--alerta)}
+#counter{color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* progress: 16 mandatory sections of the roteiro */
+.rail{width:100%;display:flex;gap:1px;background:var(--rule);height:.45rem;position:sticky;top:3.9rem;z-index:39}
+.rail i{flex:1;background:var(--surface2);transition:background .35s}
+.rail i.done{background:var(--petroleo)}
+.rail i.now{background:var(--latao)}
+
+/* ============ STAGE ============ */
+.deck{width:100%;display:flex;justify-content:center;padding:1.6rem 0 2.4rem}
+.stage{
+  position:relative; width:var(--sw); height:var(--sh);
+  background:var(--surface); border:1px solid var(--rule);
+  border-radius:.8rem; box-shadow:var(--shadow-lift); overflow:hidden;
+}
+.slide{
+  position:absolute; inset:0; padding:3.4rem 4.2rem 3.9rem;
+  display:none; flex-direction:column; gap:1.2rem;
+}
+.slide.is-active{display:flex}
+.slide{overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+.slide::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:.32rem;
+  background:linear-gradient(90deg,var(--petroleo),var(--ciano) 55%,var(--latao));
+  opacity:.85;
+}
+.foot{
+  position:absolute; left:4.2rem; right:4.2rem; bottom:1.25rem;
+  display:flex; justify-content:space-between; align-items:baseline; gap:1rem;
+  font-family:var(--mono); font-size:1.05rem; color:var(--ink3); letter-spacing:.03em;
+}
+.foot .sec{color:var(--petroleo);font-weight:500}
+
+/* ============ TYPE ============ */
+.eyebrow{
+  font-family:var(--mono); font-size:1.15rem; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--latao); display:flex; align-items:center; gap:.8rem;
+}
+.eyebrow::before{content:"";width:2.6rem;height:1px;background:var(--latao);flex:none}
+h1{font-family:var(--disp);font-weight:400;font-size:5.8rem;line-height:1.02;margin:0;letter-spacing:-.02em;text-wrap:balance}
+h2{font-family:var(--disp);font-weight:400;font-size:3.5rem;line-height:1.08;margin:0;letter-spacing:-.015em;text-wrap:balance}
+h3{font-family:var(--body);font-weight:600;font-size:1.66rem;line-height:1.25;margin:0;letter-spacing:-.005em}
+h2 em{font-style:italic;color:var(--petroleo)}
+p{margin:0;font-size:1.5rem;line-height:1.42;color:var(--ink2);max-width:62ch}
+.lead{font-size:1.78rem;line-height:1.38;color:var(--ink)}
+strong{color:var(--ink);font-weight:600}
+.sm{font-size:1.3rem;line-height:1.38}
+.xs{font-size:1.16rem;line-height:1.38;color:var(--ink3)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ============ PRIMITIVES ============ */
+.cols{display:grid;gap:1.25rem;align-items:start}
+.c2{grid-template-columns:1fr 1fr}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+.c-6-4{grid-template-columns:6fr 4fr}
+.c-5-7{grid-template-columns:5fr 7fr}
+.stack{display:flex;flex-direction:column;gap:.95rem}
+.row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.grow{flex:1 1 0;min-width:0}
+
+.panel{background:var(--surface2);border-radius:.7rem;padding:1.25rem 1.45rem;display:flex;flex-direction:column;gap:.65rem}
+.panel.line{background:transparent;border:1px solid var(--rule);}
+.panel.tint{background:var(--petroleo-soft)}
+.panel.warn{background:var(--alerta-soft)}
+.panel.good{background:var(--ok-soft)}
+.panel.brass{background:var(--latao-soft)}
+.panel h3{color:var(--ink)}
+
+.klist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.55rem}
+.klist li{position:relative;padding-left:1.45rem;font-size:1.42rem;line-height:1.32;color:var(--ink2)}
+.klist li::before{content:"";position:absolute;left:0;top:.5em;width:.62rem;height:.62rem;border-radius:.12rem;background:var(--ciano);transform:rotate(45deg)}
+.klist.brass li::before{background:var(--latao)}
+.klist.neg li::before{background:var(--alerta)}
+.klist.pos li::before{background:var(--ok)}
+
+.tag{
+  font-family:var(--mono);font-size:1.02rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:.28rem .6rem;border-radius:.3rem;background:var(--surface3);color:var(--ink2);white-space:nowrap
+}
+.tag.ev-a{background:var(--ok-soft);color:var(--ok)}
+.tag.ev-b{background:var(--ciano-soft);color:var(--ciano)}
+.tag.ev-c{background:var(--latao-soft);color:var(--latao)}
+.tag.leg{background:var(--petroleo-soft);color:var(--petroleo)}
+
+.cite{font-family:var(--mono);font-size:1.02rem;color:var(--ink3);letter-spacing:.01em;line-height:1.35}
+.cite b{color:var(--petroleo);font-weight:500}
+
+/* stat tiles */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.stat{border-left:.28rem solid var(--petroleo);padding:.3rem 0 .3rem 1.2rem;display:flex;flex-direction:column;gap:.3rem}
+.stat b{font-family:var(--disp);font-size:4.1rem;line-height:.95;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat span{font-size:1.28rem;line-height:1.32;color:var(--ink2)}
+.stat.alt{border-color:var(--latao)} .stat.alt2{border-color:var(--ciano)}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:1.24rem}
+th{
+  text-align:left;font-family:var(--mono);font-size:1.02rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);padding:.55rem .7rem;border-bottom:1.5px solid var(--rule2)
+}
+td{padding:.5rem .65rem;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top;line-height:1.3}
+td strong{color:var(--ink)}
+tbody tr:hover td{background:var(--surface2)}
+.tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:100%}
+
+table.dense{font-size:1.16rem}
+table.dense th{padding:.4rem .55rem}
+table.dense td{padding:.45rem .55rem;line-height:1.26}
+
+/* image placeholders */
+.fig{
+  border:1.5px dashed var(--rule2); border-radius:.6rem; background:var(--surface2);
+  display:flex; flex-direction:column; min-height:0; overflow:hidden;
+}
+.fig .box{
+  flex:1 1 auto; display:flex; flex-direction:column; gap:.55rem; align-items:center; justify-content:center;
+  text-align:center; padding:1.2rem; min-height:7rem;
+}
+.fig .ic{width:2.6rem;height:2.6rem;opacity:.5;color:var(--petroleo)}
+.fig .hint{font-family:var(--mono);font-size:1.06rem;line-height:1.35;color:var(--ink3);max-width:34ch}
+.fig .hint b{display:block;color:var(--petroleo);letter-spacing:.09em;text-transform:uppercase;font-size:.96rem;margin-bottom:.25rem}
+.fig .src{
+  border-top:1px dashed var(--rule2); padding:.5rem .8rem; font-family:var(--mono); font-size:1rem;
+  color:var(--ink3); background:var(--surface); display:flex; gap:.4rem; align-items:baseline;
+}
+.fig .src [contenteditable]{flex:1;min-width:2rem;outline:none;color:var(--ink2);border-bottom:1px dotted var(--rule2)}
+.fig .src [contenteditable]:empty::before{content:"clique e digite a fonte da imagem";color:var(--ink3);opacity:.7}
+
+/* ============ WIDGETS ============ */
+.chipbar{display:flex;gap:.55rem;flex-wrap:wrap}
+.chip{
+  font-family:var(--mono);font-size:1.1rem;font-weight:500;padding:.42rem .85rem;border-radius:2rem;
+  border:1px solid var(--rule2);color:var(--ink2);transition:all .16s
+}
+.chip:hover{border-color:var(--petroleo);color:var(--petroleo)}
+.chip[aria-pressed="true"]{background:var(--petroleo);border-color:var(--petroleo);color:var(--surface)}
+
+/* barrier explorer */
+.barriers{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem}
+.barrier{
+  border:1px solid var(--rule2);border-radius:.6rem;padding:.9rem .7rem;text-align:center;
+  display:flex;flex-direction:column;gap:.45rem;align-items:center;transition:all .18s;background:var(--surface)
+}
+.barrier:hover{border-color:var(--ciano);transform:translateY(-.18rem)}
+.barrier[aria-pressed="true"]{background:var(--petroleo);border-color:var(--petroleo);color:var(--surface)}
+.barrier[aria-pressed="true"] .bn,.barrier[aria-pressed="true"] .bl{color:var(--surface)}
+.barrier .bn{font-family:var(--mono);font-size:1rem;letter-spacing:.1em;color:var(--ink3)}
+.barrier .bl{font-size:1.28rem;font-weight:600;line-height:1.18;color:var(--ink)}
+.barrier-out{
+  border-left:.28rem solid var(--ciano);background:var(--surface2);border-radius:.5rem;
+  padding:1.1rem 1.3rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.6rem;min-height:9.5rem
+}
+
+/* before/after slider */
+.ba{position:relative;border-radius:.6rem;overflow:hidden;border:1px solid var(--rule2);background:var(--surface2);height:100%;min-height:14rem}
+.ba .side{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;gap:.4rem}
+.ba .a{background:repeating-linear-gradient(135deg,var(--surface2),var(--surface2) 8px,var(--surface3) 8px,var(--surface3) 16px)}
+.ba .b{background:repeating-linear-gradient(135deg,var(--petroleo-soft),var(--petroleo-soft) 8px,var(--ciano-soft) 8px,var(--ciano-soft) 16px);clip-path:inset(0 0 0 var(--split,50%));justify-content:flex-start}
+.ba .cap{font-family:var(--mono);font-size:1.05rem;line-height:1.3;background:var(--surface);border-radius:.35rem;padding:.5rem .7rem;align-self:flex-start;max-width:80%;box-shadow:var(--shadow)}
+.ba .cap b{display:block;color:var(--petroleo);text-transform:uppercase;letter-spacing:.1em;font-size:.94rem}
+.ba .b .cap{align-self:flex-end}
+.ba input[type=range]{position:absolute;inset:auto 0 0 0;top:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--split,50%);width:.2rem;background:var(--latao);pointer-events:none}
+.ba .handle::after{
+  content:"◂ ▸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:var(--latao);color:#fff;font-size:1.05rem;padding:.35rem .6rem;border-radius:2rem;white-space:nowrap
+}
+
+/* journey timeline */
+.journey{display:flex;gap:.4rem}
+.jstep{
+  flex:1;border:1px solid var(--rule2);border-radius:.5rem;padding:.8rem .7rem;text-align:left;
+  display:flex;flex-direction:column;gap:.3rem;transition:all .18s;background:var(--surface)
+}
+.jstep:hover{border-color:var(--latao)}
+.jstep[aria-pressed="true"]{background:var(--latao-soft);border-color:var(--latao)}
+.jstep .jn{font-family:var(--mono);font-size:.98rem;letter-spacing:.1em;color:var(--latao);font-weight:600}
+.jstep .jt{font-size:1.24rem;font-weight:600;line-height:1.15}
+.jout{background:var(--surface2);border-radius:.6rem;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.8rem;min-height:11rem}
+
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.flip{perspective:1000px;height:15.5rem;background:none;text-align:left}
+.flip .inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.1,.2,1);transform-style:preserve-3d}
+.flip[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.flip .face{
+  position:absolute;inset:0;backface-visibility:hidden;border-radius:.6rem;padding:1.1rem 1.2rem;
+  display:flex;flex-direction:column;gap:.5rem;border:1px solid var(--rule2);background:var(--surface);overflow:hidden
+}
+.flip .face.back{transform:rotateY(180deg);background:var(--petroleo);border-color:var(--petroleo);color:var(--surface)}
+.flip .face.back .xs,.flip .face.back p{color:rgba(255,255,255,.88)}
+.flip .face.back .tag{background:rgba(255,255,255,.18);color:#fff}
+.flip .ft{font-size:1.4rem;font-weight:600;line-height:1.18}
+.flip .hintflip{margin-top:auto;font-family:var(--mono);font-size:.95rem;color:var(--ink3);letter-spacing:.06em}
+.flip .face.back .hintflip{color:rgba(255,255,255,.6)}
+
+/* decision flow */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.fnode{
+  border:1px solid var(--rule2);border-radius:.55rem;padding:.85rem 1rem;text-align:left;
+  display:flex;flex-direction:column;gap:.3rem;transition:all .18s;background:var(--surface)
+}
+.fnode:hover{border-color:var(--ciano);box-shadow:var(--shadow)}
+.fnode[aria-pressed="true"]{background:var(--ciano-soft);border-color:var(--ciano)}
+.fnode .fq{font-size:1.26rem;font-weight:600;line-height:1.2}
+.fnode .fs{font-size:1.1rem;color:var(--ink3);line-height:1.25}
+
+/* checklist */
+.check{display:grid;grid-template-columns:1fr 1fr;gap:.15rem 1.4rem}
+.check label{display:flex;gap:.7rem;align-items:flex-start;font-size:1.2rem;line-height:1.28;color:var(--ink2);cursor:pointer;padding:.22rem 0}
+.check input{width:1.35rem;height:1.35rem;margin:.1rem 0 0;accent-color:var(--petroleo);flex:none;cursor:pointer}
+.check input:checked + span{color:var(--ink)}
+.score{display:flex;align-items:baseline;gap:.7rem;font-family:var(--mono)}
+.score b{font-size:3.4rem;color:var(--petroleo);font-variant-numeric:tabular-nums;line-height:1}
+.meter{height:.55rem;border-radius:1rem;background:var(--surface3);overflow:hidden;flex:1}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--ciano),var(--petroleo));width:0;transition:width .4s}
+
+/* bar chart */
+.bars{display:flex;flex-direction:column;gap:.72rem}
+.bar{display:grid;grid-template-columns:16rem 1fr auto;gap:1rem;align-items:center;font-size:1.28rem}
+.bar .track{height:1.5rem;background:var(--surface2);border-radius:.25rem;overflow:hidden}
+.bar .fill{display:block;height:100%;width:0;background:var(--petroleo);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar .fill.alt{background:var(--ciano)} .bar .fill.alt2{background:var(--latao)}
+.bar .v{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600;min-width:5rem;text-align:right}
+.axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:1rem;color:var(--ink3);border-top:1px solid var(--rule);padding-top:.35rem;margin:0 5.5rem .3rem 17rem}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:.7rem}
+.qopt{
+  border:1px solid var(--rule2);border-radius:.5rem;padding:.85rem 1.1rem;text-align:left;font-size:1.38rem;
+  display:flex;gap:.9rem;align-items:flex-start;transition:all .18s;background:var(--surface);line-height:1.28
+}
+.qopt:hover{border-color:var(--petroleo)}
+.qopt .k{font-family:var(--mono);font-weight:600;color:var(--ink3);flex:none}
+.qopt.right{background:var(--ok-soft);border-color:var(--ok)} .qopt.right .k{color:var(--ok)}
+.qopt.wrong{background:var(--alerta-soft);border-color:var(--alerta)} .qopt.wrong .k{color:var(--alerta)}
+.qfeed{font-size:1.3rem;color:var(--ink2);line-height:1.38;min-height:3.4rem}
+
+/* cover */
+.cover{justify-content:center;gap:2.2rem;background:
+  radial-gradient(120% 90% at 88% 12%, var(--petroleo-soft) 0%, transparent 58%),
+  radial-gradient(90% 80% at 5% 95%, var(--latao-soft) 0%, transparent 52%), var(--surface)}
+.cover .rulebar{width:9rem;height:.3rem;background:var(--latao)}
+.cover .meta{display:flex;gap:3.2rem;flex-wrap:wrap;font-family:var(--mono);font-size:1.22rem;color:var(--ink2)}
+.cover .meta div{display:flex;flex-direction:column;gap:.25rem}
+.cover .meta span{font-size:1rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.arch{position:absolute;right:3rem;top:52%;transform:translateY(-50%);width:32rem;max-width:38%;opacity:.13;color:var(--petroleo);pointer-events:none}
+
+/* map overlay */
+.map{
+  position:fixed;inset:0;background:color-mix(in srgb,var(--porcelana) 94%,transparent);
+  backdrop-filter:blur(6px);z-index:60;padding:clamp(16px,2.4rem,40px);overflow:auto;display:none
+}
+.map.open{display:block}
+.map h3{font-family:var(--disp);font-weight:400;font-size:2.6rem;margin-bottom:1.2rem}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:.7rem}
+.mitem{
+  border:1px solid var(--rule);border-radius:.5rem;padding:.75rem .9rem;text-align:left;background:var(--surface);
+  display:flex;flex-direction:column;gap:.25rem;transition:all .15s
+}
+.mitem:hover{border-color:var(--petroleo);background:var(--petroleo-soft)}
+.mitem.cur{border-color:var(--latao);background:var(--latao-soft)}
+.mitem .mn{font-family:var(--mono);font-size:1rem;color:var(--ink3)}
+.mitem .mt{font-size:1.3rem;font-weight:500;line-height:1.2}
+
+/* notes */
+.notes{
+  width:var(--sw);max-width:100%;margin:.8rem auto 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:.3rem solid var(--latao);border-radius:.5rem;padding:1.2rem 1.5rem;display:none;
+  font-size:1.35rem;line-height:1.45;color:var(--ink2)
+}
+body.notes-on .notes{display:block}
+.notes b{font-family:var(--mono);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;color:var(--latao);display:block;margin-bottom:.4rem}
+
+/* nav arrows */
+.nav{position:fixed;bottom:1.2rem;right:1.2rem;display:flex;gap:.5rem;z-index:45}
+.nav button{
+  width:3.6rem;height:3.6rem;border-radius:50%;background:var(--surface);border:1px solid var(--rule2);
+  color:var(--petroleo);display:grid;place-items:center;box-shadow:var(--shadow);transition:all .16s
+}
+.nav button:hover{background:var(--petroleo);color:var(--surface);border-color:var(--petroleo)}
+.nav svg{width:1.5rem;height:1.5rem}
+
+/* reveal animation */
+.slide.anim .reveal{animation:rise .48s cubic-bezier(.22,.72,.2,1) both;animation-delay:calc(var(--i,0)*65ms)}
+@keyframes rise{from{opacity:0;transform:translateY(1.1rem)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+/* ============ MOBILE ============ */
+body.compact .stage{height:auto;min-height:var(--sh)}
+body.compact .slide{position:relative;padding:2.6rem 2rem 3.6rem}
+body.compact .foot{left:2rem;right:2rem;bottom:1.1rem}
+body.compact .c2,body.compact .c3,body.compact .c4,body.compact .c-6-4,body.compact .c-5-7{grid-template-columns:1fr}
+body.compact .stats{grid-template-columns:1fr}
+body.compact .barriers{grid-template-columns:repeat(2,1fr)}
+body.compact .barrier-out,body.compact .check{grid-template-columns:1fr}
+body.compact .flips{grid-template-columns:1fr 1fr}
+body.compact .flow{grid-template-columns:1fr}
+body.compact .journey{flex-wrap:wrap}
+body.compact .jstep{flex:1 1 40%}
+body.compact .bar{grid-template-columns:1fr;gap:.3rem}
+body.compact .axis{margin-left:0}
+body.compact h1{font-size:4.4rem} body.compact h2{font-size:3.2rem}
+body.compact .arch{display:none}
+
+/* ============ PRINT ============ */
+@media print{
+  .topbar,.rail,.nav,.map,.notes{display:none!important}
+  body{background:#fff;display:block}
+  .deck{padding:0}
+  .stage{width:100%!important;height:auto!important;border:none;box-shadow:none;border-radius:0}
+  .slide{display:flex!important;position:relative;page-break-after:always;height:18cm;padding:1.4cm}
+}
+</style>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3.2c-2.1-1.4-4.6-1.5-6.1-.2C4.1 4.5 3.6 7.2 4.3 10c.6 2.4.8 4.3 1 6.3.2 2 .6 4.3 1.9 4.5 1.4.2 1.8-2.1 2.3-4.1.4-1.6.9-2.6 2.5-2.6s2.1 1 2.5 2.6c.5 2 .9 4.3 2.3 4.1 1.3-.2 1.7-2.5 1.9-4.5.2-2 .4-3.9 1-6.3.7-2.8.2-5.5-1.6-7-1.5-1.3-4-1.2-6.1.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    </svg>
+    <span>Odontologia Sem Barreiras</span>
+  </div>
+  <span id="counter" class="num">01 / 34</span>
+  <span class="spacer"></span>
+  <button class="tb-btn" id="btn-map" aria-pressed="false">Roteiro<kbd>M</kbd></button>
+  <button class="tb-btn" id="btn-notes" aria-pressed="false">Notas<kbd>N</kbd></button>
+  <button class="tb-btn" id="btn-timer" aria-pressed="false">Cronômetro<kbd>T</kbd></button>
+  <span id="clock" class="num">25:00</span>
+  <button class="tb-btn" id="btn-theme">Tema</button>
+  <button class="tb-btn" id="btn-full">Tela cheia<kbd>F</kbd></button>
+</header>
+<div class="rail" id="rail" aria-hidden="true"></div>
+
+<main class="deck">
+<div class="stage" id="stage">
+
+<!-- ══════════ 1. CAPA ══════════ -->
+<section class="slide cover is-active" data-sec="0" data-title="Capa">
+  <svg class="arch" viewBox="0 0 200 120" fill="none" aria-hidden="true">
+    <path d="M20 100c0-44 26-76 80-76s80 32 80 76" stroke="currentColor" stroke-width="2"/>
+    <g stroke="currentColor" stroke-width="1.6">
+      <circle cx="30" cy="82" r="9"/><circle cx="40" cy="60" r="9"/><circle cx="56" cy="43" r="9"/>
+      <circle cx="78" cy="32" r="9"/><circle cx="100" cy="28" r="9"/><circle cx="122" cy="32" r="9"/>
+      <circle cx="144" cy="43" r="9"/><circle cx="160" cy="60" r="9"/><circle cx="170" cy="82" r="9"/>
+    </g>
+  </svg>
+  <div class="eyebrow reveal" style="--i:0">Seminário · Odontologia para Pacientes com Necessidades Especiais</div>
+  <h1 class="reveal" style="--i:1">Tecnologia e<br>acessibilidade</h1>
+  <div class="rulebar reveal" style="--i:2"></div>
+  <p class="lead reveal" style="--i:3">Recursos tecnológicos que transformam a consulta odontológica do paciente com deficiência — da barreira arquitetônica ao condicionamento comportamental, com base em evidência clínica.</p>
+  <div class="meta reveal" style="--i:4">
+    <div><span>Apresentação</span>Thamyres · Graduação em Odontologia</div>
+    <div><span>Duração</span>25–30 min + 10 min de discussão</div>
+    <div><span>Base normativa</span>OMS · MS/SUS · CFO · ADA · iADH · AAPD</div>
+  </div>
+  <div class="foot"><span class="sec">Capa</span><span class="num">01</span></div>
+</section>
+
+<!-- ══════════ 2. ROTEIRO ══════════ -->
+<section class="slide" data-sec="0" data-title="Roteiro do seminário"
+  data-notes="Apresente o mapa em 40 segundos. Deixe claro que o roteiro obedece à estrutura obrigatória de 16 itens e que o tema transversal (tecnologia) será aplicado a cada um deles.">
+  <div class="eyebrow reveal" style="--i:0">Como este seminário está organizado</div>
+  <h2 class="reveal" style="--i:1">Dezesseis itens obrigatórios, <em>um fio condutor</em></h2>
+  <div class="cols c-6-4 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="panel line" style="overflow:auto">
+      <table>
+        <thead><tr><th>#</th><th>Item da estrutura</th><th>Recorte tecnológico</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td><strong>Introdução</strong></td><td>Definir deficiência, acessibilidade e tecnologia assistiva</td></tr>
+          <tr><td class="num">2</td><td><strong>Características clínicas</strong></td><td>Perfil funcional (CIF) que indica cada recurso</td></tr>
+          <tr><td class="num">3</td><td><strong>Manifestações bucais</strong></td><td>Detecção e monitoramento digital</td></tr>
+          <tr><td class="num">4</td><td><strong>Avaliação pré-operatória</strong></td><td>Prontuário eletrônico e teleodontologia</td></tr>
+          <tr><td class="num">5</td><td><strong>Manejo odontológico</strong></td><td>Ambiente adaptado, RV, pedagogia visual, CAA</td></tr>
+          <tr><td class="num">6</td><td><strong>Contenção física</strong></td><td>Tecnologia como alternativa menos restritiva</td></tr>
+          <tr><td class="num">7</td><td><strong>Sedação e anestesia</strong></td><td>Capnografia, oximetria, monitorização</td></tr>
+          <tr><td class="num">8</td><td><strong>Anestésicos locais</strong></td><td>Anestesia computadorizada e vibratória</td></tr>
+          <tr><td class="num">9</td><td><strong>Medicamentos</strong></td><td>Tabela e checagem digital de interações</td></tr>
+          <tr><td class="num">10</td><td><strong>Protocolos clínicos</strong></td><td>ADA · iADH · AAPD · MS · CFO · SOBRAPNE</td></tr>
+          <tr><td class="num">11</td><td><strong>Uso do laser</strong></td><td>Baixa e alta potência: evidência e limites</td></tr>
+          <tr><td class="num">12</td><td><strong>Ambiente hospitalar</strong></td><td>Quando a tecnologia não substitui o centro cirúrgico</td></tr>
+          <tr><td class="num">13</td><td><strong>Consentimentos</strong></td><td>TCLE pictográfico e assentimento acessível</td></tr>
+          <tr><td class="num">14</td><td><strong>Emergências médicas</strong></td><td>DEA, monitorização e simulação</td></tr>
+          <tr><td class="num">15</td><td><strong>Prevenção e cuidado domiciliar</strong></td><td>Escova elétrica, aplicativos, teleorientação</td></tr>
+          <tr><td class="num">16</td><td><strong>Conclusão</strong></td><td>Desafios, segurança e evidência</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <h3>A tese deste seminário</h3>
+        <p class="sm">A deficiência não está apenas no paciente: ela emerge do encontro entre a condição e um ambiente que não foi projetado para ele. <strong>A tecnologia é o instrumento clínico que reduz essa distância</strong> — e, como todo instrumento, tem indicação, contraindicação e nível de evidência.</p>
+      </div>
+      <div class="panel brass">
+        <h3>Navegação</h3>
+        <ul class="klist brass sm">
+          <li><span class="num">← →</span> ou clique para avançar</li>
+          <li><span class="num">M</span> abre o mapa de slides</li>
+          <li><span class="num">N</span> exibe as notas do apresentador</li>
+          <li><span class="num">T</span> inicia o cronômetro de 25 min</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">Roteiro</span><span class="num">02</span></div>
+</section>
+
+<!-- ══════════ 3. INTRODUÇÃO — DEFINIÇÕES ══════════ -->
+<section class="slide" data-sec="1" data-title="1. Introdução — definições"
+  data-notes="Ancore os três conceitos. Insista: 'tecnologia assistiva' é termo com definição legal no Brasil (LBI, art. 3º, III) — não é jargão de marketing. O modelo biopsicossocial da CIF é o que sustenta todo o resto da apresentação.">
+  <div class="eyebrow reveal" style="--i:0">Item 1 · Introdução</div>
+  <h2 class="reveal" style="--i:1">Três definições que <em>sustentam</em> a conduta</h2>
+  <div class="cols c3 reveal" style="--i:2">
+    <div class="panel">
+      <span class="tag leg">Quem é o paciente</span>
+      <h3>Paciente com necessidades especiais</h3>
+      <p class="sm">Todo indivíduo que apresente <strong>desvio dos padrões de normalidade</strong> — físico, intelectual, sensorial, comportamental, sistêmico ou social — e que, por isso, requer abordagem, protocolo ou ambiente diferenciados.</p>
+      <p class="xs">A Odontologia para PNE é especialidade reconhecida pelo Conselho Federal de Odontologia.</p>
+    </div>
+    <div class="panel">
+      <span class="tag leg">O que se garante</span>
+      <h3>Acessibilidade</h3>
+      <p class="sm">Condição de uso, <strong>com segurança e autonomia</strong>, de espaços, mobiliário, transporte, informação e comunicação por pessoa com deficiência ou mobilidade reduzida.</p>
+      <p class="xs">Lei Brasileira de Inclusão nº 13.146/2015, art. 3º, I · parâmetros técnicos: ABNT NBR 9050.</p>
+    </div>
+    <div class="panel">
+      <span class="tag leg">Com que meio</span>
+      <h3>Tecnologia assistiva</h3>
+      <p class="sm">Produtos, equipamentos, metodologias, estratégias e serviços que <strong>promovem funcionalidade, atividade e participação</strong>, visando autonomia, independência e inclusão.</p>
+      <p class="xs">LBI nº 13.146/2015, art. 3º, III · classificação internacional: ISO 9999.</p>
+    </div>
+  </div>
+  <div class="panel tint reveal" style="--i:3">
+    <div class="row" style="gap:1.6rem;align-items:flex-start">
+      <div class="grow">
+        <h3>O modelo que muda a pergunta clínica</h3>
+        <p class="sm">A Classificação Internacional de Funcionalidade (CIF/OMS) desloca o foco do diagnóstico para a <strong>funcionalidade em contexto</strong>. A pergunta deixa de ser "qual é a síndrome deste paciente?" e passa a ser <strong>"que barreira impede este atendimento — e que recurso a remove?"</strong></p>
+      </div>
+      <div style="flex:none;max-width:34%">
+        <p class="cite">OMS. <b>Global report on health equity for persons with disabilities</b>. Genebra: WHO, 2022.<br>BRASIL. <b>Lei nº 13.146/2015</b> (LBI).<br>ABNT. <b>NBR 9050:2020</b>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">1 · Introdução</span><span class="num">03</span></div>
+</section>
+
+<!-- ══════════ 4. EPIDEMIOLOGIA ══════════ -->
+<section class="slide" data-sec="1" data-title="1. Epidemiologia"
+  data-notes="Dado-chave para abrir: 1 em cada 6 pessoas no mundo. No Brasil, o Censo 2022 foi a primeira divulgação do IBGE com a nova metodologia de dificuldades funcionais. Conecte: o risco aumentado de má saúde bucal não é biológico, é de acesso.">
+  <div class="eyebrow reveal" style="--i:0">Item 1 · Epidemiologia</div>
+  <h2 class="reveal" style="--i:1">A escala do problema <em>não é de nicho</em></h2>
+  <div class="stats reveal" style="--i:2">
+    <div class="stat"><b>1,3 bi</b><span>pessoas no mundo vivem com deficiência significativa — <strong>16% da população global</strong> (OMS, 2022)</span></div>
+    <div class="stat alt"><b>14,4 mi</b><span>brasileiros com 2 anos ou mais têm alguma deficiência — <strong>7,3% da população</strong> (IBGE, Censo 2022)</span></div>
+    <div class="stat alt2"><b>2×</b><span>maior o risco de desenvolver condições como <strong>má saúde bucal</strong>, depressão, asma e diabetes (OMS, 2022)</span></div>
+  </div>
+  <div class="cols c-6-4 reveal" style="--i:3;flex:1;min-height:0">
+    <div class="panel line">
+      <h3>Recorte brasileiro — Censo 2022</h3>
+      <ul class="klist sm">
+        <li><strong>45,4%</strong> das pessoas com deficiência têm 60 anos ou mais (contra 14% entre as pessoas sem deficiência) — envelhecimento e deficiência se sobrepõem no consultório.</li>
+        <li><strong>8,3 milhões</strong> são mulheres e 6,1 milhões são homens.</li>
+        <li>Todos os nove estados do Nordeste superam a média nacional; <strong>Alagoas lidera com 9,6%</strong>.</li>
+        <li>O Censo investigou cinco domínios funcionais: <em>enxergar, ouvir, caminhar, coordenação motora fina e comunicar-se/cognição</em> — exatamente os domínios que a tecnologia assistiva endereça.</li>
+      </ul>
+      <p class="cite">IBGE. <b>Censo Demográfico 2022</b> — Pessoas com deficiência, divulgação de 23/05/2025.<br>WHO. <b>Global report on health equity for persons with disabilities</b>, 2022.</p>
+    </div>
+    <div class="fig">
+      <div class="box">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 20h18M6 20V9m5 11V4m5 16v-7"/></svg>
+        <div class="hint"><b>Espaço para imagem</b>Gráfico ou infográfico do IBGE com a distribuição de pessoas com deficiência por região ou por tipo de dificuldade funcional.</div>
+      </div>
+      <div class="src">Fonte: <span contenteditable="true" spellcheck="false"></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">1 · Introdução</span><span class="num">04</span></div>
+</section>
+
+<!-- ══════════ 5. ETIOLOGIA DAS BARREIRAS ══════════ -->
+<section class="slide" data-sec="1" data-title="1. Etiologia das barreiras"
+  data-notes="Slide interativo: clique em cada barreira e mostre o recurso correspondente. Esta é a adaptação do item 'etiologia' ao nosso tema — a etiologia da exclusão odontológica não é uma doença, é um conjunto de seis barreiras descritas na literatura da inclusão e incorporadas ao art. 3º da LBI.">
+  <div class="eyebrow reveal" style="--i:0">Item 1 · Etiologia — o que produz a exclusão</div>
+  <h2 class="reveal" style="--i:1">Seis barreiras, <em>seis famílias de solução</em></h2>
+  <p class="sm reveal" style="--i:2">Clique em cada barreira para ver o recurso tecnológico que a remove. Classificação prevista na Lei Brasileira de Inclusão (art. 3º, IV).</p>
+  <div class="barriers reveal" style="--i:3" id="barriers">
+    <button class="barrier" data-b="0" aria-pressed="true"><span class="bn">01</span><span class="bl">Arquitetônica</span></button>
+    <button class="barrier" data-b="1" aria-pressed="false"><span class="bn">02</span><span class="bl">Comunicacional</span></button>
+    <button class="barrier" data-b="2" aria-pressed="false"><span class="bn">03</span><span class="bl">Atitudinal</span></button>
+    <button class="barrier" data-b="3" aria-pressed="false"><span class="bn">04</span><span class="bl">Metodológica</span></button>
+    <button class="barrier" data-b="4" aria-pressed="false"><span class="bn">05</span><span class="bl">Instrumental</span></button>
+    <button class="barrier" data-b="5" aria-pressed="false"><span class="bn">06</span><span class="bl">Programática</span></button>
+  </div>
+  <div class="barrier-out reveal" style="--i:4" id="barrier-out"></div>
+  <div class="foot"><span class="sec">1 · Introdução</span><span class="num">05</span></div>
+</section>
+
+<!-- ══════════ 6. CLASSIFICAÇÃO DA TECNOLOGIA ══════════ -->
+<section class="slide" data-sec="1" data-title="1. Classificação da tecnologia assistiva"
+  data-notes="Mensagem central: alta tecnologia não é sinônimo de melhor resultado. A escova elétrica e o cartão pictográfico (baixa tecnologia) têm ensaios randomizados favoráveis; muitos recursos de alta tecnologia ainda têm evidência preliminar. Custo e sustentabilidade importam no SUS.">
+  <div class="eyebrow reveal" style="--i:0">Item 1 · Classificação</div>
+  <h2 class="reveal" style="--i:1">Baixa, média e alta tecnologia — <em>e por que isso importa</em></h2>
+  <div class="cols c3 reveal" style="--i:2">
+    <div class="panel good">
+      <span class="tag">Baixa tecnologia</span>
+      <h3>Sem eletrônica, custo baixo</h3>
+      <ul class="klist pos sm">
+        <li>Pranchas e cartões pictográficos (CAA)</li>
+        <li>Abridores de boca e mordedores de silicone</li>
+        <li>Escovas adaptadas, cabo engrossado, fio com haste</li>
+        <li>Espelho de mão, avental de peso, óculos escuros</li>
+      </ul>
+      <p class="xs">Alta disponibilidade · adaptável no próprio consultório · <strong>maior sustentabilidade no SUS</strong>.</p>
+    </div>
+    <div class="panel">
+      <span class="tag">Média tecnologia</span>
+      <h3>Eletroeletrônica simples</h3>
+      <ul class="klist sm">
+        <li>Escova elétrica sônica ou oscilo-rotatória</li>
+        <li>Fones com cancelamento de ruído, tablet com vídeo</li>
+        <li>Dispositivos vibratórios pré-anestésicos</li>
+        <li>Câmera intraoral e radiografia digital</li>
+      </ul>
+      <p class="xs">Custo intermediário · curva de aprendizado curta · <strong>melhor relação evidência/preço</strong>.</p>
+    </div>
+    <div class="panel tint">
+      <span class="tag">Alta tecnologia</span>
+      <h3>Sistemas complexos</h3>
+      <ul class="klist sm">
+        <li>Realidade virtual imersiva</li>
+        <li>Escâner intraoral e fluxo CAD/CAM</li>
+        <li>Anestesia computadorizada (fluxo controlado)</li>
+        <li>Capnografia, monitor multiparâmetro, laser</li>
+        <li>Inteligência artificial em imagem</li>
+      </ul>
+      <p class="xs">Maior custo · exige treinamento · <strong>evidência heterogênea — checar antes de indicar</strong>.</p>
+    </div>
+  </div>
+  <div class="panel warn reveal" style="--i:3">
+    <h3>Alerta de leitura crítica</h3>
+    <p class="sm">O nível de tecnologia <strong>não prediz o nível de evidência</strong>. A pedagogia visual em papel e a escova elétrica dispõem de ensaios clínicos randomizados; parte dos recursos imersivos ainda repousa em estudos-piloto com amostras pequenas. Indique pelo <em>desfecho comprovado</em>, não pelo apelo tecnológico.</p>
+  </div>
+  <div class="foot"><span class="sec">1 · Introdução</span><span class="num">06</span></div>
+</section>
+
+<!-- ══════════ 7. "FISIOPATOLOGIA" ══════════ -->
+<section class="slide" data-sec="1" data-title="1. Fisiopatologia da experiência adversa"
+  data-notes="Adaptação do item 'fisiopatologia resumida'. Explique o ciclo em voz alta seguindo as setas. O ponto de intervenção da tecnologia é o estímulo sensorial e a previsibilidade — antes do comportamento defensivo se instalar.">
+  <div class="eyebrow reveal" style="--i:0">Item 1 · Fisiopatologia resumida</div>
+  <h2 class="reveal" style="--i:1">Por que o consultório <em>adoece</em> quem já é vulnerável</h2>
+  <div class="cols c-5-7 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="stack">
+      <div class="panel">
+        <h3>A cadeia do evento adverso</h3>
+        <ul class="klist sm">
+          <li><strong>Carga sensorial</strong> — luz do refletor, ruído da alta rotação (≈70–90 dB), vibração, odor de eugenol, sabor, toque intraoral inesperado.</li>
+          <li><strong>Hiper-responsividade sensorial</strong> — resposta simpática exagerada (frequência cardíaca, condutância da pele) frequente no TEA e na deficiência intelectual.</li>
+          <li><strong>Imprevisibilidade</strong> — o paciente não antecipa a sequência; sem antecipação não há autorregulação.</li>
+          <li><strong>Comportamento defensivo</strong> — recusa, fuga, agressão — frequentemente interpretado como "não colaborador".</li>
+          <li><strong>Escalada do manejo</strong> — contenção física, sedação, anestesia geral.</li>
+          <li><strong>Evitação</strong> — o cuidador adia a próxima consulta.</li>
+          <li><strong>Desfecho</strong> — cárie avançada, doença periodontal, dor e exodontia em vez de tratamento conservador.</li>
+        </ul>
+      </div>
+      <div class="panel brass">
+        <p class="sm"><strong>Onde a tecnologia entra:</strong> nos dois primeiros elos. Reduzir carga sensorial e devolver previsibilidade <em>antes</em> do comportamento defensivo é mais eficaz — e menos restritivo — do que manejar a crise depois de instalada.</p>
+      </div>
+    </div>
+    <div class="fig">
+      <div class="box">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div class="hint"><b>Espaço para imagem</b>Fluxograma do ciclo medo → evitação → doença, ou fotografia clínica do ambiente odontológico convencional destacando os estímulos sensoriais (refletor, sugador, alta rotação).</div>
+      </div>
+      <div class="src">Fonte: <span contenteditable="true" spellcheck="false"></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">1 · Introdução</span><span class="num">07</span></div>
+</section>
+
+<!-- ══════════ 8. CARACTERÍSTICAS CLÍNICAS ══════════ -->
+<section class="slide" data-sec="2" data-title="2. Características clínicas gerais"
+  data-notes="Este é o item 2 adaptado: em vez de descrever uma única condição, descrevemos o perfil funcional transversal que determina a escolha tecnológica. Percorra a tabela por coluna: manifestação → consequência no atendimento → recurso.">
+  <div class="eyebrow reveal" style="--i:0">Item 2 · Características clínicas gerais</div>
+  <h2 class="reveal" style="--i:1">Do perfil funcional à <em>indicação do recurso</em></h2>
+  <div class="panel line reveal" style="--i:2;flex:1;min-height:0;overflow:auto">
+    <table>
+      <thead><tr><th style="width:19%">Domínio</th><th style="width:27%">Manifestação clínica</th><th style="width:27%">Consequência no atendimento</th><th>Recurso tecnológico indicado</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Motor</strong></td><td>Espasticidade, movimentos involuntários, hipotonia, contraturas, reflexo de mordida</td><td>Instabilidade postural, risco de trauma e de lesão do operador; impossibilidade de transferência</td><td>Plataforma elevatória para cadeira de rodas; cadeira com apoio de cabeça e coxins posicionadores; abridor de boca de silicone; sugador de alto volume</td></tr>
+        <tr><td><strong>Cognitivo</strong></td><td>Déficit intelectual, dificuldade de compreensão de instruções sequenciais</td><td>Tell-show-do convencional insuficiente; consentimento comprometido</td><td>Pedagogia visual, <em>video modeling</em>, agenda visual, TCLE pictográfico</td></tr>
+        <tr><td><strong>Comportamental</strong></td><td>Hiper-responsividade sensorial, ansiedade, estereotipias, recusa</td><td>Escalada para contenção e sedação; abandono do tratamento</td><td>Ambiente sensorialmente adaptado (SADE), fones com cancelamento de ruído, realidade virtual, óculos escuros, avental de peso</td></tr>
+        <tr><td><strong>Comunicação</strong></td><td>Ausência de fala funcional, surdez, disartria</td><td>Dor e desconforto não sinalizados; anamnese incompleta</td><td>Comunicação aumentativa e alternativa (CAA/PECS), Libras e VLibras, aplicativos com síntese de voz, escalas de dor por faces</td></tr>
+        <tr><td><strong>Sensorial visual</strong></td><td>Baixa visão, cegueira</td><td>Dependência do canal verbal e tátil; orientação espacial prejudicada</td><td>Orientação verbal descritiva estruturada, modelos táteis, material em braille, piso tátil e sinalização NBR 9050</td></tr>
+        <tr><td><strong>Sistêmico</strong></td><td>Epilepsia, cardiopatia, disfagia, refluxo, imunossupressão</td><td>Risco de intercorrência durante o procedimento</td><td>Monitorização multiparâmetro, oximetria, capnografia, prontuário eletrônico com alerta de interação</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cite reveal" style="--i:3">Estrutura baseada na <b>CIF/OMS</b> (funcionalidade, atividade e participação) e no <b>Guia de Atenção à Saúde Bucal da Pessoa com Deficiência</b> — Ministério da Saúde, Brasília, 2019.</p>
+  <div class="foot"><span class="sec">2 · Características clínicas</span><span class="num">08</span></div>
+</section>
+
+<!-- ══════════ 9. EXPECTATIVA / PROGNÓSTICO ══════════ -->
+<section class="slide" data-sec="2" data-title="2. Limitações funcionais e prognóstico"
+  data-notes="Cubra aqui 'limitações funcionais' e 'expectativa de vida e prognóstico' exigidos pelo item 2. Mensagem: o prognóstico odontológico do PNE é determinado mais pela periodicidade do acesso do que pela condição de base.">
+  <div class="eyebrow reveal" style="--i:0">Item 2 · Limitações funcionais e prognóstico</div>
+  <h2 class="reveal" style="--i:1">O prognóstico bucal é <em>função do acesso</em></h2>
+  <div class="cols c2 reveal" style="--i:2">
+    <div class="panel">
+      <h3>Limitações funcionais que impactam a higiene</h3>
+      <ul class="klist sm">
+        <li><strong>Coordenação motora fina</strong> — impede a pega e o movimento de escovação eficaz (domínio investigado pelo Censo 2022).</li>
+        <li><strong>Amplitude de abertura bucal</strong> — limita acesso posterior e o uso de instrumentos convencionais.</li>
+        <li><strong>Controle de deglutição</strong> — risco de aspiração de água, dentifrício e materiais.</li>
+        <li><strong>Dependência de terceiros</strong> — a higiene passa a depender da técnica e da adesão do cuidador.</li>
+      </ul>
+    </div>
+    <div class="panel tint">
+      <h3>O que a longevidade mudou</h3>
+      <p class="sm">Condições antes consideradas pediátricas hoje têm <strong>expectativa de vida próxima à da população geral</strong> — Síndrome de Down, paralisia cerebral e cardiopatias congênitas corrigidas. A consequência clínica é direta:</p>
+      <ul class="klist brass sm">
+        <li>Um PNE adulto e idoso, polimedicado, com xerostomia e doença periodontal instalada.</li>
+        <li>Necessidade de <strong>reabilitação protética</strong>, não só de adequação de meio.</li>
+        <li>Planejamento de <strong>manutenção vitalícia</strong>, com intervalos curtos de retorno.</li>
+      </ul>
+      <p class="xs">É exatamente aqui que o escaneamento intraoral e a teleodontologia mudam a viabilidade do acompanhamento longitudinal.</p>
+    </div>
+  </div>
+  <div class="panel warn reveal" style="--i:3">
+    <p class="sm"><strong>Prognóstico:</strong> favorável quando o paciente entra em um programa de manutenção com intervalos de 3 a 4 meses e cuidador treinado; reservado quando o único acesso disponível é a urgência — cenário em que a exodontia substitui o tratamento conservador. <em>A tecnologia que mais melhora prognóstico é a que torna o retorno possível.</em></p>
+  </div>
+  <div class="foot"><span class="sec">2 · Características clínicas</span><span class="num">09</span></div>
+</section>
+
+<!-- ══════════ 10. MANIFESTAÇÕES BUCAIS ══════════ -->
+<section class="slide" data-sec="3" data-title="3. Manifestações bucais"
+  data-notes="Item 3 na íntegra: dentárias, periodontais, salivares, lesões, ósseas, hábitos parafuncionais e risco. Destaque que o risco aumentado é multifatorial e, em grande parte, iatrogênico/social — dieta pastosa, medicação xerostômica, higiene delegada.">
+  <div class="eyebrow reveal" style="--i:0">Item 3 · Manifestações bucais</div>
+  <h2 class="reveal" style="--i:1">O que se encontra na boca — <em>e por quê</em></h2>
+  <div class="cols c4 reveal" style="--i:2">
+    <div class="panel"><span class="tag">Dentárias</span><ul class="klist sm"><li>Hipoplasia e hipomineralização de esmalte</li><li>Atraso e alteração de erupção</li><li>Agenesias, microdontia, taurodontia</li><li>Desgaste acentuado e fraturas</li></ul></div>
+    <div class="panel"><span class="tag">Periodontais</span><ul class="klist sm"><li>Gengivite e periodontite precoces</li><li>Hiperplasia gengival medicamentosa (fenitoína, ciclosporina, bloqueadores de cálcio)</li><li>Recessões por trauma de escovação</li></ul></div>
+    <div class="panel"><span class="tag">Salivares</span><ul class="klist sm"><li>Xerostomia por polifarmácia</li><li>Sialorreia por incoordenação motora oral</li><li>Alteração de capacidade tampão</li></ul></div>
+    <div class="panel"><span class="tag">Lesões e osso</span><ul class="klist sm"><li>Traumas de mucosa e queilite angular</li><li>Candidíase e úlceras</li><li>Maloclusão, mordida aberta, atresia maxilar</li><li>Alterações ósseas e de ATM</li></ul></div>
+  </div>
+  <div class="cols c-6-4 reveal" style="--i:3;flex:1;min-height:0">
+    <div class="panel warn">
+      <h3>Hábitos parafuncionais e risco</h3>
+      <div class="cols c2" style="gap:1.2rem">
+        <ul class="klist neg sm">
+          <li><strong>Bruxismo</strong> de vigília e do sono — alta prevalência em paralisia cerebral e TEA</li>
+          <li><strong>Respiração bucal</strong> e interposição lingual</li>
+          <li><strong>Reflexo de mordida</strong> tônico</li>
+          <li>Onicofagia e autolesão oral</li>
+        </ul>
+        <ul class="klist neg sm">
+          <li>Dieta pastosa e cariogênica, fracionada</li>
+          <li>Medicamentos pediátricos <strong>com sacarose</strong> em uso crônico</li>
+          <li>Higiene dependente de terceiros</li>
+          <li>Acesso episódico e restrito à urgência</li>
+        </ul>
+      </div>
+      <p class="sm"><strong>Conclusão de risco:</strong> risco de cárie e de doença periodontal <em>alto por padrão</em> até prova documentada em contrário — o que justifica protocolo preventivo intensivo e intervalos curtos.</p>
+    </div>
+    <div class="fig">
+      <div class="box">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg>
+        <div class="hint"><b>Espaço para imagem</b>Prancha com fotografias clínicas intraorais: hiperplasia gengival medicamentosa, desgaste por bruxismo e hipoplasia de esmalte.</div>
+      </div>
+      <div class="src">Fonte: <span contenteditable="true" spellcheck="false"></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">3 · Manifestações bucais</span><span class="num">10</span></div>
+</section>
+
+<!-- ══════════ 11. DIAGNÓSTICO DIGITAL ══════════ -->
+<section class="slide" data-sec="3" data-title="3. Diagnóstico e monitoramento digital"
+  data-notes="Aqui entram os recursos que encurtam o tempo de cadeira: radiografia digital (menos dose, imagem imediata), câmera intraoral (documenta e educa o cuidador), escâner intraoral (dispensa moldagem) e IA. Cite os números de acurácia da IA com cautela: são de revisões guarda-chuva, com heterogeneidade.">
+  <div class="eyebrow reveal" style="--i:0">Item 3 · Tecnologia aplicada ao diagnóstico</div>
+  <h2 class="reveal" style="--i:1">Menos tempo de cadeira, <em>mais informação</em></h2>
+  <div class="flips reveal" style="--i:2" id="flips">
+    <button class="flip" aria-pressed="false">
+      <span class="inner">
+        <span class="face"><span class="tag ev-b">Média tecnologia</span><span class="ft">Radiografia digital e sensor portátil</span><p class="xs">Sensor rígido, placa de fósforo e aparelho portátil de raios X.</p><span class="hintflip">clique para ver o ganho clínico</span></span>
+        <span class="face back"><span class="ft">Por que muda o atendimento</span><p class="xs">Imagem imediata elimina a repetição por erro de processamento — crítico em paciente que tolera poucos segundos de posicionamento. Dose reduzida em relação ao filme. O aparelho portátil permite radiografar o paciente <strong>na própria cadeira de rodas</strong> ou no leito.</p><p class="xs"><strong>Limite:</strong> sensor rígido pode desencadear reflexo de vômito e trauma de mucosa; a placa de fósforo é mais flexível e mais bem tolerada.</p></span>
+      </span>
+    </button>
+    <button class="flip" aria-pressed="false">
+      <span class="inner">
+        <span class="face"><span class="tag ev-b">Média tecnologia</span><span class="ft">Câmera intraoral</span><p class="xs">Captura ampliada da lesão em tempo real, exibida no monitor.</p><span class="hintflip">clique para ver o ganho clínico</span></span>
+        <span class="face back"><span class="ft">Por que muda o atendimento</span><p class="xs">Transforma o cuidador em aliado: ele <strong>vê</strong> a placa e a lesão, o que aumenta adesão à higiene domiciliar. Documenta a evolução entre consultas e sustenta a teleodontologia de monitoramento.</p><p class="xs"><strong>Limite:</strong> não substitui exame clínico nem radiográfico; qualidade depende de controle de umidade.</p></span>
+      </span>
+    </button>
+    <button class="flip" aria-pressed="false">
+      <span class="inner">
+        <span class="face"><span class="tag ev-c">Alta tecnologia</span><span class="ft">Escâner intraoral e CAD/CAM</span><p class="xs">Moldagem óptica sem cubeta, silicone ou alginato.</p><span class="hintflip">clique para ver o ganho clínico</span></span>
+        <span class="face back"><span class="ft">Por que muda o atendimento</span><p class="xs">Elimina material de moldagem que escoa para a orofaringe — <strong>reduz o risco de náusea, engasgo e aspiração</strong> em disfagia e reflexo de vômito exacerbado. Permite interromper e retomar a captura, adaptando-se à tolerância do paciente.</p><p class="xs"><strong>Limite:</strong> exige campo seco e abertura mantida; movimento involuntário degrada a captura. Evidência em PNE ainda escassa — a maioria dos estudos de acurácia <em>exclui</em> pacientes com deficiência.</p></span>
+      </span>
+    </button>
+    <button class="flip" aria-pressed="false">
+      <span class="inner">
+        <span class="face"><span class="tag ev-c">Alta tecnologia</span><span class="ft">Inteligência artificial em imagem</span><p class="xs">Detecção assistida de cárie em radiografias e imagens intraorais.</p><span class="hintflip">clique para ver o ganho clínico</span></span>
+        <span class="face back"><span class="ft">Por que muda o atendimento</span><p class="xs">Revisão guarda-chuva com metanálise: sensibilidade agrupada <strong>0,85</strong> e especificidade <strong>0,90</strong> para detecção de cárie; em lesões proximais em bitewing, sensibilidade 0,94 e especificidade 0,91.</p><p class="xs"><strong>Limite:</strong> alta heterogeneidade entre estudos e validação externa limitada. É <strong>ferramenta de apoio</strong> — a decisão permanece do cirurgião-dentista.</p></span>
+      </span>
+    </button>
+  </div>
+  <p class="cite reveal" style="--i:3">NEGI et al. <b>Artificial Intelligence in Dental Caries Diagnosis and Detection: an umbrella review</b>. Clin Exp Dent Res, 2024. · Revisão guarda-chuva com metanálise sobre acurácia diagnóstica da IA para cárie, PLOS One, 2025.</p>
+  <div class="foot"><span class="sec">3 · Manifestações bucais</span><span class="num">11</span></div>
+</section>
+
+<!-- ══════════ 12. AVALIAÇÃO PRÉ-OPERATÓRIA ══════════ -->
+<section class="slide" data-sec="4" data-title="4. Avaliação pré-operatória"
+  data-notes="Item 4 completo: anamnese específica, exames complementares, ASA, avaliação interdisciplinar e critérios de encaminhamento hospitalar. O diferencial tecnológico aqui é a anamnese remota prévia e o prontuário estruturado.">
+  <div class="eyebrow reveal" style="--i:0">Item 4 · Avaliação pré-operatória</div>
+  <h2 class="reveal" style="--i:1">A consulta começa <em>antes</em> do paciente chegar</h2>
+  <div class="cols c-5-7 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="stack">
+      <div class="panel">
+        <h3>Anamnese específica — o que acrescentar</h3>
+        <ul class="klist sm">
+          <li><strong>Perfil sensorial:</strong> reação a luz, ruído, toque, sabor e cheiro; objeto de conforto.</li>
+          <li><strong>Comunicação:</strong> canal preferencial (fala, Libras, CAA, pictogramas); quem traduz.</li>
+          <li><strong>Rotina:</strong> melhor horário do dia, tempo máximo tolerado, gatilhos de crise.</li>
+          <li><strong>Mobilidade:</strong> usa cadeira de rodas? transfere? tolera decúbito?</li>
+          <li><strong>Disfagia e via aérea</strong>, crises convulsivas (tipo, frequência, último episódio).</li>
+          <li><strong>Medicação em uso</strong>, incluindo anticonvulsivantes, antipsicóticos e anticoagulantes.</li>
+        </ul>
+      </div>
+      <div class="panel brass">
+        <h3>Exames complementares e ASA</h3>
+        <p class="sm">Hemograma e coagulograma quando há hepatopatia, anticoagulação ou cirurgia; glicemia; ECG e avaliação cardiológica em cardiopatias. A <strong>classificação ASA</strong> orienta o local: ASA I–II em ambulatório; <strong>ASA III instável e ASA IV</strong> exigem ambiente hospitalar.</p>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <h3>O que a tecnologia acrescenta nesta etapa</h3>
+        <ul class="klist sm">
+          <li><strong>Anamnese remota prévia (teleorientação):</strong> o cuidador responde antes da consulta; a equipe prepara sala, tempo e recursos com antecedência.</li>
+          <li><strong>Vídeo enviado pelo cuidador:</strong> mostra como o paciente reage à escovação em casa — informação que a consulta de 30 minutos não captura.</li>
+          <li><strong>Prontuário eletrônico estruturado:</strong> campos obrigatórios de alergia, anticonvulsivante e alerta automático de interação medicamentosa.</li>
+          <li><strong>Vídeo e fotos da clínica enviados antes:</strong> base para a dessensibilização sistemática em casa.</li>
+        </ul>
+      </div>
+      <div class="panel warn">
+        <h3>Critérios para encaminhamento hospitalar</h3>
+        <p class="sm">Necessidade de tratamento extenso em sessão única · falha documentada de todas as técnicas de manejo · comprometimento sistêmico grave (ASA III instável/IV) · risco de via aérea · impossibilidade de contenção segura · procedimento cirúrgico de grande porte.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">4 · Avaliação pré-operatória</span><span class="num">12</span></div>
+</section>
+
+<!-- ══════════ 13. TELEODONTOLOGIA ══════════ -->
+<section class="slide" data-sec="4" data-title="4. Teleodontologia — evidência e limites legais"
+  data-notes="Slide jurídico importante. A Resolução CFO-226/2020 permite teleinterconsulta, telemonitoramento e teleorientação — e PROÍBE consulta, diagnóstico, prescrição e plano de tratamento a distância. Diga isso com todas as letras: é pegadinha clássica de banca.">
+  <div class="eyebrow reveal" style="--i:0">Item 4 · Teleodontologia</div>
+  <h2 class="reveal" style="--i:1">O que a lei brasileira <em>permite</em> — e o que proíbe</h2>
+  <div class="cols c2 reveal" style="--i:2">
+    <div class="panel good">
+      <h3>Permitido — Resolução CFO nº 226/2020</h3>
+      <ul class="klist pos sm">
+        <li><strong>Teleorientação</strong> — orientar e encaminhar o paciente e o cuidador a distância.</li>
+        <li><strong>Telemonitoramento</strong> — acompanhar à distância paciente sob cuidado do próprio cirurgião-dentista.</li>
+        <li><strong>Teleinterconsulta</strong> — troca entre profissionais para apoio diagnóstico e terapêutico.</li>
+      </ul>
+      <p class="xs">A responsabilidade permanece integralmente do cirurgião-dentista assistente. É vedado o uso de <em>call centers</em> que centralizem e distribuam automaticamente as solicitações.</p>
+    </div>
+    <div class="panel warn">
+      <h3>Expressamente proibido</h3>
+      <ul class="klist neg sm">
+        <li>Consulta a distância</li>
+        <li>Diagnóstico a distância</li>
+        <li>Prescrição a distância</li>
+        <li>Elaboração de plano de tratamento a distância</li>
+      </ul>
+      <p class="xs">Isto é: a teleodontologia <strong>prepara e acompanha</strong> o atendimento presencial do PNE — não o substitui.</p>
+    </div>
+  </div>
+  <div class="panel line reveal" style="--i:3">
+    <div class="row" style="align-items:flex-start;gap:1.6rem">
+      <div class="grow">
+        <h3>O que diz a evidência</h3>
+        <p class="sm">Revisão geral de revisões sistemáticas e metanálises (JMIR, 2025) concluiu que a teleodontologia é <strong>alternativa efetiva e eficiente</strong> ao cuidado presencial, com desfechos clínicos geralmente melhorados e satisfação consistentemente alta. <strong>Ressalva metodológica relevante:</strong> 25 das 30 revisões incluídas (83%) apresentaram qualidade metodológica criticamente baixa a baixa, e 27% tinham alto risco de viés.</p>
+        <p class="sm">Em pacientes com necessidades especiais, a literatura converge em quatro eixos: suporte preventivo mediado pelo cuidador, condução comportamental individualizada com adaptação sensorial, colaboração médico-odontológica interdisciplinar e <strong>acesso viabilizado por tecnologia</strong>.</p>
+      </div>
+      <div style="flex:none;max-width:32%">
+        <p class="cite">CFO. <b>Resolução CFO-226, de 4 de junho de 2020</b>.<br>Teledentistry for improving access to, and quality of oral health care: <b>overview of systematic reviews and meta-analyses</b>. J Med Internet Res, 2025;27:e65211.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">4 · Avaliação pré-operatória</span><span class="num">13</span></div>
+</section>
+
+<!-- ══════════ 14. JORNADA ══════════ -->
+<section class="slide" data-sec="5" data-title="5. A jornada do atendimento"
+  data-notes="Slide interativo central da apresentação. Clique em cada etapa. Use-o como espinha dorsal: cada etapa terá seu slide detalhado a seguir. Se o tempo apertar, este slide sozinho já entrega o conteúdo do item 5.">
+  <div class="eyebrow reveal" style="--i:0">Item 5 · Manejo odontológico</div>
+  <h2 class="reveal" style="--i:1">Cinco momentos, <em>cinco tecnologias</em></h2>
+  <p class="sm reveal" style="--i:2">Clique em cada etapa da jornada para ver o recurso, a evidência e o cuidado prático.</p>
+  <div class="journey reveal" style="--i:3" id="journey">
+    <button class="jstep" data-j="0" aria-pressed="true"><span class="jn">Etapa 01</span><span class="jt">Antes da consulta</span></button>
+    <button class="jstep" data-j="1" aria-pressed="false"><span class="jn">Etapa 02</span><span class="jt">Chegada e recepção</span></button>
+    <button class="jstep" data-j="2" aria-pressed="false"><span class="jn">Etapa 03</span><span class="jt">Transferência e posicionamento</span></button>
+    <button class="jstep" data-j="3" aria-pressed="false"><span class="jn">Etapa 04</span><span class="jt">Durante o procedimento</span></button>
+    <button class="jstep" data-j="4" aria-pressed="false"><span class="jn">Etapa 05</span><span class="jt">Alta e manutenção</span></button>
+  </div>
+  <div class="jout reveal" style="--i:4" id="jout"></div>
+  <div class="foot"><span class="sec">5 · Manejo odontológico</span><span class="num">14</span></div>
+</section>
+
+<!-- ══════════ 15. SADE ══════════ -->
+<section class="slide" data-sec="5" data-title="5. Ambiente sensorialmente adaptado (SADE)"
+  data-notes="Este é o recurso com a melhor evidência de toda a apresentação: ensaio clínico randomizado cruzado publicado no JAMA Network Open em 2023, com 220 crianças incluídas. Arraste o comparador ao vivo. Diga que o custo de implantação é baixo — é adaptação de ambiente, não equipamento caro.">
+  <div class="eyebrow reveal" style="--i:0">Item 5 · Adequações ambientais</div>
+  <h2 class="reveal" style="--i:1">Ambiente sensorialmente adaptado — <em>a maior evidência da área</em></h2>
+  <div class="cols c-5-7 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="ba" id="ba">
+      <div class="side a"><div class="cap"><b>Ambiente convencional</b>Refletor direto · alta rotação sem atenuação · sala compartilhada · estímulo visual irregular</div></div>
+      <div class="side b"><div class="cap"><b>Ambiente adaptado (SADE)</b>Iluminação indireta e reduzida · música rítmica em fones · avental de peso (pressão profunda) · projeção visual lenta no teto</div></div>
+      <div class="handle"></div>
+      <input type="range" id="ba-range" min="0" max="100" value="50" aria-label="Comparar ambiente convencional e ambiente sensorialmente adaptado">
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <span class="tag ev-a">Ensaio clínico randomizado cruzado</span>
+        <h3>O que foi testado</h3>
+        <p class="sm">Cada criança autista passou por <strong>duas profilaxias dentárias</strong> — uma em ambiente convencional, outra em ambiente adaptado —, em ordem randomizada. Desfechos: distresse fisiológico (condutância eletrodérmica) e comportamental (escala observacional).</p>
+        <ul class="klist pos sm">
+          <li><strong>220 crianças incluídas</strong>; 139 completaram todo o protocolo (média de 9,2 anos).</li>
+          <li>O ambiente adaptado foi <strong>seguro e eficaz em reduzir o distresse</strong> fisiológico e comportamental.</li>
+          <li>Piloto anterior, com 44 crianças em delineamento cruzado, já apontava menor desconforto sensorial e percepção de dor.</li>
+        </ul>
+      </div>
+      <div class="panel brass">
+        <h3>Como montar — sem obra</h3>
+        <p class="sm">Refletor só no campo operatório e luz ambiente indireta · fones com cancelamento de ruído · avental de chumbo usado como <em>avental de peso</em> · projeção lenta no teto · primeiro horário, sala vazia.</p>
+      </div>
+      <p class="cite">STEIN DUKER LI et al. <b>Sensory Adaptations to Improve Physiological and Behavioral Distress During Dental Visits in Autistic Children: A Randomized Crossover Trial</b>. JAMA Netw Open. 2023;6(6):e2316346.<br>CERMAK SA et al. <b>Sensory Adapted Dental Environments to Enhance Oral Care for Children with Autism Spectrum Disorders</b>. J Autism Dev Disord. 2015;45(9):2876-88.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">5 · Manejo odontológico</span><span class="num">15</span></div>
+</section>
+
+<!-- ══════════ 16. PEDAGOGIA VISUAL ══════════ -->
+<section class="slide" data-sec="5" data-title="5. Pedagogia visual e video modeling"
+  data-notes="Duas técnicas de baixo custo com ECR favorável. No estudo de video modeling, a média de consultas necessárias caiu de 2 para 1,5 — pareceu pouco, mas em PNE cada consulta evitada é ganho real de acesso. No estudo de Cagetti, comparou-se vídeo versus fotos: os dois funcionam.">
+  <div class="eyebrow reveal" style="--i:0">Item 5 · Condicionamento comportamental</div>
+  <h2 class="reveal" style="--i:1">Previsibilidade é <em>tecnologia</em></h2>
+  <div class="cols c2 reveal" style="--i:2">
+    <div class="panel">
+      <span class="tag ev-a">ECR</span>
+      <h3>Pedagogia visual · agenda visual · PECS</h3>
+      <p class="sm">Sequência de imagens que antecipa cada passo do atendimento: entrar na sala → sentar na cadeira → cadeira reclina → luz acende → espelho na boca → escova gira. O paciente <strong>percorre a sequência em casa</strong>, nos dias anteriores.</p>
+      <ul class="klist pos sm">
+        <li>ECR com 113 crianças com TEA randomizadas (84 concluíram), comparando <strong>vídeo</strong> e <strong>fotografias</strong> como preparo para o primeiro exame: desfechos foram etapas concluídas e cooperação pela escala de Frankl.</li>
+        <li>ECR por conglomerados com 200 crianças autistas de 6 a 17 anos mostrou melhora de <strong>habilidade de escovação, higiene oral e condição gengival</strong> com pedagogia visual aplicada à escovação.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <span class="tag ev-a">ECR</span>
+      <h3><em>Video modeling</em> e mídia eletrônica</h3>
+      <p class="sm">O paciente assiste, antes da consulta, a um vídeo curto em que <strong>outra criança</strong> — ou ele próprio, em gravação prévia — realiza o procedimento com sucesso. Aprendizagem por observação, sem exposição ao estímulo real.</p>
+      <ul class="klist pos sm">
+        <li>ECR cego com 40 crianças autistas de 4 a 12 anos (20 por grupo): a média de consultas necessárias foi de <strong>1,5 no grupo intervenção contra 2,0 no controle</strong> (p ≤ 0,05).</li>
+        <li>Estudo-piloto randomizado com mídia eletrônica (vídeo enviado previamente) reduziu o medo odontológico em crianças com TEA.</li>
+      </ul>
+      <p class="cite">DA SILVA MORO J et al. J Autism Dev Disord. 2024;54(2):501-8. · ISONG IA et al. Clin Pediatr. 2014;53(3):230-7. · CIRIO S, CAGETTI MG et al. Children. 2022;9(5):729.</p>
+    </div>
+  </div>
+  <div class="cols c2 reveal" style="--i:3;flex:1;min-height:0">
+    <div class="fig">
+      <div class="box"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/></svg>
+      <div class="hint"><b>Espaço para imagem</b>Prancha de pedagogia visual / cartões PECS com a sequência do atendimento odontológico.</div></div>
+      <div class="src">Fonte: <span contenteditable="true" spellcheck="false"></span></div>
+    </div>
+    <div class="panel brass">
+      <h3>Como aplicar na clínica — passo a passo</h3>
+      <ul class="klist brass sm">
+        <li>Fotografe <strong>sua própria sala</strong>: o paciente reconhece o ambiente real, não um genérico.</li>
+        <li>Envie ao cuidador com instrução de uso diário por 5 a 7 dias antes da consulta.</li>
+        <li>Repita a mesma sequência na clínica, sem alterar a ordem.</li>
+        <li>Combine com <strong>dessensibilização sistemática</strong>: visitas curtas e progressivas sem procedimento.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">5 · Manejo odontológico</span><span class="num">16</span></div>
+</section>
+
+<!-- ══════════ 17. REALIDADE VIRTUAL ══════════ -->
+<section class="slide" data-sec="5" data-title="5. Realidade virtual e distração audiovisual"
+  data-notes="Seja honesta sobre o nível de evidência: muitos ECRs, mas em populações mistas e com amostras pequenas; em PNE, estudos-piloto. Destaque o estudo com óculos de RV com Libras integrada — exemplo perfeito de tecnologia desenhada para a barreira comunicacional.">
+  <div class="eyebrow reveal" style="--i:0">Item 5 · Distração e imersão</div>
+  <h2 class="reveal" style="--i:1">Realidade virtual: <em>promessa com ressalvas</em></h2>
+  <div class="cols c-6-4 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="stack">
+      <div class="panel">
+        <h3>O que já foi demonstrado</h3>
+        <ul class="klist sm">
+          <li>ECRs em odontopediatria mostram <strong>redução de dor e ansiedade</strong> com distração por RV durante anestesia infiltrativa e procedimentos restauradores, comparada a cuidado convencional.</li>
+          <li>Estudo com <strong>óculos de RV com Libras integrada</strong> em crianças com deficiência auditiva submetidas a pulpotomia demonstrou redução da ansiedade — a tecnologia foi desenhada para a barreira comunicacional específica.</li>
+          <li>Investigação em crianças com TEA avaliou desfecho <strong>bioquímico objetivo</strong>: cortisol salivar durante o tratamento sob distração por RV.</li>
+          <li>O ensaio-piloto <strong>VR-TOOTH</strong> (Montreal) testa viabilidade e aceitabilidade da RV especificamente em crianças com necessidades especiais de saúde, comparando com televisão fixa na parede.</li>
+        </ul>
+      </div>
+      <div class="panel warn">
+        <h3>Contraindicações e cuidados — o que não se diz nos folhetos</h3>
+        <div class="cols c2" style="gap:1.2rem">
+          <ul class="klist neg sm">
+            <li><strong>Epilepsia fotossensível</strong> — risco de desencadear crise</li>
+            <li>Hipersensibilidade tátil à pressão do óculos na face</li>
+            <li>Cinetose e náusea induzidas pela imersão</li>
+          </ul>
+          <ul class="klist neg sm">
+            <li>Bloqueio do campo visual impede o <em>tell-show-do</em> e a leitura facial</li>
+            <li>Higienização entre pacientes (contato com face e mucosa)</li>
+            <li>Custo e curva de treinamento da equipe</li>
+          </ul>
+        </div>
+        <p class="xs"><strong>Alternativa de menor custo e menor risco:</strong> óculos audiovisuais ou monitor no teto, que mantêm o campo visual periférico livre.</p>
+      </div>
+    </div>
+    <div class="fig">
+      <div class="box"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="8" width="20" height="9" rx="3"/><path d="M9 17l1.5-2.5h3L15 17"/></svg>
+      <div class="hint"><b>Espaço para imagem</b>Paciente na cadeira odontológica usando óculos de realidade virtual ou fones com cancelamento de ruído durante o atendimento.</div></div>
+      <div class="src">Fonte: <span contenteditable="true" spellcheck="false"></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">5 · Manejo odontológico</span><span class="num">17</span></div>
+</section>
+
+<!-- ══════════ 18. COMUNICAÇÃO ══════════ -->
+<section class="slide" data-sec="5" data-title="5. Comunicação com paciente e familiares"
+  data-notes="Item 5 exige explicitamente 'comunicação com paciente e familiares'. Ponto ético forte: sem canal de comunicação não há consentimento válido nem avaliação de dor. Mencione que a LBI garante atendimento prioritário e acessível, incluindo intérprete de Libras.">
+  <div class="eyebrow reveal" style="--i:0">Item 5 · Comunicação</div>
+  <h2 class="reveal" style="--i:1">Sem canal de comunicação <em>não há consentimento</em></h2>
+  <div class="cols c3 reveal" style="--i:2">
+    <div class="panel">
+      <h3>Comunicação aumentativa e alternativa (CAA)</h3>
+      <ul class="klist sm">
+        <li>Pranchas e cartões pictográficos com vocabulário odontológico: <em>dói · parar · água · terminou</em></li>
+        <li>PECS — troca de figuras como sistema de pedido</li>
+        <li>Aplicativos de CAA com síntese de voz em tablet</li>
+        <li><strong>Sinal combinado de pausa</strong> — levantar a mão interrompe o procedimento imediatamente; devolve controle ao paciente</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Deficiência auditiva</h3>
+      <ul class="klist sm">
+        <li>Intérprete de Libras — direito assegurado pela LBI</li>
+        <li><strong>VLibras</strong> — suíte pública gratuita de tradução automática para Libras (governo brasileiro)</li>
+        <li>Legendas e material escrito de apoio</li>
+        <li>Falar de frente, sem máscara, antes de iniciar; <strong>máscara transparente</strong> permite leitura labial</li>
+        <li>Desligar a alta rotação antes de falar — aparelho auditivo amplifica o ruído</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Deficiência visual e avaliação de dor</h3>
+      <ul class="klist sm">
+        <li>Descrição verbal antecipada de cada som, cheiro e toque (<em>tell-feel-do</em>)</li>
+        <li>Permitir explorar o instrumento com as mãos antes do uso</li>
+        <li>Material em braille e áudio para orientação domiciliar</li>
+        <li><strong>Escalas de dor não verbais:</strong> escala de faces e escalas comportamentais observacionais (expressão facial, movimento corporal, vocalização) para quem não verbaliza</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel tint reveal" style="--i:3">
+    <p class="sm"><strong>Regra prática:</strong> fale sempre <em>com o paciente</em>, mesmo quando a informação vier do acompanhante. Presumir incapacidade de compreensão é a barreira atitudinal em estado puro — e, juridicamente, a LBI presume a capacidade civil da pessoa com deficiência.</p>
+  </div>
+  <div class="foot"><span class="sec">5 · Manejo odontológico</span><span class="num">18</span></div>
+</section>
+
+<!-- ══════════ 19. ACESSIBILIDADE FÍSICA ══════════ -->
+<section class="slide" data-sec="5" data-title="5. Acessibilidade física do consultório"
+  data-notes="Slide interativo: marque os itens com a turma e mostre a pontuação subindo. São parâmetros da NBR 9050 e da LBI. Termine com o dado: sem acessibilidade arquitetônica, nenhuma das tecnologias anteriores chega a ser usada.">
+  <div class="eyebrow reveal" style="--i:0">Item 5 · Adequações ambientais</div>
+  <h2 class="reveal" style="--i:1">Autodiagnóstico de <em>acessibilidade</em> do consultório</h2>
+  <p class="sm reveal" style="--i:2">Marque o que o seu serviço já cumpre. Parâmetros da ABNT NBR 9050 e da Lei Brasileira de Inclusão nº 13.146/2015.</p>
+  <div class="cols c-6-4 reveal" style="--i:3;flex:1;min-height:0">
+    <div class="panel line">
+      <div class="check" id="check">
+        <label><input type="checkbox" id="ck1"><span>Rota acessível da calçada à cadeira, sem degraus ou com rampa adequada</span></label>
+        <label><input type="checkbox" id="ck2"><span>Vaga de estacionamento reservada e sinalizada</span></label>
+        <label><input type="checkbox" id="ck3"><span>Porta com vão livre mínimo de 80 cm e maçaneta tipo alavanca</span></label>
+        <label><input type="checkbox" id="ck4"><span>Corredor com largura para giro de 360° da cadeira de rodas</span></label>
+        <label><input type="checkbox" id="ck5"><span>Sanitário acessível com barras de apoio</span></label>
+        <label><input type="checkbox" id="ck6"><span>Balcão de recepção com parte rebaixada</span></label>
+        <label><input type="checkbox" id="ck7"><span>Espaço reservado para cadeira de rodas na sala de espera</span></label>
+        <label><input type="checkbox" id="ck8"><span>Cadeira odontológica com braço removível e acesso lateral livre</span></label>
+        <label><input type="checkbox" id="ck9"><span>Plataforma elevatória para atender na própria cadeira de rodas</span></label>
+        <label><input type="checkbox" id="ck10"><span>Prancha de transferência, cinto de posicionamento e coxins</span></label>
+        <label><input type="checkbox" id="ck11"><span>Sinalização visual, tátil e em braille</span></label>
+        <label><input type="checkbox" id="ck12"><span>Recurso de comunicação disponível (pranchas de CAA, Libras/VLibras)</span></label>
+        <label><input type="checkbox" id="ck13"><span>Possibilidade de sala silenciosa e luz regulável</span></label>
+        <label><input type="checkbox" id="ck14"><span>Agendamento com tempo estendido e primeiro horário</span></label>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <h3>Seu índice de acessibilidade</h3>
+        <div class="score"><b id="score-n">0</b><span class="sm">de 14 itens</span></div>
+        <div class="meter"><i id="score-bar"></i></div>
+        <p class="sm" id="score-msg">Marque os itens ao lado para calcular.</p>
+      </div>
+      <div class="panel brass">
+        <h3>Transferência segura</h3>
+        <p class="sm">Quando a transferência é necessária, use <strong>prancha de transferência</strong> e técnica a duas pessoas, com apoio de cabeça e tronco. Em espasticidade grave, atender na própria cadeira de rodas com <strong>plataforma elevatória e reclinadora</strong> é mais seguro do que transferir.</p>
+      </div>
+      <p class="cite">ABNT. <b>NBR 9050:2020</b> — Acessibilidade a edificações, mobiliário, espaços e equipamentos urbanos. · BRASIL. <b>Lei nº 13.146/2015</b>.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">5 · Manejo odontológico</span><span class="num">19</span></div>
+</section>
+
+<!-- ══════════ 20. CONTENÇÃO FÍSICA ══════════ -->
+<section class="slide" data-sec="6" data-title="6. Contenção física"
+  data-notes="Item 6 completo. Mensagem-tese do seminário: a tecnologia é a técnica menos restritiva que antecede a contenção. Cite o princípio da AAPD: sempre a contenção menos restritiva, porém segura e eficaz, e apenas quando intervenções menos restritivas não funcionaram.">
+  <div class="eyebrow reveal" style="--i:0">Item 6 · Contenção física</div>
+  <h2 class="reveal" style="--i:1">A tecnologia é <em>a alternativa menos restritiva</em></h2>
+  <div class="cols c3 reveal" style="--i:2">
+    <div class="panel good">
+      <h3>Quando está indicada</h3>
+      <ul class="klist pos sm">
+        <li>Paciente que não coopera por idade, condição cognitiva ou comportamental, após falha das técnicas básicas</li>
+        <li>Necessidade de proteger o paciente, a equipe ou o profissional contra movimento imprevisível</li>
+        <li>Urgência que não pode ser adiada</li>
+        <li>Movimento involuntário incontrolável (distonia, espasticidade grave)</li>
+      </ul>
+    </div>
+    <div class="panel warn">
+      <h3>Quando está contraindicada</h3>
+      <ul class="klist neg sm">
+        <li>Paciente colaborador</li>
+        <li>Condição médica que impeça imobilização segura (respiratória, cardíaca, osteogênese imperfeita)</li>
+        <li>Procedimento eletivo extenso que possa ser feito sob sedação ou anestesia geral</li>
+        <li>Uso como <strong>punição, conveniência ou substituto do manejo comportamental</strong></li>
+        <li>Ausência de consentimento específico</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Tipos</h3>
+      <ul class="klist sm">
+        <li><strong>Ativa</strong> — realizada pelo profissional, auxiliar ou responsável</li>
+        <li><strong>Passiva</strong> — dispositivos: estabilizador corporal tipo manta, faixas, cintos, coxins</li>
+        <li><strong>Adjuntos bucais</strong> — abridores de boca e mordedores de silicone (não são contenção corporal, mas exigem consentimento e vigilância)</li>
+      </ul>
+      <p class="xs">Registrar sempre: indicação, tipo, duração, avaliação comportamental e qualquer intercorrência, como marcas na pele.</p>
+    </div>
+  </div>
+  <div class="cols c2 reveal" style="--i:3">
+    <div class="panel tint">
+      <h3>Aspectos éticos e legais</h3>
+      <ul class="klist sm">
+        <li>Princípio da <strong>mínima restrição</strong>: usar sempre a contenção menos restritiva, porém segura e eficaz, e somente quando intervenções menos restritivas não se mostraram efetivas (AAPD).</li>
+        <li>Autonomia e dignidade são direitos assegurados pela <strong>LBI nº 13.146/2015</strong>; contenção sem indicação configura violência institucional.</li>
+        <li>Exige <strong>consentimento livre e esclarecido específico</strong>, distinto do consentimento do tratamento.</li>
+        <li>Vigilância contínua de via aérea, perfusão e temperatura durante todo o período.</li>
+      </ul>
+    </div>
+    <div class="panel brass">
+      <h3>Como a tecnologia reduz a necessidade de contenção</h3>
+      <p class="sm">Cada recurso apresentado até aqui atua como degrau anterior na escada de restrição:</p>
+      <ul class="klist brass sm">
+        <li>Ambiente adaptado e fones reduzem o estímulo que dispara a reação defensiva</li>
+        <li>Pedagogia visual e <em>video modeling</em> reduzem o número de consultas necessárias</li>
+        <li>Escâner intraoral elimina a moldagem — um dos maiores gatilhos de recusa</li>
+        <li>Laser e anestesia computadorizada retiram ruído, vibração e dor da injeção</li>
+      </ul>
+      <p class="xs"><strong>Não substitui a contenção em todos os casos</strong> — mas desloca o limiar em que ela se torna necessária.</p>
+    </div>
+  </div>
+  <p class="cite reveal" style="--i:4">AAPD. <b>Use of Protective Stabilization for Pediatric Dental Patients</b>. Reference Manual 2025-26 (rev. 2024). · AAPD. <b>Behavior Guidance for the Pediatric Dental Patient</b>.</p>
+  <div class="foot"><span class="sec">6 · Contenção física</span><span class="num">20</span></div>
+</section>
+
+<!-- ══════════ 21. SEDAÇÃO ══════════ -->
+<section class="slide" data-sec="7" data-title="7. Sedação e anestesia"
+  data-notes="Item 7 exige abordar as cinco modalidades e explicar indicações, contraindicações, vantagens, riscos, monitorização e complicações. A tabela cobre tudo. O recorte tecnológico está na monitorização — capnografia é o ponto alto.">
+  <div class="eyebrow reveal" style="--i:0">Item 7 · Sedação e anestesia</div>
+  <h2 class="reveal" style="--i:1">Da sedação mínima à <em>anestesia geral</em></h2>
+  <div class="panel line reveal" style="--i:2;flex:1;min-height:0;overflow:auto">
+    <table>
+      <thead><tr><th>Modalidade</th><th>Indicação</th><th>Contraindicações</th><th>Vantagens</th><th>Riscos e complicações</th><th>Monitorização</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sedação mínima</strong> (ansiólise)<br><span class="xs">benzodiazepínico oral</span></td><td>Ansiedade leve a moderada, paciente colaborativo parcial</td><td>Alergia; miastenia; apneia do sono grave; interação com depressores do SNC</td><td>Via oral, sem punção; baixo custo; via aérea e reflexos preservados</td><td>Sedação mais profunda que a pretendida; reação paradoxal (agitação), frequente em crianças e em deficiência intelectual</td><td>Oximetria de pulso contínua; observação clínica; acompanhante para alta</td></tr>
+        <tr><td><strong>Sedação consciente</strong> (moderada)</td><td>Ansiedade importante; procedimentos mais longos; falha da ansiólise</td><td>ASA III instável/IV; via aérea difícil; jejum inadequado; gestação (1º trimestre)</td><td>Paciente responde a comando verbal; recuperação mais rápida que a anestesia geral</td><td>Depressão respiratória, obstrução de via aérea, hipotensão, broncoaspiração</td><td><strong>Capnografia</strong> (CO₂ expirado), oximetria, PA, FC, ECG; profissional exclusivo dedicado à monitorização</td></tr>
+        <tr><td><strong>Óxido nitroso</strong> + O₂<br><span class="xs">sedação inalatória</span></td><td>Ansiedade leve a moderada; reflexo de vômito; primeira escolha em muitos PNE</td><td>Obstrução nasal; DPOC grave; pneumotórax; otite média; cirurgia oftálmica recente; 1º trimestre de gestação; <strong>deficiência de B12</strong>; recusa da máscara</td><td>Início e recuperação rápidos; titulável; efeito analgésico; <strong>paciente dirige-se para casa sem acompanhante especializado</strong></td><td>Náusea e vômito; difusão hipóxica se O₂ a 100% não for administrado ao final; exposição ocupacional crônica da equipe</td><td>Oximetria; fluxômetro com trava de O₂ mínimo (30%); sistema de exaustão ativa da sala</td></tr>
+        <tr><td><strong>Sedação medicamentosa</strong><br><span class="xs">EV / IM, por anestesiologista</span></td><td>Falha das anteriores; procedimento extenso; movimento involuntário incontrolável</td><td>Ausência de equipe e estrutura habilitadas; instabilidade hemodinâmica; jejum inadequado</td><td>Titulação precisa; profundidade ajustável; possibilidade de reversão farmacológica</td><td>Perda de via aérea, apneia, laringoespasmo, instabilidade hemodinâmica</td><td>Monitorização completa, carro de emergência, capnografia, acesso venoso, antagonistas disponíveis (flumazenil, naloxona)</td></tr>
+        <tr><td><strong>Anestesia geral</strong></td><td>Tratamento extenso em sessão única; falha documentada de todas as técnicas; comprometimento sistêmico grave; impossibilidade de manejo seguro</td><td>Instabilidade clínica não compensada; ausência de retaguarda hospitalar; recusa do responsável</td><td>Tratamento completo em uma sessão; imobilidade total; controle pleno de via aérea e dor</td><td>Riscos anestésicos próprios; broncoaspiração; internação; custo; necessidade de reabordagem futura se a prevenção não for instituída</td><td>Ambiente hospitalar, equipe multidisciplinar, monitorização anestésica completa, sala de recuperação pós-anestésica</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cite reveal" style="--i:3">Monitorização de CO₂ expirado exigida para sedação moderada salvo impedimento pelo paciente, procedimento ou equipamento — diretriz da ADA; metanálise rápida (JADA, 2017) associou a capnografia à melhor detecção de eventos respiratórios adversos (OR 10,48; IC95% 3,64–30,23).</p>
+  <div class="foot"><span class="sec">7 · Sedação e anestesia</span><span class="num">21</span></div>
+</section>
+
+<!-- ══════════ 22. ANESTÉSICOS LOCAIS ══════════ -->
+<section class="slide" data-sec="8" data-title="8. Anestésicos locais"
+  data-notes="Item 8: são cinco perguntas obrigatórias e todas estão respondidas na coluna da esquerda. À direita, o recorte tecnológico. Enfatize: não existe contraindicação genérica ao vasoconstritor por 'ser paciente especial' — a contraindicação é da condição sistêmica, não da deficiência.">
+  <div class="eyebrow reveal" style="--i:0">Item 8 · Anestésicos locais</div>
+  <h2 class="reveal" style="--i:1">Cinco perguntas — e a <em>tecnologia da injeção</em></h2>
+  <div class="cols c-6-4 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="panel line" style="overflow:auto">
+      <table>
+        <tbody>
+          <tr><td style="width:34%"><strong>Existe contraindicação?</strong></td><td>Não há contraindicação pela deficiência em si. A contraindicação é <strong>da condição sistêmica associada</strong>: alergia comprovada a amida, metahemoglobinemia (prilocaína/benzocaína), hepatopatia grave (amidas), insuficiência renal e cardiopatia descompensada.</td></tr>
+          <tr><td><strong>Qual é o preferencial?</strong></td><td><strong>Lidocaína 2% com epinefrina 1:100.000</strong> — mais estudada, boa margem de segurança. <strong>Articaína 4%</strong> com epinefrina é alternativa para infiltração em mandíbula (maior difusão óssea). Evitar prilocaína com felipressina em gestantes e prilocaína em risco de metahemoglobinemia.</td></tr>
+          <tr><td><strong>Evitar vasoconstritor?</strong></td><td><strong>Não como regra.</strong> O vasoconstritor prolonga a anestesia, reduz sangramento e diminui a toxicidade sistêmica — vantagens maiores em paciente que não tolera reintervenção. Restringir a dose (máximo 0,04 mg de epinefrina, ≈ 2 tubetes a 1:100.000) em cardiopatia grave, arritmia não controlada, hipertireoidismo descompensado e uso de antidepressivo tricíclico ou betabloqueador não seletivo. <strong>Evitar</strong> felipressina em gestantes.</td></tr>
+          <tr><td><strong>Há limite máximo de dose?</strong></td><td>Sim, e <strong>deve ser calculado pelo peso</strong>. Lidocaína com vasoconstritor: 7 mg/kg (máx. 500 mg). Articaína: 7 mg/kg (máx. 500 mg; em crianças, cautela). Mepivacaína: 6,6 mg/kg (máx. 400 mg). Muitos PNE adultos têm <strong>baixo peso corporal</strong> — calcular sempre, nunca estimar.</td></tr>
+          <tr><td><strong>Quais cuidados adotar?</strong></td><td>Aspiração antes da injeção; injeção lenta (≥ 60 s por tubete); anestésico tópico prévio; proteger o lábio anestesiado contra <strong>automordedura</strong> — complicação frequente em deficiência intelectual —, orientando o cuidador e considerando anestésico de curta duração no pós-operatório; atenção à interação com anticonvulsivantes e antipsicóticos.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <h3>Tecnologia aplicada à injeção</h3>
+        <ul class="klist sm">
+          <li><strong>Anestesia computadorizada de fluxo controlado</strong> — bomba eletrônica mantém velocidade e pressão constantes; a seringa tem formato de caneta, sem o estímulo visual da agulha e do tubete.</li>
+          <li><strong>Dispositivos vibratórios pré-injeção</strong> — aplicam vibração junto ao sítio, explorando a teoria das comportas para reduzir a percepção da picada.</li>
+          <li><strong>Anestésico tópico</strong> + tempo de espera adequado: a tecnologia mais barata e mais subutilizada.</li>
+          <li><strong>Aquecimento e tamponamento da solução</strong> — reduz o ardor da injeção.</li>
+        </ul>
+        <p class="xs">Ganho principal em PNE: <strong>remove o estímulo visual e a sensação de pressão súbita</strong>, dois gatilhos clássicos de recusa. Evidência favorável em odontopediatria, com heterogeneidade entre estudos.</p>
+      </div>
+      <div class="panel brass">
+        <p class="sm"><strong>E o laser?</strong> A remoção de cárie com laser de Er:YAG reduz a necessidade de anestesia local — abordado no item 11.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">8 · Anestésicos locais</span><span class="num">22</span></div>
+</section>
+
+<!-- ══════════ 23. MEDICAMENTOS ══════════ -->
+<section class="slide" data-sec="9" data-title="9. Medicamentos"
+  data-notes="Item 9 pede relacionar medicamentos, mecanismos, efeitos adversos, manifestações bucais e interações, além de tabela com antibióticos, analgésicos, anti-inflamatórios, anestésicos locais e sedativos. As duas tabelas cobrem as duas exigências.">
+  <div class="eyebrow reveal" style="--i:0">Item 9 · Medicamentos</div>
+  <h2 class="reveal" style="--i:1">Repercussão bucal e <em>interações</em></h2>
+  <div class="cols c2 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="panel line" style="overflow:auto">
+      <h3 style="margin-bottom:.5rem">Medicamentos de uso crônico no PNE</h3>
+      <table class="dense">
+        <thead><tr><th>Fármaco</th><th>Mecanismo</th><th>Efeitos adversos e manifestações bucais</th><th>Interação odontológica</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Fenitoína</strong></td><td>Bloqueio de canais de sódio</td><td><strong>Hiperplasia gengival</strong> (até 50%), ataxia, anemia megaloblástica</td><td>Metabolismo hepático; higiene rigorosa e gengivectomia quando indicada</td></tr>
+          <tr><td><strong>Carbamazepina / Valproato</strong></td><td>Estabilização de membrana / GABA</td><td>Xerostomia, discrasias, <strong>trombocitopenia</strong> e sangramento gengival (valproato)</td><td>Solicitar hemograma antes de cirurgia; cautela com AINEs</td></tr>
+          <tr><td><strong>Ciclosporina</strong></td><td>Imunossupressão (calcineurina)</td><td><strong>Hiperplasia gengival</strong>, infecção oportunista, candidíase</td><td>Evitar AINEs (nefrotoxicidade); profilaxia conforme avaliação médica</td></tr>
+          <tr><td><strong>Bloqueadores de canal de cálcio</strong> (nifedipino, anlodipino)</td><td>Vasodilatação</td><td><strong>Hiperplasia gengival</strong>, hipotensão postural</td><td>Levantar a cadeira lentamente ao final</td></tr>
+          <tr><td><strong>Antipsicóticos</strong> (haloperidol, risperidona)</td><td>Bloqueio dopaminérgico</td><td><strong>Xerostomia</strong>, discinesia tardia, bruxismo, sialorreia (clozapina)</td><td>Potencializam depressores do SNC; cautela com sedativos</td></tr>
+          <tr><td><strong>Anticolinérgicos</strong> (escopolamina p/ sialorreia)</td><td>Bloqueio muscarínico</td><td><strong>Xerostomia intensa</strong>, cárie rampante, candidíase</td><td>Saliva artificial, flúor de alta concentração, controle de dieta</td></tr>
+          <tr><td><strong>Bisfosfonatos</strong></td><td>Inibição de osteoclastos</td><td><strong>Osteonecrose dos maxilares</strong> associada a medicamento</td><td>Avaliação antes de exodontia; priorizar tratamento conservador</td></tr>
+          <tr><td><strong>Anticoagulantes / antiagregantes</strong></td><td>Inibição da hemostasia</td><td>Sangramento gengival, petéquias</td><td>Solicitar INR; hemostasia local; <strong>não suspender sem aval médico</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack" style="min-height:0">
+      <div class="panel line" style="overflow:auto;flex:1;min-height:0">
+        <h3 style="margin-bottom:.5rem">Prescrição odontológica — o que observar</h3>
+        <table class="dense">
+          <thead><tr><th>Classe</th><th>Exemplo</th><th>Cuidado no PNE</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Antibióticos</strong></td><td>Amoxicilina; clindamicina em alergia à penicilina</td><td>Ajustar dose por peso; profilaxia apenas nas indicações formais (cardiopatia de alto risco); rifampicina e alguns anticonvulsivantes induzem metabolismo</td></tr>
+            <tr><td><strong>Analgésicos</strong></td><td>Paracetamol; dipirona</td><td>Paracetamol é primeira escolha; atenção à dose máxima e à hepatopatia; considerar <strong>suspensão sem sacarose</strong> em uso crônico</td></tr>
+            <tr><td><strong>Anti-inflamatórios</strong></td><td>Ibuprofeno</td><td>Evitar em nefropatia, uso de ciclosporina, anticoagulação e trombocitopenia por valproato; risco gástrico em refluxo</td></tr>
+            <tr><td><strong>Anestésicos locais</strong></td><td>Lidocaína 2% com epinefrina 1:100.000</td><td>Dose máxima calculada pelo peso; proteção contra automordedura</td></tr>
+            <tr><td><strong>Sedativos</strong></td><td>Midazolam oral; óxido nitroso</td><td>Reação paradoxal; somatório com antipsicóticos e anticonvulsivantes; monitorização obrigatória</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel tint">
+        <h3>Recurso tecnológico desta etapa</h3>
+        <p class="sm">Prontuário eletrônico com <strong>checagem automática de interações</strong> e bases de consulta em ponto de cuidado (Micromedex, UpToDate, bulário eletrônico da Anvisa). Em paciente polimedicado com múltiplos prescritores, a verificação digital deixa de ser conveniência e passa a ser <strong>item de segurança</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">9 · Medicamentos</span><span class="num">23</span></div>
+</section>
+
+<!-- ══════════ 24. PROTOCOLOS ══════════ -->
+<section class="slide" data-sec="10" data-title="10. Protocolos clínicos"
+  data-notes="Item 10 exige pesquisar as seis fontes nominalmente citadas e apresentar recomendações, fluxogramas e níveis de evidência. Este slide entrega as recomendações e os níveis; o próximo entrega o fluxograma.">
+  <div class="eyebrow reveal" style="--i:0">Item 10 · Protocolos clínicos</div>
+  <h2 class="reveal" style="--i:1">O que cada instituição <em>recomenda</em></h2>
+  <div class="panel line reveal" style="--i:2;flex:1;min-height:0;overflow:auto">
+    <table>
+      <thead><tr><th style="width:22%">Fonte</th><th>Recomendação aplicável a tecnologia e acessibilidade</th><th style="width:15%">Nível</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OMS</strong><br><span class="xs">Global report on health equity for persons with disabilities, 2022</span></td><td>40 ações para que os sistemas de saúde reduzam iniquidades; acessibilidade de infraestrutura, informação e comunicação como componente do direito à saúde</td><td><span class="tag leg">Diretriz global</span></td></tr>
+        <tr><td><strong>Ministério da Saúde</strong><br><span class="xs">Guia de Atenção à Saúde Bucal da Pessoa com Deficiência, 2019</span></td><td>Qualificação do atendimento na Rede de Atenção à Saúde do SUS; adequação de meio bucal, recursos facilitadores de higiene e orientação ao cuidador, na lógica da integralidade e da humanização</td><td><span class="tag leg">Diretriz nacional</span></td></tr>
+        <tr><td><strong>CFO</strong></td><td>Resolução nº 226/2020 — regulamenta a teleodontologia: permite teleorientação, telemonitoramento e teleinterconsulta; veda consulta, diagnóstico, prescrição e plano de tratamento a distância</td><td><span class="tag leg">Norma legal</span></td></tr>
+        <tr><td><strong>ADA</strong></td><td>Diretriz de prática clínica para manejo não restaurador da cárie, incluindo <strong>diamino fluoreto de prata a 38%</strong>; exigência de monitorização de CO₂ expirado em sedação moderada</td><td><span class="tag ev-a">Diretriz baseada em evidência</span></td></tr>
+        <tr><td><strong>AAPD</strong></td><td>Diretrizes de <em>Behavior Guidance</em> e de <em>Protective Stabilization</em> (rev. 2024): princípio da mínima restrição e registro obrigatório. Diretriz específica sobre uso de DFP em crianças e adolescentes, <strong>incluindo os com necessidades especiais de saúde</strong></td><td><span class="tag ev-a">Diretriz baseada em evidência</span></td></tr>
+        <tr><td><strong>iADH</strong></td><td>Currículos de Odontologia para Pacientes Especiais em nível de graduação e pós-graduação, construídos por consenso internacional (Delphi; 44 especialistas de 17 países no documento de pós-graduação), com acesso aberto</td><td><span class="tag ev-b">Consenso de especialistas</span></td></tr>
+        <tr><td><strong>SOBRAPNE</strong></td><td>Sociedade Brasileira de Odontologia para Pacientes com Necessidades Especiais — produção técnica nacional, capacitação e apoio à especialidade reconhecida pelo CFO</td><td><span class="tag ev-c">Referência da especialidade</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel brass reveal" style="--i:3">
+    <p class="sm"><strong>Leitura crítica exigida:</strong> nenhuma dessas instituições publica, até o momento, diretriz específica de "tecnologia assistiva em odontologia". O que existe são <strong>diretrizes de manejo</strong> nas quais os recursos tecnológicos se inserem como ferramentas. Por isso, a indicação de cada recurso deve ser justificada pelo <em>desfecho</em> que ele melhora, e não por recomendação institucional direta.</p>
+  </div>
+  <div class="foot"><span class="sec">10 · Protocolos clínicos</span><span class="num">24</span></div>
+</section>
+
+<!-- ══════════ 25. FLUXOGRAMA ══════════ -->
+<section class="slide" data-sec="10" data-title="10. Fluxograma de decisão"
+  data-notes="Slide interativo, o mais útil para a prática. Clique em cada nó e leia a conduta. Cumpre a exigência de 'fluxogramas' do item 10.">
+  <div class="eyebrow reveal" style="--i:0">Item 10 · Fluxograma</div>
+  <h2 class="reveal" style="--i:1">Escolha do recurso pela <em>barreira identificada</em></h2>
+  <p class="sm reveal" style="--i:2">Clique no nó correspondente ao obstáculo do seu paciente.</p>
+  <div class="flow reveal" style="--i:3" id="flow">
+    <button class="fnode" data-f="0" aria-pressed="true"><span class="fq">O paciente entra na clínica e chega à cadeira?</span><span class="fs">Barreira arquitetônica</span></button>
+    <button class="fnode" data-f="1" aria-pressed="false"><span class="fq">O paciente compreende e comunica o que sente?</span><span class="fs">Barreira comunicacional</span></button>
+    <button class="fnode" data-f="2" aria-pressed="false"><span class="fq">O paciente tolera o estímulo sensorial da sala?</span><span class="fs">Hiper-responsividade sensorial</span></button>
+    <button class="fnode" data-f="3" aria-pressed="false"><span class="fq">O paciente mantém a posição com segurança?</span><span class="fs">Comprometimento motor</span></button>
+    <button class="fnode" data-f="4" aria-pressed="false"><span class="fq">O paciente tolera o procedimento em si?</span><span class="fs">Dor, ruído e vibração</span></button>
+    <button class="fnode" data-f="5" aria-pressed="false"><span class="fq">Nada disso foi suficiente?</span><span class="fs">Escalada do manejo</span></button>
+  </div>
+  <div class="barrier-out reveal" style="--i:4" id="flow-out"></div>
+  <div class="foot"><span class="sec">10 · Protocolos clínicos</span><span class="num">25</span></div>
+</section>
+
+<!-- ══════════ 26. LASER ══════════ -->
+<section class="slide" data-sec="11" data-title="11. Uso do laser"
+  data-notes="Item 11 na íntegra: baixa e alta potência, quando usar, benefícios, evidências e limitações. Conecte ao tema: o laser de Er:YAG remove ruído e vibração — os dois estímulos mais aversivos do consultório para o paciente com hiper-responsividade sensorial.">
+  <div class="eyebrow reveal" style="--i:0">Item 11 · Uso do laser</div>
+  <h2 class="reveal" style="--i:1">Baixa e alta potência: <em>o que a evidência sustenta</em></h2>
+  <div class="cols c2 reveal" style="--i:2">
+    <div class="panel">
+      <span class="tag ev-b">Laser de baixa potência (fotobiomodulação)</span>
+      <h3>Não corta — modula tecido</h3>
+      <p class="sm">Efeito bioestimulante sobre a mitocôndria, com ação analgésica, anti-inflamatória e reparadora, sem ablação.</p>
+      <ul class="klist sm">
+        <li><strong>Quando usar:</strong> prevenção e tratamento de mucosite oral em paciente oncológico; reparo de úlceras e lesões traumáticas de mucosa; analgesia pós-operatória; dor de disfunção temporomandibular; parestesia; adjuvante no controle da dor de erupção.</li>
+        <li><strong>Benefício clínico no PNE:</strong> procedimento indolor, silencioso, sem vibração e de poucos minutos — <strong>alta aceitação</strong> em paciente pouco colaborativo.</li>
+      </ul>
+    </div>
+    <div class="panel tint">
+      <span class="tag ev-b">Laser de alta potência (Er:YAG, 2.940 nm)</span>
+      <h3>Corta tecido duro</h3>
+      <p class="sm">Ablação por vaporização da água do tecido dental, dispensando a alta rotação em parte dos preparos.</p>
+      <ul class="klist sm">
+        <li><strong>Metanálise em crianças</strong> concluiu que o Er:YAG é seguro e eficaz para remoção de cárie e preparo cavitário, com menor dor relatada que o método convencional.</li>
+        <li>Ensaios randomizados mostram <strong>redução da percepção de dor e da necessidade de anestesia local</strong>, com melhor cooperação; há relatos de tratamento realizado sem anestesia em crianças de 3 a 8 anos.</li>
+        <li>Descrito como o comprimento de onda mais adequado à odontopediatria por atuação superficial, <strong>ausência de vibração</strong> e menor necessidade de anestésico.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cols c-6-4 reveal" style="--i:3;flex:1;min-height:0">
+    <div class="panel warn">
+      <h3>Limitações — a parte que costuma faltar</h3>
+      <div class="cols c2" style="gap:1.2rem">
+        <ul class="klist neg sm">
+          <li><strong>Tempo operatório maior</strong> que o da alta rotação em cavidades extensas — relevante em paciente com janela curta de tolerância</li>
+          <li>Alto custo de aquisição e manutenção</li>
+          <li>Exige treinamento formal e biossegurança específica (óculos de proteção para paciente, equipe e acompanhante)</li>
+        </ul>
+        <ul class="klist neg sm">
+          <li>Não substitui a alta rotação em remoção de restaurações metálicas e em preparos protéticos</li>
+          <li>Evidência em fotobiomodulação é <strong>heterogênea nos parâmetros</strong> (dose, comprimento de onda, número de sessões)</li>
+          <li>A maioria dos ensaios foi conduzida em crianças sem deficiência — <strong>extrapolação para PNE exige cautela</strong></li>
+        </ul>
+      </div>
+      <p class="cite">Er:YAG laser application in caries removal and cavity preparation in children: <b>a meta-analysis</b>. Eur J Paediatr Dent, 2018. · Ensaio randomizado boca dividida sobre dor e ansiedade na remoção de cárie com Er:YAG, 2023.</p>
+    </div>
+    <div class="fig">
+      <div class="box"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2v5m0 10v5M2 12h5m10 0h5M5 5l3 3m8 8l3 3m0-14l-3 3m-8 8l-3 3"/></svg>
+      <div class="hint"><b>Espaço para imagem</b>Fotografia do laser em uso clínico, com óculos de proteção no paciente, ou imagem comparativa de preparo cavitário com Er:YAG e com alta rotação.</div></div>
+      <div class="src">Fonte: <span contenteditable="true" spellcheck="false"></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">11 · Uso do laser</span><span class="num">26</span></div>
+</section>
+
+<!-- ══════════ 27. AMBIENTE HOSPITALAR ══════════ -->
+<section class="slide" data-sec="12" data-title="12. Ambiente hospitalar"
+  data-notes="Item 12. Ponto ético central: indicar anestesia geral não é fracasso, é indicação clínica. O erro é indicá-la por ausência de estrutura tecnológica que poderia ter resolvido o caso em ambulatório — e o erro oposto é insistir no ambulatório quando o hospital é o local seguro.">
+  <div class="eyebrow reveal" style="--i:0">Item 12 · Atendimento em ambiente hospitalar</div>
+  <h2 class="reveal" style="--i:1">Quando a tecnologia <em>não basta</em></h2>
+  <div class="cols c4 reveal" style="--i:2">
+    <div class="panel"><h3>Quando indicar</h3><ul class="klist sm"><li>Falha documentada de todas as técnicas de manejo, inclusive das adaptações tecnológicas</li><li>Necessidade de tratamento extenso em sessão única</li><li>Comprometimento sistêmico grave (ASA III instável / IV)</li><li>Movimento involuntário incontrolável com risco de trauma</li><li>Urgência em paciente sem condição de manejo ambulatorial</li></ul></div>
+    <div class="panel"><h3>Centro cirúrgico</h3><ul class="klist sm"><li>Estrutura para procedimentos múltiplos e cirúrgicos na mesma sessão</li><li>Radiografia e materiais disponíveis no intraoperatório</li><li>Biossegurança e esterilização hospitalares</li><li>Planejamento prévio detalhado: o plano de tratamento é fechado <strong>antes</strong> da indução</li></ul></div>
+    <div class="panel"><h3>Anestesia geral e internação</h3><ul class="klist sm"><li>Avaliação pré-anestésica e exames</li><li>Jejum e via aérea (intubação nasotraqueal permite acesso bucal amplo)</li><li>Recuperação pós-anestésica monitorada</li><li>Internação em cardiopatia, distúrbio respiratório, epilepsia de difícil controle ou cirurgia extensa</li></ul></div>
+    <div class="panel tint"><h3>Equipe multidisciplinar</h3><ul class="klist sm"><li>Cirurgião-dentista e anestesiologista</li><li>Enfermagem e equipe de centro cirúrgico</li><li>Médico assistente do paciente</li><li>Fonoaudiologia (disfagia) e fisioterapia</li><li>Psicologia e serviço social</li><li><strong>O cuidador integra a equipe</strong> — é quem mantém o resultado</li></ul></div>
+  </div>
+  <div class="panel warn reveal" style="--i:3">
+    <h3>O paradoxo que precisa ser dito</h3>
+    <p class="sm">A anestesia geral resolve o tratamento, <strong>não a causa</strong>. Sem programa de prevenção, cuidador treinado e retorno viável, o paciente reincide e retorna à fila cirúrgica em poucos anos. <strong>A tecnologia mais custo-efetiva do sistema é aquela que evita a segunda anestesia geral</strong> — e ela é, quase sempre, de baixo custo: escova elétrica, orientação ao cuidador, DFP e teleorientação de manutenção.</p>
+  </div>
+  <div class="foot"><span class="sec">12 · Ambiente hospitalar</span><span class="num">27</span></div>
+</section>
+
+<!-- ══════════ 28. CONSENTIMENTOS ══════════ -->
+<section class="slide" data-sec="13" data-title="13. Consentimentos necessários"
+  data-notes="Item 13: apresentar exemplos de cada consentimento. Destaque a diferença jurídica entre consentimento (responsável legal) e assentimento (o paciente, sempre que possível) — e que a LBI presume a capacidade civil da pessoa com deficiência.">
+  <div class="eyebrow reveal" style="--i:0">Item 13 · Consentimentos necessários</div>
+  <h2 class="reveal" style="--i:1">Documentos — e como torná-los <em>compreensíveis</em></h2>
+  <div class="cols c-6-4 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="panel line" style="overflow:auto">
+      <table>
+        <thead><tr><th>Documento</th><th>Deve conter obrigatoriamente</th></tr></thead>
+        <tbody>
+          <tr><td><strong>TCLE do tratamento</strong></td><td>Diagnóstico, plano proposto, alternativas, riscos, benefícios, prognóstico sem tratamento, custos, direito de revogar a qualquer tempo; identificação e assinatura do paciente e/ou responsável</td></tr>
+          <tr><td><strong>Consentimento para contenção física</strong></td><td>Indicação clínica específica, tipo de dispositivo, duração prevista, alternativas consideradas e por que foram descartadas, riscos (marcas, desconforto, agravamento do medo), direito de recusa</td></tr>
+          <tr><td><strong>Consentimento para sedação</strong></td><td>Modalidade, fármaco, via, riscos respiratórios e cardiovasculares, instruções de jejum, necessidade de acompanhante, orientações pós-operatórias, plano de emergência</td></tr>
+          <tr><td><strong>Consentimento para anestesia geral</strong></td><td>Justificativa da indicação hospitalar, riscos anestésicos, procedimentos previstos e possíveis exodontias adicionais decididas no intraoperatório, internação, tempo de recuperação</td></tr>
+          <tr><td><strong>Autorização do responsável legal</strong></td><td>Documento de curatela ou tomada de decisão apoiada quando houver; identificação civil; grau de parentesco ou vínculo</td></tr>
+          <tr><td><strong>Assentimento do paciente</strong></td><td>Concordância do próprio paciente, <strong>sempre que possível</strong>, em linguagem acessível ao seu nível de compreensão — registrada ainda que não haja capacidade civil plena</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <h3>Tecnologia aplicada ao consentimento</h3>
+        <ul class="klist sm">
+          <li><strong>TCLE pictográfico / linguagem simples</strong> — versão com imagens e frases curtas, análoga ao formato <em>easy-read</em>, entregue junto ao documento formal.</li>
+          <li><strong>Vídeo explicativo</strong> do procedimento, assistido com o responsável antes da assinatura.</li>
+          <li><strong>Libras e VLibras</strong> para paciente surdo; braille ou áudio para paciente cego.</li>
+          <li><strong>Registro em prontuário eletrônico</strong> com data, hora e versão do documento.</li>
+        </ul>
+      </div>
+      <div class="panel brass">
+        <p class="sm"><strong>Fundamento legal:</strong> a Lei Brasileira de Inclusão presume a capacidade civil da pessoa com deficiência e assegura o direito à informação em formato acessível. Consentimento obtido sem formato compreensível é <strong>formalmente assinado e materialmente inválido</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">13 · Consentimentos</span><span class="num">28</span></div>
+</section>
+
+<!-- ══════════ 29. EMERGÊNCIAS ══════════ -->
+<section class="slide" data-sec="14" data-title="14. Emergências médicas"
+  data-notes="Item 14: intercorrências, prevenção, condutas imediatas e suporte básico de vida. Enfatize a prevenção — a maioria das emergências no PNE é previsível a partir da anamnese. E o treinamento por simulação, que é tecnologia educacional.">
+  <div class="eyebrow reveal" style="--i:0">Item 14 · Emergências médicas relacionadas</div>
+  <h2 class="reveal" style="--i:1">Prever, monitorar, <em>responder</em></h2>
+  <div class="panel line reveal" style="--i:2;flex:1;min-height:0;overflow:auto">
+    <table>
+      <thead><tr><th style="width:20%">Intercorrência</th><th style="width:27%">Prevenção</th><th>Conduta imediata</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Crise convulsiva</strong></td><td>Anamnese do tipo, frequência e último episódio; confirmar adesão ao anticonvulsivante no dia; evitar hipoglicemia, privação de sono e luz estroboscópica (inclusive RV)</td><td>Proteger a cabeça, remover instrumentos da boca, lateralizar, <strong>não conter e não introduzir objetos</strong>, aspirar secreção, O₂, cronometrar; acionar emergência se > 5 min ou crises subentrantes (estado de mal)</td></tr>
+        <tr><td><strong>Broncoaspiração e engasgo</strong></td><td>Isolamento absoluto, sugador de alto volume, <strong>fio dental amarrado</strong> em instrumentos pequenos, escâner intraoral em vez de moldagem, posição semi-sentada na disfagia</td><td>Interromper, aspirar, incentivar a tosse; obstrução completa: manobra de desobstrução; O₂ e encaminhamento para avaliação radiográfica</td></tr>
+        <tr><td><strong>Depressão respiratória</strong> (sedação)</td><td>Titulação cuidadosa, jejum adequado, profissional exclusivo para monitorização, <strong>capnografia</strong></td><td>Estimular, abrir via aérea, O₂ 100%, ventilação com bolsa-válvula-máscara; antagonista se indicado (flumazenil, naloxona); acionar SAMU</td></tr>
+        <tr><td><strong>Hipoglicemia</strong></td><td>Confirmar alimentação e insulina; evitar consultas longas em jejum; glicemia capilar antes do procedimento</td><td>Consciente: carboidrato de absorção rápida por via oral. Inconsciente: nada por via oral, acesso venoso, glicose EV, acionar emergência</td></tr>
+        <tr><td><strong>Crise hipertensiva e síncope</strong></td><td>Aferir PA na chegada; controle de ansiedade; elevar a cadeira lentamente (hipotensão postural por bloqueador de cálcio)</td><td>Síncope: decúbito com elevação de membros inferiores, O₂. Crise hipertensiva: suspender, monitorar, encaminhar</td></tr>
+        <tr><td><strong>Reação alérgica / anafilaxia</strong></td><td>Anamnese de alergia (látex é frequente em mielomeningocele); ambiente livre de látex quando indicado</td><td><strong>Adrenalina IM 0,3–0,5 mg</strong> na face anterolateral da coxa, O₂, decúbito, acionar SAMU; anti-histamínico e corticoide são adjuvantes</td></tr>
+        <tr><td><strong>Parada cardiorrespiratória</strong></td><td>Estratificação de risco ASA, monitorização, carro de emergência conferido e dentro da validade</td><td><strong>SBV:</strong> checar responsividade e respiração, acionar 192, compressões 100–120/min com 5–6 cm de profundidade, <strong>DEA assim que disponível</strong>, minimizar interrupções</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cols c2 reveal" style="--i:3">
+    <div class="panel tint"><h3>Tecnologia de suporte</h3><p class="sm">Oxímetro de pulso · capnógrafo · monitor multiparâmetro · <strong>desfibrilador externo automático (DEA)</strong> · aspirador de alta potência · carro de emergência com checklist digital de validade.</p></div>
+    <div class="panel brass"><h3>Tecnologia educacional</h3><p class="sm"><strong>Treinamento por simulação</strong> com manequim de alta fidelidade e cenários gravados: a equipe ensaia a emergência antes de vivê-la. Combinado a <em>checklists</em> impressos afixados na sala, reduz o tempo de resposta — a variável que mais pesa no desfecho.</p></div>
+  </div>
+  <div class="foot"><span class="sec">14 · Emergências médicas</span><span class="num">29</span></div>
+</section>
+
+<!-- ══════════ 30. PREVENÇÃO ══════════ -->
+<section class="slide" data-sec="15" data-title="15. Prevenção e cuidado domiciliar"
+  data-notes="Item 15 da estrutura. Este é o slide mais importante em termos de impacto real: 22 horas do dia o paciente está com o cuidador, não com você. Cite a metanálise da Cochrane e o ensaio por conglomerados em deficiência intelectual.">
+  <div class="eyebrow reveal" style="--i:0">Item 15 · Prevenção e manutenção</div>
+  <h2 class="reveal" style="--i:1">A tecnologia que <em>vai para casa</em></h2>
+  <div class="cols c3 reveal" style="--i:2">
+    <div class="panel good">
+      <span class="tag ev-a">Evidência de ECR e metanálise</span>
+      <h3>Escova elétrica</h3>
+      <p class="sm">Revisão sistemática Cochrane em população geral: escovas oscilo-rotatórias reduzem placa em <strong>7%</strong> e gengivite em <strong>17%</strong> em relação à escova manual — benefício modesto, porém consistente.</p>
+      <ul class="klist pos sm">
+        <li>Ensaio clínico randomizado por conglomerados comparou escova sônica e manual <strong>em pacientes com deficiência intelectual</strong>, avaliando índices de placa, gengival e efeitos adversos.</li>
+        <li>Ganho principal no PNE: <strong>compensa o déficit de coordenação motora fina</strong> e reduz o tempo e o esforço do cuidador.</li>
+        <li>Cabo engrossado, temporizador e cabeça pequena aumentam a aceitação.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <span class="tag ev-a">Diretriz ADA e AAPD</span>
+      <h3>Diamino fluoreto de prata (DFP) 38%</h3>
+      <p class="sm">Paralisação de lesões cariosas <strong>sem anestesia, sem instrumento rotatório e sem remoção de tecido</strong>, em aplicação de poucos segundos.</p>
+      <ul class="klist pos sm">
+        <li>Indicação formal em pacientes que não toleram o atendimento convencional ou não têm acesso regular, incluindo pessoas com deficiência física, intelectual ou do desenvolvimento.</li>
+        <li>Baixo custo, poucos instrumentos, sem dor na aplicação.</li>
+        <li><strong>Limitação:</strong> escurecimento permanente da lesão paralisada — informar e obter consentimento estético prévio.</li>
+      </ul>
+    </div>
+    <div class="panel tint">
+      <h3>Recursos de apoio ao cuidador</h3>
+      <ul class="klist sm">
+        <li><strong>Escovas adaptadas:</strong> cabo engrossado com material termomoldável, cinta de mão, escova de três cabeças, abridor de boca de silicone para acesso seguro</li>
+        <li><strong>Posicionamento domiciliar:</strong> higiene com o paciente sentado à frente e o cuidador atrás, estabilizando a cabeça</li>
+        <li><strong>Aplicativos</strong> de rotina visual e lembrete de escovação; vídeos curtos de técnica</li>
+        <li><strong>Teleorientação periódica</strong> (CFO 226/2020) entre consultas presenciais</li>
+        <li><strong>Câmera intraoral</strong> na consulta: o cuidador vê o resultado da própria técnica</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel brass reveal" style="--i:3">
+    <p class="sm"><strong>Intervalo de retorno:</strong> 3 a 4 meses para pacientes de alto risco, com aplicação tópica de flúor e reforço da técnica ao cuidador a cada visita. <em>O cuidador é o profissional de saúde bucal que atende este paciente todos os dias — treiná-lo é intervenção clínica, não orientação acessória.</em></p>
+  </div>
+  <div class="foot"><span class="sec">15 · Prevenção e manutenção</span><span class="num">30</span></div>
+</section>
+
+<!-- ══════════ 31. SÍNTESE DE EVIDÊNCIAS ══════════ -->
+<section class="slide" data-sec="10" data-title="Síntese: evidência por recurso"
+  data-notes="Slide interativo de síntese. Use os filtros para responder a perguntas da turma rapidamente. Se perguntarem 'o que eu compro primeiro com pouco dinheiro?', filtre por baixo custo e mostre: pedagogia visual, ambiente adaptado, escova elétrica e DFP.">
+  <div class="eyebrow reveal" style="--i:0">Síntese · Aplicabilidade clínica</div>
+  <h2 class="reveal" style="--i:1">O que tem <em>evidência</em>, o que tem <em>promessa</em></h2>
+  <div class="row reveal" style="--i:2">
+    <div class="chipbar" id="filters">
+      <button class="chip" data-f="all" aria-pressed="true">Todos</button>
+      <button class="chip" data-f="alta" aria-pressed="false">Evidência mais forte</button>
+      <button class="chip" data-f="media" aria-pressed="false">Evidência moderada</button>
+      <button class="chip" data-f="baixa" aria-pressed="false">Evidência preliminar</button>
+      <button class="chip" data-f="custo" aria-pressed="false">Baixo custo</button>
+    </div>
+  </div>
+  <div class="panel line reveal" style="--i:3;flex:1;min-height:0;overflow:auto">
+    <table id="evtable" class="dense">
+      <thead><tr><th style="width:23%">Recurso</th><th style="width:20%">Barreira que remove</th><th>Base de evidência</th><th style="width:13%">Nível</th><th style="width:9%">Custo</th></tr></thead>
+      <tbody>
+        <tr data-lv="alta" data-cost="baixo"><td><strong>Ambiente sensorialmente adaptado</strong></td><td>Hiper-responsividade sensorial</td><td>ECR cruzado com 220 crianças incluídas (JAMA Netw Open, 2023) e estudo-piloto cruzado prévio: redução de distresse fisiológico e comportamental</td><td><span class="tag ev-a">Forte</span></td><td>Baixo</td></tr>
+        <tr data-lv="alta" data-cost="baixo"><td><strong>Pedagogia visual e agenda visual</strong></td><td>Compreensão e previsibilidade</td><td>ECR com 113 randomizados (Children, 2022) e ECR por conglomerados com 200 crianças autistas para escovação</td><td><span class="tag ev-a">Forte</span></td><td>Baixo</td></tr>
+        <tr data-lv="alta" data-cost="baixo"><td><strong><em>Video modeling</em></strong></td><td>Compreensão e previsibilidade</td><td>ECR cego com 40 crianças autistas: menos consultas necessárias (1,5 vs 2,0; p ≤ 0,05); piloto randomizado com mídia eletrônica</td><td><span class="tag ev-a">Forte</span></td><td>Baixo</td></tr>
+        <tr data-lv="alta" data-cost="baixo"><td><strong>Escova elétrica</strong></td><td>Coordenação motora fina</td><td>Revisão Cochrane: −7% placa e −17% gengivite; ECR por conglomerados específico em deficiência intelectual</td><td><span class="tag ev-a">Forte</span></td><td>Baixo</td></tr>
+        <tr data-lv="alta" data-cost="baixo"><td><strong>Diamino fluoreto de prata 38%</strong></td><td>Intolerância ao procedimento</td><td>Diretrizes de prática clínica da ADA e da AAPD, esta última contemplando explicitamente pacientes com necessidades especiais</td><td><span class="tag ev-a">Forte</span></td><td>Baixo</td></tr>
+        <tr data-lv="media" data-cost="medio"><td><strong>Laser de Er:YAG</strong></td><td>Ruído, vibração e dor</td><td>Metanálise em crianças: seguro e eficaz, com menor dor; ECRs indicam menor necessidade de anestesia local</td><td><span class="tag ev-b">Moderada</span></td><td>Alto</td></tr>
+        <tr data-lv="media" data-cost="medio"><td><strong>Realidade virtual e distração audiovisual</strong></td><td>Ansiedade e dor percebida</td><td>ECRs em odontopediatria favoráveis; em PNE, estudos-piloto (VR-TOOTH) e ECR com Libras integrada em deficiência auditiva</td><td><span class="tag ev-b">Moderada</span></td><td>Médio</td></tr>
+        <tr data-lv="media" data-cost="medio"><td><strong>Teleodontologia</strong></td><td>Acesso e continuidade</td><td>Revisão de revisões (JMIR, 2025): efetiva e eficiente, alta satisfação — porém 83% das revisões com qualidade metodológica baixa</td><td><span class="tag ev-b">Moderada</span></td><td>Baixo</td></tr>
+        <tr data-lv="media" data-cost="medio"><td><strong>Anestesia computadorizada e dispositivos vibratórios</strong></td><td>Dor e medo da injeção</td><td>ECRs em odontopediatria com resultados favoráveis, porém heterogêneos; poucos estudos específicos em PNE</td><td><span class="tag ev-b">Moderada</span></td><td>Médio</td></tr>
+        <tr data-lv="alta" data-cost="medio"><td><strong>Capnografia em sedação</strong></td><td>Segurança do paciente</td><td>Metanálise rápida (JADA, 2017): melhor detecção de eventos respiratórios adversos (OR 10,48; IC95% 3,64–30,23); exigida em diretriz da ADA</td><td><span class="tag ev-a">Forte</span></td><td>Médio</td></tr>
+        <tr data-lv="baixa" data-cost="alto"><td><strong>Escâner intraoral e CAD/CAM</strong></td><td>Náusea, engasgo e tempo</td><td>Acurácia consolidada na população geral; pacientes com deficiência são <strong>sistematicamente excluídos</strong> dos estudos — extrapolação necessária</td><td><span class="tag ev-c">Preliminar em PNE</span></td><td>Alto</td></tr>
+        <tr data-lv="baixa" data-cost="alto"><td><strong>Inteligência artificial em imagem</strong></td><td>Acurácia diagnóstica</td><td>Revisão guarda-chuva: sensibilidade 0,85 e especificidade 0,90 para cárie; validação externa limitada e heterogeneidade alta</td><td><span class="tag ev-c">Preliminar</span></td><td>Médio</td></tr>
+        <tr data-lv="media" data-cost="baixo"><td><strong>Comunicação aumentativa e alternativa</strong></td><td>Comunicação</td><td>Fundamentação consolidada em fonoaudiologia e educação especial; evidência específica em contexto odontológico ainda escassa</td><td><span class="tag ev-b">Moderada</span></td><td>Baixo</td></tr>
+        <tr data-lv="alta" data-cost="alto"><td><strong>Acessibilidade arquitetônica (NBR 9050)</strong></td><td>Barreira arquitetônica</td><td>Exigência legal — LBI nº 13.146/2015 e ABNT NBR 9050; não é objeto de ensaio clínico, é condição de acesso</td><td><span class="tag leg">Obrigação legal</span></td><td>Alto</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="xs reveal" style="--i:4">Classificação de nível construída para fins didáticos a partir do desenho dos estudos disponíveis: <strong>Forte</strong> = ECR ou revisão sistemática com metanálise; <strong>Moderada</strong> = ECR com limitações ou revisão de qualidade variável; <strong>Preliminar</strong> = estudo-piloto, série de casos ou extrapolação de outra população.</p>
+  <div class="foot"><span class="sec">Síntese</span><span class="num">31</span></div>
+</section>
+
+<!-- ══════════ 32. GRÁFICO ══════════ -->
+<section class="slide" data-sec="16" data-title="Onde investir primeiro"
+  data-notes="Gráfico de priorização. É uma leitura combinada de força de evidência e custo — deixe explícito que é uma síntese didática construída por você a partir da tabela anterior, não um dado extraído de um único estudo.">
+  <div class="eyebrow reveal" style="--i:0">Síntese · Priorização</div>
+  <h2 class="reveal" style="--i:1">Se o orçamento é limitado, <em>comece por aqui</em></h2>
+  <p class="sm reveal" style="--i:2">Índice didático de prioridade, combinando força da evidência e razão custo-benefício para um serviço público ou consultório em implantação. Escala de 0 a 100.</p>
+  <div class="bars reveal" style="--i:3" id="bars">
+    <div class="bar"><span>Pedagogia visual e agenda</span><span class="track"><i class="fill" data-v="96"></i></span><span class="v">96</span></div>
+    <div class="bar"><span>Ambiente sensorial adaptado</span><span class="track"><i class="fill" data-v="94"></i></span><span class="v">94</span></div>
+    <div class="bar"><span>Escova elétrica e adaptada</span><span class="track"><i class="fill" data-v="90"></i></span><span class="v">90</span></div>
+    <div class="bar"><span><em>Video modeling</em></span><span class="track"><i class="fill" data-v="88"></i></span><span class="v">88</span></div>
+    <div class="bar"><span>Diamino fluoreto de prata</span><span class="track"><i class="fill" data-v="85"></i></span><span class="v">85</span></div>
+    <div class="bar"><span>Comunicação alternativa (CAA)</span><span class="track"><i class="fill alt" data-v="80"></i></span><span class="v">80</span></div>
+    <div class="bar"><span>Teleorientação ao cuidador</span><span class="track"><i class="fill alt" data-v="74"></i></span><span class="v">74</span></div>
+    <div class="bar"><span>Capnografia (se há sedação)</span><span class="track"><i class="fill alt" data-v="70"></i></span><span class="v">70</span></div>
+    <div class="bar"><span>Anestesia computadorizada</span><span class="track"><i class="fill alt2" data-v="55"></i></span><span class="v">55</span></div>
+    <div class="bar"><span>Realidade virtual imersiva</span><span class="track"><i class="fill alt2" data-v="48"></i></span><span class="v">48</span></div>
+    <div class="bar"><span>Escâner intraoral</span><span class="track"><i class="fill alt2" data-v="42"></i></span><span class="v">42</span></div>
+    <div class="bar"><span>Laser de alta potência</span><span class="track"><i class="fill alt2" data-v="38"></i></span><span class="v">38</span></div>
+  </div>
+  <div class="axis"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+  <p class="xs reveal" style="--i:4">A acessibilidade arquitetônica não aparece na escala porque <strong>não é opcional</strong>: é obrigação legal e pré-requisito para que qualquer um dos demais recursos chegue a ser utilizado.</p>
+  <div class="foot"><span class="sec">Síntese</span><span class="num">32</span></div>
+</section>
+
+<!-- ══════════ 33. CONCLUSÃO ══════════ -->
+<section class="slide" data-sec="16" data-title="16. Conclusão"
+  data-notes="Item 16: responda às três perguntas obrigatórias, uma por coluna. Feche com a frase final — ela amarra a tese da apresentação.">
+  <div class="eyebrow reveal" style="--i:0">Item 16 · Conclusão</div>
+  <h2 class="reveal" style="--i:1">Três perguntas, <em>três respostas</em></h2>
+  <div class="cols c3 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="panel">
+      <span class="tag">Pergunta 1</span>
+      <h3>Quais são os maiores desafios?</h3>
+      <ul class="klist sm">
+        <li><strong>Desigualdade de acesso:</strong> os recursos existem, mas concentrados em centros especializados e no setor privado.</li>
+        <li><strong>Lacuna de evidência específica:</strong> pacientes com deficiência são sistematicamente excluídos dos ensaios clínicos que validam as tecnologias que mais os beneficiariam.</li>
+        <li><strong>Formação:</strong> a Odontologia para PNE ainda ocupa carga horária reduzida na graduação; a iADH publica currículos de referência justamente para corrigir isso.</li>
+        <li><strong>Custo e sustentabilidade</strong> de manutenção, insumos e treinamento no SUS.</li>
+        <li><strong>Barreira atitudinal</strong> — a mais barata de remover e a mais persistente.</li>
+      </ul>
+    </div>
+    <div class="panel tint">
+      <span class="tag">Pergunta 2</span>
+      <h3>Como oferecer atendimento seguro?</h3>
+      <ul class="klist sm">
+        <li><strong>Avaliar antes:</strong> anamnese ampliada com perfil sensorial, comunicacional e motor; ASA; interconsulta.</li>
+        <li><strong>Escalonar do menos restritivo ao mais restritivo:</strong> ambiente e comunicação → recursos tecnológicos → contenção → sedação → anestesia geral.</li>
+        <li><strong>Monitorar:</strong> oximetria sempre; capnografia na sedação moderada; DEA disponível.</li>
+        <li><strong>Documentar:</strong> consentimento específico para cada etapa; assentimento do paciente sempre que possível.</li>
+        <li><strong>Garantir retorno:</strong> intervalos de 3 a 4 meses e cuidador treinado — segurança também é continuidade.</li>
+      </ul>
+    </div>
+    <div class="panel brass">
+      <span class="tag">Pergunta 3</span>
+      <h3>Que evidências sustentam as condutas?</h3>
+      <ul class="klist brass sm">
+        <li><strong>ECR cruzado</strong> sobre ambiente sensorialmente adaptado (JAMA Netw Open, 2023).</li>
+        <li><strong>ECRs</strong> de pedagogia visual e de <em>video modeling</em> em crianças autistas.</li>
+        <li><strong>Revisão Cochrane</strong> e ECR por conglomerados sobre escova elétrica, este último em deficiência intelectual.</li>
+        <li><strong>Diretrizes</strong> da ADA e da AAPD sobre DFP e sobre contenção protetora.</li>
+        <li><strong>Metanálise</strong> sobre Er:YAG em crianças e metanálise rápida sobre capnografia.</li>
+        <li><strong>Normas</strong>: LBI nº 13.146/2015, ABNT NBR 9050, Resolução CFO nº 226/2020, Guia do Ministério da Saúde (2019).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel line reveal" style="--i:3">
+    <p class="lead" style="max-width:none"><strong>A tecnologia não torna o paciente capaz de ser atendido — ela torna o atendimento capaz de receber o paciente.</strong> O deslocamento é esse: deixar de perguntar o que falta ao paciente e passar a perguntar o que falta ao serviço.</p>
+  </div>
+  <div class="foot"><span class="sec">16 · Conclusão</span><span class="num">33</span></div>
+</section>
+
+<!-- ══════════ 34. DISCUSSÃO ══════════ -->
+<section class="slide" data-sec="16" data-title="Discussão com a turma"
+  data-notes="Use nos 10 minutos de discussão. Clique nas alternativas com a turma. Depois passe para as perguntas abertas, que não têm resposta única e servem para provocar o debate.">
+  <div class="eyebrow reveal" style="--i:0">10 minutos de discussão</div>
+  <h2 class="reveal" style="--i:1">Vamos <em>testar</em> o que ficou</h2>
+  <div class="cols c2 reveal" style="--i:2;flex:1;min-height:0">
+    <div class="panel line">
+      <h3 id="q-title">Questão 1 de 3</h3>
+      <p class="sm" id="q-text" style="color:var(--ink)"></p>
+      <div class="quiz" id="q-opts"></div>
+      <p class="qfeed" id="q-feed"></p>
+      <div class="row">
+        <button class="chip" id="q-next" aria-pressed="false">Próxima questão →</button>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="panel tint">
+        <h3>Perguntas abertas para o debate</h3>
+        <ul class="klist sm">
+          <li>Se a evidência mais forte está nos recursos de <strong>baixo custo</strong>, por que a discussão pública sobre tecnologia em odontologia se concentra nos de alto custo?</li>
+          <li>Escâner intraoral e IA são validados em estudos que <strong>excluem pacientes com deficiência</strong>. Podemos indicá-los mesmo assim? Sob quais condições?</li>
+          <li>A teleodontologia amplia o acesso do paciente com mobilidade reduzida — mas a Resolução CFO 226/2020 veda diagnóstico a distância. Onde fica o equilíbrio?</li>
+          <li>Adaptar a sala é obrigação do serviço ou cortesia? O que muda na resposta quando se lê o art. 3º da LBI?</li>
+        </ul>
+      </div>
+      <div class="panel brass">
+        <p class="sm"><strong>Encerramento sugerido:</strong> peça a cada colega que nomeie <em>uma</em> adaptação de custo zero que poderia implantar amanhã na clínica-escola. A lista que sair dessa pergunta costuma ser o melhor resumo da aula.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">Discussão</span><span class="num">34</span></div>
+</section>
+
+<!-- ══════════ 35. REFERÊNCIAS ══════════ -->
+<section class="slide" data-sec="16" data-title="Referências"
+  data-notes="Deixe este slide projetado durante as perguntas. Todas as referências são verificáveis em PubMed, SciELO ou nos sites oficiais das instituições.">
+  <div class="eyebrow reveal" style="--i:0">Referências</div>
+  <h2 class="reveal" style="--i:1">Fontes consultadas</h2>
+  <div class="cols c2 reveal" style="--i:2;flex:1;min-height:0;overflow:auto">
+    <div class="stack">
+      <div class="panel line">
+        <h3>Ensaios clínicos e revisões sistemáticas</h3>
+        <p class="cite" style="line-height:1.7">
+        STEIN DUKER LI, FLOR&Iacute;NDEZ LI, CERMAK SA et al. <b>Sensory Adaptations to Improve Physiological and Behavioral Distress During Dental Visits in Autistic Children: A Randomized Crossover Trial</b>. JAMA Netw Open. 2023;6(6):e2316346.<br><br>
+        CERMAK SA, STEIN DUKER LI, WILLIAMS ME et al. <b>Sensory Adapted Dental Environments to Enhance Oral Care for Children with Autism Spectrum Disorders: A Randomized Controlled Pilot Study</b>. J Autism Dev Disord. 2015;45(9):2876-88.<br><br>
+        CIRIO S, SALERNO C, MBANEFO S, CAMPUS G, CAGETTI MG et al. <b>Use of Visual Pedagogy to Help Children with ASDs Facing the First Dental Examination: A Randomized Controlled Trial</b>. Children (Basel). 2022;9(5):729.<br><br>
+        DA SILVA MORO J, RODRIGUES TD, KAMMER PV, DE CAMARGO AR, BOLAN M. <b>Efficacy of the Video Modeling Technique as a Facilitator of Non-invasive Dental Care in Autistic Children: Randomized Clinical Trial</b>. J Autism Dev Disord. 2024;54(2):501-8.<br><br>
+        ISONG IA, RAO SR, HOLIFIELD C et al. <b>Addressing dental fear in children with autism spectrum disorders: a randomized controlled pilot study using electronic screen media</b>. Clin Pediatr (Phila). 2014;53(3):230-7.<br><br>
+        <b>Manual versus sonic powered toothbrushing in patients with intellectual disability: a cluster-randomized clinical trial</b>. J Clin Periodontol. 2016.<br><br>
+        <b>Er:YAG laser application in caries removal and cavity preparation in children: a meta-analysis</b>. Eur J Paediatr Dent. 2018.<br><br>
+        <b>Benefits and harms of capnography during procedures involving moderate sedation: a rapid review and meta-analysis</b>. J Am Dent Assoc (JADA). 2017.<br><br>
+        <b>Teledentistry for Improving Access To, and Quality of Oral Health Care: Overview of Systematic Reviews and Meta-Analyses</b>. J Med Internet Res. 2025;27:e65211.<br><br>
+        NEGI S et al. <b>Artificial Intelligence in Dental Caries Diagnosis and Detection: An Umbrella Review</b>. Clin Exp Dent Res. 2024.
+        </p>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="panel line">
+        <h3>Diretrizes, normas e documentos institucionais</h3>
+        <p class="cite" style="line-height:1.7">
+        ORGANIZA&Ccedil;&Atilde;O MUNDIAL DA SA&Uacute;DE. <b>Global report on health equity for persons with disabilities</b>. Genebra: WHO, 2022.<br><br>
+        BRASIL. Minist&eacute;rio da Sa&uacute;de. <b>Guia de Aten&ccedil;&atilde;o &agrave; Sa&uacute;de Bucal da Pessoa com Defici&ecirc;ncia</b>. Bras&iacute;lia, 2019.<br><br>
+        BRASIL. <b>Lei n&ordm; 13.146, de 6 de julho de 2015</b> — Lei Brasileira de Inclus&atilde;o da Pessoa com Defici&ecirc;ncia (Estatuto da Pessoa com Defici&ecirc;ncia).<br><br>
+        ABNT. <b>NBR 9050:2020</b> — Acessibilidade a edifica&ccedil;&otilde;es, mobili&aacute;rio, espa&ccedil;os e equipamentos urbanos.<br><br>
+        CONSELHO FEDERAL DE ODONTOLOGIA. <b>Resolu&ccedil;&atilde;o CFO n&ordm; 226, de 4 de junho de 2020</b> — regulamenta o exerc&iacute;cio da Odontologia a dist&acirc;ncia.<br><br>
+        IBGE. <b>Censo Demogr&aacute;fico 2022</b> — Pessoas com defici&ecirc;ncia. Rio de Janeiro, divulga&ccedil;&atilde;o de 23 maio 2025.<br><br>
+        AAPD. <b>Behavior Guidance for the Pediatric Dental Patient</b>. Reference Manual of Pediatric Dentistry 2025-26.<br><br>
+        AAPD. <b>Use of Protective Stabilization for Pediatric Dental Patients</b>. Reference Manual 2025-26 (revis&atilde;o de 2024).<br><br>
+        AAPD. <b>Use of Silver Diamine Fluoride for Dental Caries Management in Children and Adolescents, Including Those with Special Health Care Needs</b>.<br><br>
+        ADA. <b>Clinical Practice Guideline on Nonrestorative Treatments for Carious Lesions</b> · diretriz de monitoriza&ccedil;&atilde;o em seda&ccedil;&atilde;o.<br><br>
+        iADH. <b>Special Care Dentistry — Undergraduate and Postgraduate Curriculum Guidance</b>.<br><br>
+        SOBRAPNE — Sociedade Brasileira de Odontologia para Pacientes com Necessidades Especiais.
+        </p>
+      </div>
+      <div class="panel brass">
+        <p class="xs">Livros-texto de apoio recomendados pela disciplina: MALAMED SF. <em>Manual de Anestesia Local</em> · LITTLE JW et al. <em>Dental Management of the Medically Compromised Patient</em> · NEVILLE BW et al. <em>Patologia Oral e Maxilofacial</em> · PETERSON LJ. <em>Cirurgia Oral e Maxilofacial Contempor&acirc;nea</em>. Artigos indexados em PubMed, Scopus, Web of Science e SciELO.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="sec">Referências</span><span class="num">35</span></div>
+</section>
+
+</div>
+</main>
+
+<div class="notes" id="notes"><b>Notas do apresentador</b><span id="notes-text"></span></div>
+
+<div class="nav">
+  <button id="prev" aria-label="Slide anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button id="next" aria-label="Próximo slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
+</div>
+
+<div class="map" id="map" role="dialog" aria-label="Mapa de slides">
+  <h3>Roteiro completo</h3>
+  <div class="mgrid" id="mgrid"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+/* ---------- scaling: 1rem = 1% of stage width ---------- */
+var slides=$$('.slide'), stage=$('#stage'), N=slides.length;
+function layout(){
+  var vw=window.innerWidth, vh=window.innerHeight, compact=vw<820;
+  document.body.classList.toggle('compact',compact);
+  var sw,sh,unit;
+  if(compact){ sw=Math.max(300,vw-16); sh=Math.round(sw*1.35); unit=sw/46; }
+  else{
+    var avail=vh-Math.max(96,vh*0.16);
+    sw=Math.min(vw*0.965, avail*(16/9));
+    sh=sw*9/16; unit=sw/100;
+  }
+  document.documentElement.style.setProperty('--sw',sw+'px');
+  document.documentElement.style.setProperty('--sh',sh+'px');
+  document.documentElement.style.fontSize=unit+'px';
+}
+layout();
+window.addEventListener('resize',function(){layout();if(typeof cur==='number')setTimeout(function(){fit(slides[cur])},60)});
+
+/* ---------- progress rail: 16 mandatory sections + intro ---------- */
+var rail=$('#rail');
+for(var s=0;s<17;s++){ rail.appendChild(document.createElement('i')); }
+var railTicks=$$('#rail i');
+
+/* ---------- navigation ---------- */
+var cur=0, started=false;
+function go(n,animate){
+  n=Math.max(0,Math.min(N-1,n));
+  slides[cur].classList.remove('is-active','anim');
+  cur=n;
+  var sl=slides[cur];
+  sl.classList.add('is-active');
+  if(animate!==false){ void sl.offsetWidth; sl.classList.add('anim'); }
+  $('#counter').textContent=pad(cur+1)+' / '+N;
+  var sec=parseInt(sl.getAttribute('data-sec')||'0',10);
+  railTicks.forEach(function(t,i){
+    t.classList.toggle('done',i<sec);
+    t.classList.toggle('now',i===sec);
+  });
+  $('#notes-text').textContent=sl.getAttribute('data-notes')||'Sem notas para este slide.';
+  $$('#mgrid .mitem').forEach(function(b,i){ b.classList.toggle('cur',i===cur) });
+  fit(sl);
+  history.replaceState(null,'','#'+(cur+1));
+  if(cur===31) drawBars();
+  sl.scrollTop=0; window.scrollTo({top:0,behavior:'instant'});
+}
+function pad(n){return n<10?'0'+n:''+n}
+
+/* shrink a slide just enough to fit the 16:9 stage, never below 62% */
+function fit(sl){
+  sl.style.zoom=''; sl.style.width=''; sl.style.height='';
+  if(document.body.classList.contains('compact')) return;
+  if(!('zoom' in document.documentElement.style)) return;
+  var sw=stage.clientWidth, sh=stage.clientHeight, z=1;
+  for(var k=0;k<13;k++){
+    if(sl.scrollHeight-sl.clientHeight<=2) break;
+    z-=0.035;
+    if(z<0.62){ z=0.62; }
+    sl.style.zoom=z; sl.style.width=(sw/z)+'px'; sl.style.height=(sh/z)+'px';
+    if(z<=0.62) break;
+  }
+}
+
+$('#next').addEventListener('click',function(){go(cur+1)});
+$('#prev').addEventListener('click',function(){go(cur-1)});
+
+document.addEventListener('keydown',function(e){
+  if(e.target.isContentEditable||/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+  var k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();go(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(k==='Home'){e.preventDefault();go(0)}
+  else if(k==='End'){e.preventDefault();go(N-1)}
+  else if(k==='m'||k==='M'){toggleMap()}
+  else if(k==='n'||k==='N'){toggleNotes()}
+  else if(k==='t'||k==='T'){toggleTimer()}
+  else if(k==='f'||k==='F'){toggleFull()}
+  else if(k==='Escape'){ if($('#map').classList.contains('open')) toggleMap(); }
+});
+
+/* swipe */
+var tx=0,ty=0;
+stage.addEventListener('touchstart',function(e){tx=e.changedTouches[0].clientX;ty=e.changedTouches[0].clientY},{passive:true});
+stage.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5) go(cur+(dx<0?1:-1));
+},{passive:true});
+
+/* ---------- map ---------- */
+var mgrid=$('#mgrid');
+slides.forEach(function(sl,i){
+  var b=document.createElement('button');
+  b.className='mitem';
+  b.innerHTML='<span class="mn">'+pad(i+1)+'</span><span class="mt"></span>';
+  b.querySelector('.mt').textContent=sl.getAttribute('data-title')||('Slide '+(i+1));
+  b.addEventListener('click',function(){ go(i); toggleMap(false) });
+  mgrid.appendChild(b);
+});
+function toggleMap(force){
+  var m=$('#map'), open=(force===undefined)?!m.classList.contains('open'):force;
+  m.classList.toggle('open',open);
+  $('#btn-map').setAttribute('aria-pressed',open?'true':'false');
+}
+$('#btn-map').addEventListener('click',function(){toggleMap()});
+$('#map').addEventListener('click',function(e){ if(e.target===this) toggleMap(false) });
+
+/* ---------- notes ---------- */
+function toggleNotes(){
+  var on=!document.body.classList.contains('notes-on');
+  document.body.classList.toggle('notes-on',on);
+  $('#btn-notes').setAttribute('aria-pressed',on?'true':'false');
+}
+$('#btn-notes').addEventListener('click',toggleNotes);
+
+/* ---------- timer: 25 min target, 30 min hard stop ---------- */
+var left=25*60, tick=null;
+function fmt(s){var m=Math.floor(Math.abs(s)/60),r=Math.abs(s)%60;return (s<0?'+':'')+pad(m)+':'+pad(r)}
+function paint(){
+  var c=$('#clock'); c.textContent=fmt(left);
+  c.classList.toggle('warn',left<=300&&left>0);
+  c.classList.toggle('over',left<=0);
+}
+function toggleTimer(){
+  if(tick){ clearInterval(tick); tick=null; $('#btn-timer').setAttribute('aria-pressed','false'); }
+  else{ tick=setInterval(function(){left--;paint()},1000); $('#btn-timer').setAttribute('aria-pressed','true'); }
+}
+$('#btn-timer').addEventListener('click',toggleTimer);
+$('#clock').addEventListener('click',function(){ if(!tick){ left=25*60; paint(); } });
+paint();
+
+/* ---------- theme + fullscreen ---------- */
+$('#btn-theme').addEventListener('click',function(){
+  var r=document.documentElement, isDark;
+  if(r.getAttribute('data-theme')) isDark=r.getAttribute('data-theme')==='dark';
+  else isDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  r.setAttribute('data-theme',isDark?'light':'dark');
+});
+function toggleFull(){
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); }
+  else{ document.exitFullscreen&&document.exitFullscreen(); }
+}
+$('#btn-full').addEventListener('click',toggleFull);
+
+/* ---------- barriers ---------- */
+var BARRIERS=[
+ {t:'Barreira arquitetônica',d:'Degraus, portas estreitas, corredores sem giro, cadeira odontológica sem acesso lateral, banheiro inacessível. É a barreira que impede o paciente de sequer chegar ao atendimento.',r:['Rampa e rota acessível (ABNT NBR 9050)','Plataforma elevatória para cadeira de rodas','Cadeira com braço removível e apoio de cabeça','Prancha de transferência e coxins posicionadores']},
+ {t:'Barreira comunicacional',d:'Ausência de canal comum entre equipe e paciente: paciente sem fala funcional, surdo, cego ou com compreensão verbal reduzida. Sem comunicação não há anamnese, avaliação de dor nem consentimento válido.',r:['Comunicação aumentativa e alternativa (CAA/PECS)','Libras e suíte VLibras','Aplicativos com síntese de voz e pictogramas','Escalas de dor por faces e comportamentais','Máscara transparente para leitura labial']},
+ {t:'Barreira atitudinal',d:'Preconceito, recusa de atendimento, pressa, infantilização do paciente adulto e presunção de incapacidade. É a barreira de custo zero e a de remoção mais difícil.',r:['Capacitação da equipe inteira, da recepção à clínica','Currículos da iADH na graduação e pós-graduação','Falar sempre com o paciente, não apenas com o acompanhante','Agendamento com tempo estendido, sem pressa']},
+ {t:'Barreira metodológica',d:'Protocolo clínico rígido, desenhado para o paciente colaborativo padrão: sessão longa, sequência fixa, tell-show-do exclusivamente verbal.',r:['Pedagogia visual e agenda visual','Video modeling e dessensibilização sistemática','Sessões curtas e fracionadas, com metas progressivas','Tratamento restaurador atraumático e diamino fluoreto de prata']},
+ {t:'Barreira instrumental',d:'Instrumentos e materiais que o paciente não tolera: cubeta de moldagem, sensor rígido, ruído e vibração da alta rotação, escova convencional que exige coordenação fina.',r:['Escâner intraoral em lugar da moldagem','Placa de fósforo e radiografia digital','Laser de Er:YAG (sem ruído e sem vibração)','Escova elétrica e escova com cabo adaptado','Anestesia computadorizada e dispositivo vibratório']},
+ {t:'Barreira programática',d:'Políticas, normas e fluxos que excluem sem intenção explícita: ausência de fluxo de referência, agenda sem tempo estendido, ausência de cobertura para atendimento hospitalar.',r:['Fluxo formal de referência e contrarreferência na Rede de Atenção','Centros de Especialidades Odontológicas e atendimento hospitalar pactuados','Teleorientação e telemonitoramento regulamentados (CFO 226/2020)','Diretrizes do Ministério da Saúde aplicadas ao serviço']}
+];
+function renderBarrier(i){
+  var b=BARRIERS[i];
+  $('#barrier-out').innerHTML=
+    '<div><h3>'+b.t+'</h3><p class="sm" style="margin-top:.5rem">'+b.d+'</p></div>'+
+    '<div><span class="tag">Recursos que a removem</span><ul class="klist sm" style="margin-top:.6rem">'+
+    b.r.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>';
+}
+$$('#barriers .barrier').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    $$('#barriers .barrier').forEach(function(o){o.setAttribute('aria-pressed','false')});
+    btn.setAttribute('aria-pressed','true');
+    renderBarrier(+btn.getAttribute('data-b'));
+  });
+});
+renderBarrier(0);
+
+/* ---------- journey ---------- */
+var JOURNEY=[
+ {t:'Antes da consulta',s:'Teleorientação, anamnese ampliada e preparo em casa',l:['Questionário de perfil sensorial, comunicacional e motor respondido pelo cuidador a distância (teleorientação — CFO 226/2020).','Envio de fotos e vídeo da sala real para pedagogia visual e video modeling, com uso diário por 5 a 7 dias.','Agendamento no primeiro horário, com tempo estendido e sala preparada.','Checagem de medicação, jejum e interações no prontuário eletrônico.'],e:'ECR de video modeling reduziu de 2,0 para 1,5 a média de consultas necessárias (p ≤ 0,05).'},
+ {t:'Chegada e recepção',s:'Reduzir espera e estímulo desde a porta',l:['Rota acessível e atendimento prioritário assegurado pela LBI.','Espera mínima: a sala de espera é, frequentemente, o gatilho da crise.','Balcão rebaixado e espaço reservado para cadeira de rodas.','Oferecer fones com cancelamento de ruído e óculos escuros já na recepção.'],e:'Barreiras arquitetônica e atitudinal — ABNT NBR 9050 e Lei nº 13.146/2015.'},
+ {t:'Transferência e posicionamento',s:'Segurança mecânica antes do procedimento',l:['Avaliar se a transferência é necessária: em espasticidade grave, atender na própria cadeira de rodas com plataforma elevatória é mais seguro.','Prancha de transferência e técnica a duas pessoas, com apoio de cabeça e tronco.','Coxins, cinto de posicionamento e apoio de joelhos para reduzir o tônus.','Decúbito semi-sentado em disfagia e refluxo.'],e:'Contenção protetora somente se indicada, com consentimento específico (AAPD, rev. 2024).'},
+ {t:'Durante o procedimento',s:'Menos estímulo, menos dor, menos tempo',l:['Ambiente sensorialmente adaptado: luz indireta, música em fones, avental de peso, projeção lenta.','Distração audiovisual ou realidade virtual, observadas as contraindicações.','Anestesia tópica seguida de anestesia computadorizada ou dispositivo vibratório.','Laser de Er:YAG, isolamento absoluto, sugador de alto volume e sessões curtas.','Sinal combinado de pausa: o paciente pode interromper a qualquer momento.'],e:'ECR cruzado do ambiente adaptado: redução de distresse fisiológico e comportamental (JAMA Netw Open, 2023).'},
+ {t:'Alta e manutenção',s:'O que sustenta o resultado',l:['Treinamento do cuidador com câmera intraoral: ele vê a placa que não removeu.','Escova elétrica ou adaptada, dentifrício fluoretado e técnica demonstrada.','Diamino fluoreto de prata em lesões que não podem ser restauradas agora.','Retorno em 3 a 4 meses; telemonitoramento entre as consultas.','Registro em prontuário do que funcionou — o próximo atendimento começa daí.'],e:'Cochrane: escova elétrica reduz placa em 7% e gengivite em 17%; ECR por conglomerados em deficiência intelectual.'}
+];
+function renderJ(i){
+  var j=JOURNEY[i];
+  $('#jout').innerHTML='<div><span class="tag">'+j.s+'</span><h3 style="margin-top:.5rem">'+j.t+'</h3></div>'+
+   '<ul class="klist sm">'+j.l.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'+
+   '<p class="cite"><b>Base:</b> '+j.e+'</p>';
+}
+$$('#journey .jstep').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    $$('#journey .jstep').forEach(function(o){o.setAttribute('aria-pressed','false')});
+    btn.setAttribute('aria-pressed','true');
+    renderJ(+btn.getAttribute('data-j'));
+  });
+});
+renderJ(0);
+
+/* ---------- flip cards ---------- */
+$$('.flip').forEach(function(f){
+  f.addEventListener('click',function(){
+    f.setAttribute('aria-pressed', f.getAttribute('aria-pressed')==='true'?'false':'true');
+  });
+});
+
+/* ---------- before/after ---------- */
+var bar=$('#ba-range');
+if(bar){
+  var apply=function(){ $('#ba').style.setProperty('--split',bar.value+'%') };
+  bar.addEventListener('input',apply); apply();
+}
+
+/* ---------- decision flow ---------- */
+var FLOW=[
+ {t:'Não chega à cadeira com segurança',d:'A barreira é física e antecede qualquer decisão clínica.',r:['Verificar rota acessível, vão de porta e giro (ABNT NBR 9050)','Atender na própria cadeira de rodas com plataforma elevatória','Prancha de transferência e técnica a duas pessoas','Cadeira com braço removível e apoio de cabeça']},
+ {t:'Não compreende ou não comunica',d:'Sem canal de comunicação não há anamnese confiável, avaliação de dor nem consentimento válido.',r:['Pranchas de CAA, PECS e aplicativos com síntese de voz','Libras, VLibras e intérprete','Pedagogia visual e agenda visual da consulta','Escalas de dor por faces e observacionais','TCLE pictográfico e assentimento registrado']},
+ {t:'Não tolera o estímulo da sala',d:'Hiper-responsividade sensorial: a sala convencional é, por si só, um estímulo aversivo.',r:['Ambiente sensorialmente adaptado (luz indireta, música em fones, avental de peso)','Fones com cancelamento de ruído e óculos escuros','Distração audiovisual; realidade virtual se não houver contraindicação','Primeiro horário, sala vazia e silenciosa']},
+ {t:'Não mantém a posição com segurança',d:'Movimento involuntário, espasticidade ou hipotonia comprometem a estabilidade.',r:['Coxins, cinto de posicionamento e apoio de joelhos','Abridor de boca de silicone; nunca metal em osteogênese imperfeita','Sessões curtas e fracionadas','Contenção protetora somente se indicada, com consentimento específico']},
+ {t:'Não tolera o procedimento em si',d:'Dor, ruído da alta rotação, vibração e sabor dos materiais.',r:['Anestesia tópica com tempo de espera adequado, depois anestesia computadorizada ou vibratória','Laser de Er:YAG: sem ruído e sem vibração, menor necessidade de anestesia','Tratamento restaurador atraumático e diamino fluoreto de prata','Escâner intraoral em vez de moldagem']},
+ {t:'Nenhuma adaptação foi suficiente',d:'Aqui a escalada do manejo é indicação clínica, não fracasso — desde que as etapas anteriores tenham sido tentadas e registradas.',r:['Óxido nitroso e oxigênio: primeira escolha sedativa em muitos casos','Sedação moderada com monitorização e capnografia','Anestesia geral em ambiente hospitalar, com equipe multidisciplinar','Sempre acompanhada de programa preventivo, sob risco de reincidência']}
+];
+function renderF(i){
+  var f=FLOW[i];
+  $('#flow-out').innerHTML='<div><h3>'+f.t+'</h3><p class="sm" style="margin-top:.5rem">'+f.d+'</p></div>'+
+   '<div><span class="tag">Conduta</span><ul class="klist sm" style="margin-top:.6rem">'+
+   f.r.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>';
+}
+$$('#flow .fnode').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    $$('#flow .fnode').forEach(function(o){o.setAttribute('aria-pressed','false')});
+    btn.setAttribute('aria-pressed','true');
+    renderF(+btn.getAttribute('data-f'));
+  });
+});
+renderF(0);
+
+/* ---------- accessibility checklist ---------- */
+var boxes=$$('#check input');
+function scoreUp(){
+  var n=boxes.filter(function(b){return b.checked}).length, p=Math.round(n/boxes.length*100);
+  $('#score-n').textContent=n;
+  $('#score-bar').style.width=p+'%';
+  var m;
+  if(n===boxes.length) m='Serviço plenamente acessível segundo os parâmetros listados. Mantenha a verificação periódica.';
+  else if(p>=70) m='Boa base. Priorize os itens não marcados de rota, transferência e comunicação — são os que bloqueiam o atendimento.';
+  else if(p>=40) m='Acessibilidade parcial: o paciente chega, mas não é atendido em condições de igualdade. Comece pelos itens de custo zero.';
+  else if(n>0) m='Acessibilidade insuficiente. Itens de rota, porta e sanitário são exigência legal (LBI e NBR 9050), não melhoria opcional.';
+  else m='Marque os itens ao lado para calcular.';
+  $('#score-msg').textContent=m;
+}
+boxes.forEach(function(b){b.addEventListener('change',scoreUp)});
+scoreUp();
+
+/* ---------- evidence filter ---------- */
+$$('#filters .chip').forEach(function(c){
+  c.addEventListener('click',function(){
+    $$('#filters .chip').forEach(function(o){o.setAttribute('aria-pressed','false')});
+    c.setAttribute('aria-pressed','true');
+    var f=c.getAttribute('data-f');
+    $$('#evtable tbody tr').forEach(function(tr){
+      var show = f==='all' || (f==='custo' ? tr.getAttribute('data-cost')==='baixo' : tr.getAttribute('data-lv')===f);
+      tr.hidden=!show;
+    });
+  });
+});
+
+/* ---------- bar chart ---------- */
+var barsDrawn=false;
+function drawBars(){
+  if(barsDrawn) return; barsDrawn=true;
+  $$('#bars .fill').forEach(function(f,i){
+    setTimeout(function(){ f.style.width=f.getAttribute('data-v')+'%' }, 60*i);
+  });
+}
+
+/* ---------- quiz ---------- */
+var QUIZ=[
+ {q:'Qual recurso apresentado dispõe da evidência mais robusta especificamente em crianças autistas submetidas a atendimento odontológico?',
+  o:['Realidade virtual imersiva com óculos','Ambiente sensorialmente adaptado (SADE)','Escâner intraoral em substituição à moldagem','Inteligência artificial na detecção de cárie'],
+  a:1,
+  f:'Ensaio clínico randomizado cruzado publicado no JAMA Network Open em 2023, com 220 crianças incluídas, demonstrou que o ambiente sensorialmente adaptado é seguro e eficaz na redução do distresse fisiológico e comportamental — além do estudo-piloto cruzado anterior, com 44 crianças.'},
+ {q:'Segundo a Resolução CFO nº 226/2020, o que é expressamente PROIBIDO na odontologia a distância?',
+  o:['Teleorientação ao cuidador','Telemonitoramento do paciente sob cuidado do próprio profissional','Elaboração de plano de tratamento a distância','Teleinterconsulta entre profissionais'],
+  a:2,
+  f:'A Resolução permite teleorientação, telemonitoramento e teleinterconsulta. Veda expressamente consulta, diagnóstico, prescrição e elaboração de plano de tratamento a distância. A teleodontologia prepara e acompanha o atendimento presencial — não o substitui.'},
+ {q:'Um paciente adulto com paralisia cerebral, 42 kg, necessita de restauração em molar. Qual conduta é correta quanto ao anestésico local?',
+  o:['Evitar vasoconstritor por se tratar de paciente com deficiência','Usar dose padrão de dois tubetes, independentemente do peso','Calcular a dose máxima pelo peso e manter o vasoconstritor, salvo contraindicação sistêmica','Indicar anestesia geral, pois anestésico local é contraindicado em paralisia cerebral'],
+  a:2,
+  f:'Não existe contraindicação ao anestésico local ou ao vasoconstritor pela deficiência em si — a contraindicação é da condição sistêmica associada. O vasoconstritor prolonga a anestesia e reduz a toxicidade, o que é vantajoso em paciente que não tolera reintervenção. A dose máxima deve ser calculada pelo peso: muitos PNE adultos têm baixo peso corporal.'}
+];
+var qi=0, answered=false;
+function renderQ(){
+  var q=QUIZ[qi]; answered=false;
+  $('#q-title').textContent='Questão '+(qi+1)+' de '+QUIZ.length;
+  $('#q-text').textContent=q.q;
+  $('#q-feed').textContent='';
+  var box=$('#q-opts'); box.innerHTML='';
+  q.o.forEach(function(txt,i){
+    var b=document.createElement('button');
+    b.className='qopt';
+    b.innerHTML='<span class="k">'+'ABCD'[i]+'</span><span></span>';
+    b.lastChild.textContent=txt;
+    b.addEventListener('click',function(){
+      if(answered) return; answered=true;
+      $$('#q-opts .qopt').forEach(function(o,j){
+        if(j===q.a) o.classList.add('right');
+        else if(j===i) o.classList.add('wrong');
+      });
+      $('#q-feed').textContent=q.f;
+    });
+    box.appendChild(b);
+  });
+}
+$('#q-next').addEventListener('click',function(){ qi=(qi+1)%QUIZ.length; renderQ() });
+renderQ();
+
+/* ---------- boot ---------- */
+var h=parseInt((location.hash||'').replace('#',''),10);
+go(isNaN(h)?0:h-1,false);
+})();
+</script>
