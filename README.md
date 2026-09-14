@@ -60,3 +60,23 @@ Quatro slides têm caixas tracejadas com a descrição do que inserir e um campo
 ## Imprimir ou converter para PDF
 
 `Ctrl+P` → salvar como PDF. A folha de estilo de impressão empilha os slides, um por página.
+
+## Versão no Canva
+
+O deck também existe no Canva, no projeto **"Apresentação Básica Simples Manchas Verde"** (`DAHS6-rhy10`), com as mesmas 24 páginas e a mesma estrutura de explicação — apenas com a paleta do template: fundo escuro `#4f674f`, fundo claro `#b7cdb7`, texto `#142414` no claro e `#ffffff` no escuro, e o verde de destaque `#b7cdb7`/`#4f674f`.
+
+Grade usada em todas as páginas (1920 × 1080):
+
+| Elemento | Posição |
+| --- | --- |
+| Eyebrow | topo 96, esquerda 108, largura 1704, corpo 26 |
+| Título | topo 150, esquerda 108, corpo 68–76 |
+| Conteúdo | a partir de 330–400 |
+| Citação | topo 900–930, corpo 20 |
+| 2 colunas | x = 108 e 1014, largura 800 |
+| 3 colunas | x = 108, 712 e 1316, largura 470 |
+| 4 colunas | x = 108, 545, 982 e 1419, largura 390 |
+
+Três páginas mantêm molduras de imagem do template, prontas para substituição: pedagogia visual (8) e realidade virtual (10).
+
+**Ajuste manual pendente no Canva:** a API não permite definir a família tipográfica em caixas de texto novas, então os textos criados por ela ficaram na fonte padrão do Canva. Em cada página, `Ctrl+A` e escolher as fontes do template resolve — display `YAFdJtdLX_k`, corpo `YAEnTI0o408`.
