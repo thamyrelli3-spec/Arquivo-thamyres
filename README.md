@@ -2,47 +2,61 @@
 
 Apresentação de seminário — **Tecnologia e acessibilidade para pacientes com necessidades especiais: recursos tecnológicos que podem transformar a consulta odontológica**.
 
-Arquivo único e autocontido: `index.html`. Basta abrir no navegador (duplo clique) ou projetar. Não precisa de internet, exceto para carregar as fontes.
+Arquivo único e autocontido: `index.html`. Abre no navegador com duplo clique.
+
+## Recorte
+
+O tema é **transversal**: o foco são os recursos tecnológicos, não a caracterização de cada condição — isso é objeto dos outros seminários da disciplina. A caracterização do paciente aparece apenas como ponte entre a dificuldade e a solução, concentrada em dois slides (as seis barreiras e o mapa função → recurso).
+
+**24 slides**, com pouco texto: cada slide sustenta uma ideia e o complemento é falado. Todo o detalhe está nas **notas do apresentador** (tecla `N`), que servem de base para o roteiro de fala.
 
 ## Estrutura
 
-35 slides, dentro do intervalo recomendado pela disciplina (25 a 35), organizados segundo os **16 itens obrigatórios** da estrutura do seminário. Cada item recebeu o recorte do tema transversal (tecnologia e acessibilidade).
+| Slides | Bloco |
+|---|---|
+| 1–2 | Abertura e os três números que justificam o tema |
+| 3–5 | O que impede o atendimento: seis barreiras, função → recurso, escada da restrição |
+| 6 | Mapa: baixa, média e alta tecnologia |
+| 7–12 | As tecnologias na consulta: teleodontologia, pedagogia visual, ambiente adaptado, realidade virtual, comunicação, acessibilidade física |
+| 13–16 | Diagnóstico digital, anestesia, laser e a tecnologia que vai para casa |
+| 17–19 | Quando escalar: sedação e monitorização, contenção e consentimento, medicamentos |
+| 20–24 | Síntese de evidências, priorização, conclusão, discussão e referências |
+
+Os 16 itens obrigatórios da estrutura do seminário estão cobertos, agora pelo recorte tecnológico e de forma mais compacta.
 
 ## Como apresentar
 
 | Ação | Atalho |
 |---|---|
-| Avançar / voltar | `→` `←` `espaço` ou clique nas setas |
+| Avançar / voltar | `→` `←` `espaço` |
 | Mapa de todos os slides | `M` |
 | Notas do apresentador | `N` |
 | Cronômetro de 25 min | `T` (clique no relógio para zerar) |
 | Tela cheia | `F` |
-| Ir ao primeiro / último | `Home` / `End` |
 
-Alternar tema claro e escuro pelo botão **Tema** na barra superior.
+Alternar tema claro e escuro pelo botão **Tema**.
 
 ## Elementos interativos
 
-- Explorador das **seis barreiras** previstas na LBI (slide 5)
-- **Jornada do atendimento** em cinco etapas (slide 14)
-- **Comparador deslizante** ambiente convencional × ambiente sensorialmente adaptado (slide 15)
-- **Cartões que viram** com o ganho clínico de cada recurso de diagnóstico (slide 11)
-- **Autodiagnóstico de acessibilidade** do consultório, com pontuação ao vivo (slide 19)
-- **Fluxograma de decisão** por barreira identificada (slide 25)
-- **Tabela de evidências filtrável** por nível e por custo (slide 31)
-- **Gráfico animado** de priorização de investimento (slide 32)
-- **Quiz** com três questões para os 10 minutos de discussão (slide 34)
+- Explorador das **seis barreiras** da LBI (slide 3)
+- **Escada da restrição** (slide 5)
+- **Comparador deslizante** ambiente convencional × adaptado (slide 9)
+- **Cartões que viram** com o ganho clínico de cada recurso de diagnóstico (slide 13)
+- **Autodiagnóstico de acessibilidade** com pontuação ao vivo (slide 12)
+- **Tabela de evidências filtrável** por nível e por custo (slide 20)
+- **Gráfico animado** de priorização (slide 21)
+- **Quiz** de três questões para a discussão (slide 23)
 
 ## Espaços para imagens
 
-Seis slides têm caixas tracejadas reservadas para imagens, com a descrição do que inserir. Cada caixa tem um campo **Fonte:** clicável e editável — a disciplina exige que toda imagem traga a referência da fonte.
+Quatro slides têm caixas tracejadas com a descrição do que inserir e um campo **Fonte:** clicável e editável — a disciplina exige referência em toda imagem.
 
-## Observações sobre o conteúdo
+## Observações
 
-- Toda afirmação clínica relevante está referenciada. As referências completas estão no slide 35.
-- O item **15** da estrutura obrigatória não aparecia nas fotos do arquivo fornecido (a sequência salta de 14 para 16). Foi preenchido com **Prevenção e cuidado domiciliar**, tema que completa a sequência de forma coerente. Confirme com a professora e ajuste o slide 30 se necessário.
-- Os níveis de evidência da tabela de síntese e o índice de priorização do gráfico são **sínteses didáticas** construídas a partir do desenho dos estudos citados, e estão identificados como tal nos próprios slides.
+- Toda afirmação clínica está referenciada; as referências completas estão no slide 24.
+- A disciplina recomenda 25 a 35 slides. Este deck tem 24, por decisão de foco: menos slides, mais tempo de fala por slide.
+- Os níveis de evidência da tabela de síntese e o índice do gráfico de priorização são **sínteses didáticas**, identificadas como tal nos próprios slides.
 
-## Imprimir ou converter para PDF/PPT
+## Imprimir ou converter para PDF
 
-`Ctrl+P` → salvar como PDF. A folha de estilo de impressão empilha todos os slides, um por página.
+`Ctrl+P` → salvar como PDF. A folha de estilo de impressão empilha os slides, um por página.
