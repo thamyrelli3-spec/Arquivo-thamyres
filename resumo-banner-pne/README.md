@@ -48,3 +48,20 @@ necessário termo de consentimento assinado pela responsável.
 ```bash
 python3 gerar_docx.py   # requer python-docx; lê o texto de corpo.txt
 ```
+
+---
+
+## Versão alternativa: tema de tecnologia (Opção 2)
+
+Mesmo pacote, com o tema do seminário do box — `Resumo_Banner_PNE_Tecnologia.docx`
+e `Guia_de_estudo_Tecnologia.docx`.
+
+| Regra | Situação |
+|---|---|
+| Até 270 palavras, sem contar título | **260 palavras** |
+| Referências explícitas | 10 referências ABNT |
+| Arial 12 justificado 1,5 / título Arial 14 caixa alta | sim |
+
+Correção encontrada no `index.html` (slide de referências): a metanálise de Er:YAG está
+atribuída ao *European Journal of Paediatric Dentistry*, 2018. O correto é **LI, Ting et al.
+Lasers in Medical Science, v. 34, n. 2, p. 273-280, 2019**.
