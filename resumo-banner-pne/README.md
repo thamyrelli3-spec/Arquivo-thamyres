@@ -11,20 +11,23 @@ Revisão de literatura sobre manejo odontológico de criança com **TEA nível 3
 
 | Regra | Situação |
 |---|---|
-| Até 270 palavras, sem contar título e subtítulos | **262 palavras** no corpo |
+| Até 270 palavras, sem contar título e subtítulos | **265 palavras** no corpo |
 | Introdução, objetivos, materiais e métodos, resultados e conclusão | na ordem, em parágrafo único |
 | Parágrafo único, sem tópicos (orientação da professora) | sim |
 | Arial 12, justificado, entrelinhas 1,5 | sim |
 | Título ARIAL 14 EM CAIXA ALTA | sim |
-| Referências explícitas (não contam palavras) | 6 referências, citadas no texto |
+| Referências explícitas (não contam palavras) | 7 referências ABNT ao final |
 | Até 5 participantes (1 autor + até 4 coautores) + 1 orientador | campos em branco para preencher |
 | 3 palavras-chave (orientação da professora) | sim |
 
-## O que falta preencher
+## Participantes
 
-- Nome do autor principal e dos até 4 coautores
-- Nome da orientadora
-- Confirmar a idade da paciente (o texto diz "oito anos")
+- Autora: Thamyres Tosarelli
+- Coautora: Beatriz Gouvea
+- Orientadora: Profa. Dra. Rosemary Martins
+
+Paciente de 8 anos (nome não citado, por sigilo). Para as fotos do banner é
+necessário termo de consentimento assinado pela responsável.
 
 ## Referências usadas
 
@@ -34,6 +37,7 @@ Revisão de literatura sobre manejo odontológico de criança com **TEA nível 3
 4. CERMAK et al. *J Autism Dev Disord*, 2015 — ambiente sensorialmente adaptado (ECR piloto).
 5. DRUMOND et al. *Caries Research*, 2022 — cárie em crianças com TDAH (metanálise).
 6. STEIN DUKER et al. *JAMA Network Open*, 2023 — adaptação sensorial (ECR cruzado, 162 crianças).
+7. BEZERRA; ASSIS; SANTOS. *Brazilian Journal of Health Review*, 2023 — atendimento odontológico de crianças com TEA.
 
 ## Como regerar o .docx
 
