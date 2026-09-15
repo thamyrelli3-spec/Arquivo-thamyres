@@ -4,14 +4,18 @@ Arquivo para enviar à professora antes da submissão: **`Resumo_Banner_PNE_TEA_
 
 ## Tema
 
-Revisão de literatura sobre manejo odontológico de criança com **TEA nível 3 + TDAH + TAG**
-(Opção 1 do enunciado: revisão sobre a condição do paciente atendido no box, com fotos no banner).
+Revisão de literatura sobre o manejo odontológico do paciente com **TEA nível 3 + TDAH + TAG**
+(Opção 1 do enunciado: revisão sobre a condição da paciente atendida no box, com fotos no banner).
+
+O resumo trata do manejo **de modo geral**, como a literatura recomenda que seja conduzido o
+condicionamento, e não da conduta específica planejada para a paciente — que ainda está em
+acompanhamento. O caso aparece no banner, pelas fotos e pela apresentação oral.
 
 ## Conformidade com as regras de submissão
 
 | Regra | Situação |
 |---|---|
-| Até 270 palavras, sem contar título e subtítulos | **265 palavras** no corpo |
+| Até 270 palavras, sem contar título e subtítulos | **267 palavras** no corpo |
 | Introdução, objetivos, materiais e métodos, resultados e conclusão | na ordem, em parágrafo único |
 | Parágrafo único, sem tópicos (orientação da professora) | sim |
 | Arial 12, justificado, entrelinhas 1,5 | sim |
