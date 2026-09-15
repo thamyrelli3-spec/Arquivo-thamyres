@@ -22,6 +22,9 @@ REFS = [
  "AMERICAN ACADEMY OF PEDIATRIC DENTISTRY. Behavior guidance for the pediatric dental patient. "
  "In: The Reference Manual of Pediatric Dentistry. Chicago: AAPD, 2024. p. 358-378.",
 
+ "AMERICAN ACADEMY OF PEDIATRIC DENTISTRY. Policy on the use of silver diamine fluoride for "
+ "pediatric dental patients. In: The Reference Manual of Pediatric Dentistry. Chicago: AAPD, 2024.",
+
  "BRASIL. Ministério da Saúde. Guia de atenção à saúde bucal da pessoa com deficiência. "
  "Brasília: Ministério da Saúde, 2019.",
 

@@ -15,8 +15,9 @@ acompanhamento. O caso aparece no banner, pelas fotos e pela apresentação oral
 
 | Regra | Situação |
 |---|---|
-| Até 270 palavras, sem contar título e subtítulos | **267 palavras** no corpo |
-| Introdução, objetivos, materiais e métodos, resultados e conclusão | na ordem, em parágrafo único |
+| Até 270 palavras, sem contar título e subtítulos | **263 palavras** no corpo |
+| Introdução, objetivos, resultados e conclusão | na ordem, em parágrafo único |
+| Materiais e métodos | **sem frase explícita**, por decisão da autora (ver observação) |
 | Parágrafo único, sem tópicos (orientação da professora) | sim |
 | Arial 12, justificado, entrelinhas 1,5 | sim |
 | Título ARIAL 14 EM CAIXA ALTA | sim |
@@ -58,10 +59,23 @@ e `Guia_de_estudo_Tecnologia.docx`.
 
 | Regra | Situação |
 |---|---|
-| Até 270 palavras, sem contar título | **260 palavras** |
-| Referências explícitas | 10 referências ABNT |
+| Até 270 palavras, sem contar título | **264 palavras** |
+| Referências explícitas | 11 referências ABNT |
 | Arial 12 justificado 1,5 / título Arial 14 caixa alta | sim |
 
 Correção encontrada no `index.html` (slide de referências): a metanálise de Er:YAG está
 atribuída ao *European Journal of Paediatric Dentistry*, 2018. O correto é **LI, Ting et al.
 Lasers in Medical Science, v. 34, n. 2, p. 273-280, 2019**.
+
+
+## Observação sobre materiais e métodos
+
+Os dois resumos não trazem mais a frase "trata-se de uma revisão de literatura, com artigos
+publicados entre 2015 e 2025" — o espaço foi usado para conteúdo clínico. O formulário lista
+materiais e métodos entre os itens exigidos, então, se a orientadora cobrar, basta reinserir
+uma destas frases logo após o objetivo e cortar o equivalente em palavras:
+
+- TEA: "Para isso, foram analisados ensaios clínicos randomizados, revisões sistemáticas e
+  diretrizes internacionais sobre manejo comportamental."
+- Tecnologia: "Para isso, foram analisados ensaios clínicos randomizados, revisões sistemáticas
+  e diretrizes nacionais e internacionais sobre cada recurso."
