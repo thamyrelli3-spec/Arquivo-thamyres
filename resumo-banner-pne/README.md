@@ -79,3 +79,16 @@ uma destas frases logo após o objetivo e cortar o equivalente em palavras:
   diretrizes internacionais sobre manejo comportamental."
 - Tecnologia: "Para isso, foram analisados ensaios clínicos randomizados, revisões sistemáticas
   e diretrizes nacionais e internacionais sobre cada recurso."
+
+## PDFs
+
+Os `.pdf` ao lado de cada `.docx` foram gerados por LibreOffice nesta máquina, que não tem
+Arial instalada e substituiu por Liberation Sans — fonte metricamente idêntica, então a
+quebra de linha e a paginação são as mesmas. Os `.docx` continuam especificando Arial.
+Para um PDF em Arial de verdade, basta abrir o `.docx` no Word e salvar como PDF.
+
+Regerar todos:
+
+```bash
+soffice --headless --convert-to pdf --outdir . *.docx
+```
