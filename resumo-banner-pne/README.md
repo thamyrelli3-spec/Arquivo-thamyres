@@ -22,14 +22,14 @@ acompanhamento. O caso aparece no banner, pelas fotos e pela apresentação oral
 | Arial 12, justificado, entrelinhas 1,5 | sim |
 | Título ARIAL 14 EM CAIXA ALTA | sim |
 | Referências explícitas (não contam palavras) | 7 referências ABNT ao final |
-| Até 5 participantes (1 autor + até 4 coautores) + 1 orientador | campos em branco para preencher |
+| Até 5 participantes (1 autor + até 4 coautores) + 1 orientador | 1 autora + 1 coautora; **2 orientadores** (o formulário prevê 1 — confirmar) |
 | 3 palavras-chave (orientação da professora) | sim |
 
 ## Participantes
 
 - Autora: Thamyres Tosarelli
 - Coautora: Beatriz Gouvea
-- Orientadora: Profa. Dra. Rosemary Martins
+- Orientadores: Rosemary Baptista Martins Teixeira e Ricardo Matsura Kodama
 
 Paciente de 8 anos (nome não citado, por sigilo). Para as fotos do banner é
 necessário termo de consentimento assinado pela responsável.

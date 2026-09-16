@@ -37,7 +37,8 @@ p('As marcações entre colchetes são só para você, não fazem parte da fala.
 
 marca('[ABERTURA — 20 segundos. Olhe para a pessoa, não para o banner.]')
 fala('Bom dia! Meu nome é Thamyres Tosarelli, esse trabalho eu fiz junto com a Beatriz Gouvea, '
-     'com orientação da professora Rosemary Martins. O nosso tema é o manejo odontológico do '
+     'com orientação dos professores Rosemary Baptista Martins Teixeira e Ricardo Matsura '
+     'Kodama. O nosso tema é o manejo odontológico do '
      'paciente com Transtorno do Espectro Autista nível 3, associado a TDAH e a Transtorno de '
      'Ansiedade Generalizada. Posso começar?')
 
@@ -107,7 +108,8 @@ h('VERSÃO CURTA — cerca de 2 minutos')
 p('Para quando a pessoa disser "me resume rapidinho" ou quando a fila estiver grande.', 10, False,
   True, WD_ALIGN_PARAGRAPH.LEFT, 1.15, 10)
 fala('Bom dia! Eu sou a Thamyres, esse trabalho é meu e da Beatriz, orientado pela professora '
-     'Rosemary. A gente fez uma revisão de literatura sobre o manejo do paciente com autismo nível '
+     'Rosemary Baptista Martins Teixeira e pelo professor Ricardo Matsura Kodama. A gente fez uma '
+     'revisão de literatura sobre o manejo do paciente com autismo nível '
      '3 associado a TDAH e ansiedade generalizada, a partir de uma paciente de oito anos que a '
      'gente atende na clínica.')
 fala('O ponto central é que esse paciente tem mais cárie e mais doença periodontal, mas não por '
