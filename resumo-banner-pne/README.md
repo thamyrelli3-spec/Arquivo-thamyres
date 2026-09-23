@@ -15,7 +15,7 @@ acompanhamento. O caso aparece no banner, pelas fotos e pela apresentação oral
 
 | Regra | Situação |
 |---|---|
-| Até 270 palavras, sem contar título e subtítulos | **258 palavras** no corpo |
+| Até 260 palavras, **contando o título** | **251** (título 20 + corpo 231) |
 | Introdução, objetivos, resultados e conclusão | na ordem, em parágrafo único |
 | Materiais e métodos | **sem frase explícita**, por decisão da autora (ver observação) |
 | Parágrafo único, sem tópicos (orientação da professora) | sim |
@@ -27,8 +27,7 @@ acompanhamento. O caso aparece no banner, pelas fotos e pela apresentação oral
 
 ## Participantes
 
-- Autora: Thamyres Tosarelli
-- Coautora: Beatriz Gouvea
+- Autores: Thamyres Tosarelli e Beatriz Gouvea
 - Orientadores: Rosemary Baptista Martins Teixeira e Ricardo Matsura Kodama
 
 Paciente de 8 anos (nome não citado, por sigilo). Para as fotos do banner é

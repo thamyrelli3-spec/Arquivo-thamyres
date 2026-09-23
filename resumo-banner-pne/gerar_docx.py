@@ -8,9 +8,8 @@ TITULO = ("MANEJO ODONTOLÓGICO DO PACIENTE COM TRANSTORNO DO ESPECTRO AUTISTA N
           "TDAH E TRANSTORNO DE ANSIEDADE GENERALIZADA: REVISÃO DE LITERATURA")
 
 CABECALHO = [
-    "AUTORA: THAMYRES TOSARELLI",
-    "CO-AUTORA: BEATRIZ GOUVEA",
-    "ORIENTADORES: ROSEMARY BAPTISTA MARTINS TEIXEIRA E RICARDO MATSURA KODAMA",
+    "Autores: Thamyres Tosarelli e Beatriz Gouvea",
+    "Orientadores: Rosemary Baptista Martins Teixeira e Ricardo Matsura Kodama",
 ]
 
 CORPO = open('corpo.txt', encoding='utf-8').read().strip()
