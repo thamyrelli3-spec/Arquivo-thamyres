@@ -15,7 +15,7 @@ acompanhamento. O caso aparece no banner, pelas fotos e pela apresentação oral
 
 | Regra | Situação |
 |---|---|
-| Até 270 palavras, sem contar título e subtítulos | **263 palavras** no corpo |
+| Até 270 palavras, sem contar título e subtítulos | **258 palavras** no corpo |
 | Introdução, objetivos, resultados e conclusão | na ordem, em parágrafo único |
 | Materiais e métodos | **sem frase explícita**, por decisão da autora (ver observação) |
 | Parágrafo único, sem tópicos (orientação da professora) | sim |
