@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Preenche o layout oficial do banner da V JOCAM mantendo a formatação do modelo."""
+"""Preenche o layout oficial do banner da V JOCAM mantendo a formatação do modelo.
+
+Estrutura adotada, seguindo os banners aprovados em edições anteriores:
+Introdução -> Revisão de Literatura -> três figuras -> Conclusão -> Referências.
+"""
 import re, html
 
 SLIDE = 'unpacked/ppt/slides/slide1.xml'
@@ -8,39 +12,41 @@ CM = 360000  # EMU por centímetro
 TITULO = "MANEJO ODONTOLÓGICO DO PACIENTE COM TEA NÍVEL 3, TDAH E TAG"
 
 AUTORES = [
-    "Autores*: Thamyres Tosarelli, Beatriz Gouvea",
-    "Orientadores**: Rosemary Baptista Martins Teixeira, Ricardo Matsura Kodama",
+    "Autores*: Tosarelli, T.; Gouvea, B.",
+    "Orientadores**: Teixeira, R. B. M.; Kodama, R. M.",
 ]
 
-INTRODUCAO = ("O Transtorno do Espectro Autista (TEA) nível 3 exige maior suporte, com comunicação verbal "
- "limitada, comportamentos repetitivos e alterações sensoriais. Com frequência vem acompanhado "
- "do Transtorno de Déficit de Atenção e Hiperatividade (TDAH) e do Transtorno de Ansiedade "
- "Generalizada (TAG), o que reduz a colaboração no consultório. Esses pacientes têm maior risco de cárie e de doença periodontal, "
- "pois a higiene bucal depende do cuidador, a dieta costuma ser seletiva e cariogênica e os "
- "psicofármacos reduzem o fluxo salivar.")
+INTRODUCAO = ("O Transtorno do Espectro Autista (TEA) é um distúrbio do neurodesenvolvimento que "
+ "altera a comunicação, a interação social e o comportamento. No nível 3, o mais grave, o paciente "
+ "necessita de apoio muito substancial: a comunicação verbal é limitada, há comportamentos "
+ "repetitivos e alterações no processamento sensorial, o que torna o atendimento odontológico um "
+ "desafio para toda a equipe.")
 
-METODOS = ("O atendimento começa por anamnese detalhada com o responsável, que informa a rotina "
- "da criança, a forma de comunicação e os estímulos que causam desconforto. As consultas devem ser "
- "curtas, no mesmo horário, na mesma sala e com a mesma equipe, sendo a primeira apenas de "
- "adaptação, sem procedimento clínico. O condicionamento é gradual, por dessensibilização, "
- "associada ao dizer-mostrar-fazer, à pedagogia visual com pranchas e agendas de figuras, a vídeos "
- "que mostram o procedimento antes da consulta e ao reforço positivo a cada etapa cumprida. O "
- "ambiente é adaptado com redução de luz, ruído e odores, mantendo-se o cuidador presente.")
-
-RESULTADOS = [
- ("A pedagogia visual aumenta a cooperação e melhora a qualidade da escovação, e a modelagem por "
-  "vídeo reduz o número de consultas necessárias para o atendimento não invasivo. A adaptação "
-  "sensorial do ambiente reduz o estresse fisiológico e comportamental em todas as fases da "
-  "consulta."),
- ("A contenção protetora, a sedação e a anestesia geral permanecem indicadas apenas quando o "
-  "manejo básico não é suficiente, mediante consentimento informado. Os estudos disponíveis, "
-  "porém, têm amostras pequenas e grande heterogeneidade metodológica, o que impede a definição "
-  "de um protocolo universal."),
+REVISAO = [
+ ("A associação do TEA ao Transtorno de Déficit de Atenção e Hiperatividade (TDAH) e ao Transtorno "
+  "de Ansiedade Generalizada (TAG) é frequente e reduz ainda mais a colaboração na cadeira "
+  "odontológica. Esses pacientes apresentam maior risco de cárie e de doença periodontal, pois a "
+  "higiene bucal depende do cuidador, a dieta costuma ser seletiva e cariogênica e os psicofármacos "
+  "reduzem o fluxo salivar."),
+ ("A colaboração é construída, e não obtida de imediato. A anamnese deve ser detalhada com o "
+  "responsável, identificando a rotina, a comunicação e os estímulos que causam desconforto. As "
+  "consultas devem ser curtas, no mesmo horário, sala e equipe, sendo a primeira apenas de "
+  "adaptação. A dessensibilização, o dizer-mostrar-fazer, a "
+  "pedagogia visual com pranchas e agendas de figuras, a modelagem por vídeo e o reforço positivo "
+  "aumentam a cooperação e reduzem o número de consultas necessárias. A adaptação sensorial do "
+  "ambiente, com redução de luz, ruído e odores, diminui o estresse fisiológico e comportamental. "
+  "Contenção protetora, sedação e anestesia geral ficam reservadas à falha do manejo básico."),
 ]
 
-CONCLUSAO = ("Não existe um protocolo único para esse perfil de paciente. O sucesso do atendimento "
- "depende da individualização, da previsibilidade, da capacitação da equipe e do vínculo com a "
- "família, e a ênfase na prevenção evita a necessidade de procedimentos mais invasivos.")
+LEGENDAS = [
+ "Fig. 1 - Condicionamento da paciente antes do atendimento",
+ "Fig. 2 - Pedagogia visual durante a consulta",
+ "Fig. 3 - Adequação do meio bucal",
+]
+
+CONCLUSAO = ("Não existe protocolo único para o paciente com TEA. O sucesso do atendimento depende "
+ "da individualização, da previsibilidade, da capacitação da equipe e do vínculo com a família. A "
+ "ênfase na prevenção reduz a necessidade de contenção, sedação e anestesia geral.")
 
 REFERENCIAS = [
  "ALBHAISI, I. N. et al. Effectiveness of psychological techniques in dental management for children with autism spectrum disorder: a systematic literature review. BMC Oral Health, v. 22, 2022.",
@@ -58,6 +64,19 @@ RODAPE = [
 ]
 PALAVRAS = "Transtorno do Espectro Autista; Assistência Odontológica para Pessoas com Deficiências; Manejo Comportamental."
 
+# --- posições finais, em cm -------------------------------------------------
+POS = {
+    'titulo':    17.8,   # abaixo do logo da JOCAM
+    'autores':   24.2,
+    'introducao':28.2,
+    'revisao':   40.0,
+    'conclusao': 93.0,
+    'referencias': 104.0,
+}
+FOTO_Y, FOTO_H, FOTO_W = 68.0, 21.0, 26.5
+FOTO_X = [2.0, 31.75, 61.5]
+LEGENDA_Y = 89.5
+
 # ----------------------------------------------------------------------------
 
 def esc(t):
@@ -71,8 +90,8 @@ def molde(par, texto):
     pPr = re.search(r'<a:pPr.*?</a:pPr>', par, re.S)
     run = re.search(r'<a:r>.*?</a:r>', par, re.S)
     end = re.search(r'<a:endParaRPr.*?</a:endParaRPr>', par, re.S)
-    novo_run = re.sub(r'<a:t>.*?</a:t>', '<a:t>%s</a:t>' % esc(texto), run.group(0), flags=re.S)
-    return '<a:p>' + (pPr.group(0) if pPr else '') + novo_run + (end.group(0) if end else '') + '</a:p>'
+    novo = re.sub(r'<a:t>.*?</a:t>', '<a:t>%s</a:t>' % esc(texto), run.group(0), flags=re.S)
+    return '<a:p>' + (pPr.group(0) if pPr else '') + novo + (end.group(0) if end else '') + '</a:p>'
 
 def trocar_corpo(sp, paras):
     bodyPr = re.search(r'<a:bodyPr[^>]*>.*?</a:bodyPr>|<a:bodyPr[^>]*/>', sp, re.S).group(0)
@@ -86,52 +105,23 @@ def por_tamanho(pars, sz):
     raise SystemExit('não achei parágrafo sz=%d' % sz)
 
 x = open(SLIDE, encoding='utf-8').read()
-shapes = re.findall(r'<p:sp>.*?</p:sp>', x, re.S)
 
 def achar(trecho):
-    for sp in shapes:
+    for sp in re.findall(r'<p:sp>.*?</p:sp>', x, re.S):
         if trecho in sp:
             return sp
     raise SystemExit('não achei shape com %r' % trecho)
 
-# --- título -----------------------------------------------------------------
-sp = achar('<a:t>TÍTULO</a:t>')
-x = x.replace(sp, trocar_corpo(sp, [molde(paragrafos(sp)[0], TITULO)]))
-
-# --- autores ----------------------------------------------------------------
-sp = achar('Autores*:')
-ps = paragrafos(sp)
-x = x.replace(sp, trocar_corpo(sp, [molde(ps[0], AUTORES[0]), molde(ps[1], AUTORES[1])]))
-
-# --- seções -----------------------------------------------------------------
-secoes = [
-    ('<a:t>Introdução/ Revisão de Literatura</a:t>', 'Introdução/ Revisão de Literatura', [INTRODUCAO]),
-    ('<a:t>Material e Métodos</a:t>',                 'Material e Métodos',                [METODOS]),
-    ('<a:t>Resultados</a:t>',                         'Resultados',                        RESULTADOS),
-    ('<a:t>Conclusão</a:t>',                          'Conclusão',                         [CONCLUSAO]),
-]
-for marca, titulo_sec, blocos in secoes:
+def preencher_secao(marca, titulo_sec, blocos):
+    global x
     sp = achar(marca)
     ps = paragrafos(sp)
     cab = por_tamanho(ps, 6600)
-    def corpo_par(texto):
-        t = molde(cab, texto)
-        t = t.replace('sz="6600"', 'sz="4800"').replace('val="6600"', 'val="4800"')
+    def corpo(texto):
+        t = molde(cab, texto).replace('sz="6600"', 'sz="4800"').replace('val="6600"', 'val="4800"')
         return re.sub(r'(<a:rPr )b="1"', r'\1b="0"', t)
-    novos = [molde(cab, titulo_sec)] + [corpo_par(b) for b in blocos]
-    x = x.replace(sp, trocar_corpo(sp, novos))
+    x = x.replace(sp, trocar_corpo(sp, [molde(cab, titulo_sec)] + [corpo(b) for b in blocos]))
 
-# --- referências ------------------------------------------------------------
-sp = achar('<a:t>Referências</a:t>')
-ps = paragrafos(sp)
-cab, corpo = por_tamanho(ps, 2600), por_tamanho(ps, 1800)
-novos = ([molde(cab, 'Referências:')]
-         + [molde(corpo, r) for r in REFERENCIAS]
-         + [molde(corpo, r) for r in RODAPE]
-         + [molde(cab, 'Palavras-chave:'), molde(corpo, PALAVRAS)])
-x = x.replace(sp, trocar_corpo(sp, novos))
-
-# --- reposiciona blocos ------------------------------------------------------
 def mover(marca, y_cm):
     global x
     m = re.search(r'<p:sp>(?:(?!</p:sp>).)*?' + re.escape(marca) + r'.*?</p:sp>', x, re.S)
@@ -139,13 +129,79 @@ def mover(marca, y_cm):
     off = re.search(r'<a:off x="(-?\d+)" y="(-?\d+)"/>', bloco)
     novo = '<a:off x="%s" y="%d"/>' % (off.group(1), int(round(y_cm * CM)))
     x = x.replace(bloco, bloco.replace(off.group(0), novo, 1), 1)
-    print('   %-22s y: %.1f -> %.1f cm' % (marca[:22], int(off.group(2)) / CM, y_cm))
 
-mover(esc(TITULO)[:30], 17.8)          # abaixo do logo da JOCAM
-mover('Autores*:', 24.2)
-mover('Introdução/ Revisão', 28.2)
-mover('<a:t>Material e Métodos</a:t>', 43.2)  # folga para a introdução
-mover('Referências:', 105.5)           # cabia fora da folha
+def apagar(marca):
+    global x
+    m = re.search(r'<p:sp>(?:(?!</p:sp>).)*?' + re.escape(marca) + r'.*?</p:sp>', x, re.S)
+    x = x.replace(m.group(0), '', 1)
+
+# --- título, autores --------------------------------------------------------
+sp = achar('<a:t>TÍTULO</a:t>')
+x = x.replace(sp, trocar_corpo(sp, [molde(paragrafos(sp)[0], TITULO)]))
+
+sp = achar('Autores*:')
+ps = paragrafos(sp)
+x = x.replace(sp, trocar_corpo(sp, [molde(ps[0], AUTORES[0]), molde(ps[1], AUTORES[1])]))
+
+# --- seções: a caixa de Material e Métodos vira Revisão de Literatura,
+#     a de Resultados sai (o banner usa figuras nesse espaço) ----------------
+preencher_secao('<a:t>Introdução/ Revisão de Literatura</a:t>', 'Introdução', [INTRODUCAO])
+preencher_secao('<a:t>Material e Métodos</a:t>', 'Revisão de Literatura', REVISAO)
+apagar('<a:t>Resultados</a:t>')
+preencher_secao('<a:t>Conclusão</a:t>', 'Conclusão', [CONCLUSAO])
+
+# --- referências ------------------------------------------------------------
+sp = achar('<a:t>Referências</a:t>')
+ps = paragrafos(sp)
+cab, corpo = por_tamanho(ps, 2600), por_tamanho(ps, 1800)
+x = x.replace(sp, trocar_corpo(sp,
+      [molde(cab, 'Referências:')]
+    + [molde(corpo, r) for r in REFERENCIAS]
+    + [molde(corpo, r) for r in RODAPE]
+    + [molde(cab, 'Palavras-chave:'), molde(corpo, PALAVRAS)]))
+
+# --- molduras das fotos e legendas ------------------------------------------
+ids = [int(i) for i in re.findall(r'<p:cNvPr id="(\d+)"', x)]
+proximo = max(ids) + 1
+
+def caixa(id_, nome, x_cm, y_cm, w_cm, h_cm, texto, sz, moldura):
+    geo = ('<a:xfrm><a:off x="%d" y="%d"/><a:ext cx="%d" cy="%d"/></a:xfrm>'
+           '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+           % (x_cm*CM, y_cm*CM, w_cm*CM, h_cm*CM))
+    if moldura:
+        geo += ('<a:solidFill><a:srgbClr val="FFFFFF"><a:alpha val="55000"/></a:srgbClr></a:solidFill>'
+                '<a:ln w="28575"><a:solidFill><a:srgbClr val="000066"/></a:solidFill>'
+                '<a:prstDash val="dash"/></a:ln>')
+    else:
+        geo += '<a:noFill/>'
+    anchor = 'ctr' if moldura else 't'
+    return ('<p:sp><p:nvSpPr><p:cNvPr id="%d" name="%s"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>'
+            '<p:spPr>%s</p:spPr>'
+            '<p:txBody><a:bodyPr anchor="%s" wrap="square" lIns="91425" rIns="91425" '
+            'tIns="45700" bIns="45700"/><a:lstStyle/>'
+            '<a:p><a:pPr algn="ctr"><a:buNone/></a:pPr>'
+            '<a:r><a:rPr lang="pt-BR" sz="%d" b="0" i="0"><a:solidFill>'
+            '<a:srgbClr val="000066"/></a:solidFill><a:latin typeface="Arial"/>'
+            '<a:ea typeface="Arial"/><a:cs typeface="Arial"/></a:rPr><a:t>%s</a:t></a:r>'
+            '</a:p></p:txBody></p:sp>'
+            % (id_, nome, geo, anchor, sz, esc(texto)))
+
+novas = []
+for i, xf in enumerate(FOTO_X):
+    novas.append(caixa(proximo + i, 'Moldura foto %d' % (i+1), xf, FOTO_Y, FOTO_W, FOTO_H,
+                       'INSIRA A FOTO %d' % (i+1), 3600, True))
+for i, xf in enumerate(FOTO_X):
+    novas.append(caixa(proximo + 3 + i, 'Legenda %d' % (i+1), xf, LEGENDA_Y, FOTO_W, 2.4,
+                       LEGENDAS[i], 2400, False))
+x = x.replace('</p:spTree>', ''.join(novas) + '</p:spTree>')
+
+# --- reposicionamento --------------------------------------------------------
+mover(esc(TITULO)[:30], POS['titulo'])
+mover('Autores*:', POS['autores'])
+mover('<a:t>Introdução</a:t>', POS['introducao'])
+mover('<a:t>Revisão de Literatura</a:t>', POS['revisao'])
+mover('<a:t>Conclusão</a:t>', POS['conclusao'])
+mover('Referências:', POS['referencias'])
 
 open(SLIDE, 'w', encoding='utf-8').write(x)
-print('slide preenchido — %d caracteres' % len(x))
+print('slide montado — %d shapes' % len(re.findall(r'<p:sp>', x)))
