@@ -91,3 +91,14 @@ Regerar todos:
 ```bash
 soffice --headless --convert-to pdf --outdir . *.docx
 ```
+
+
+## Guia de estudo de conteúdo
+
+`Guia_Estudo_Conteudo_TEA_TDAH_TAG.docx` (e o PDF) — o conteúdo do tema para estudar, em 11
+partes: as três condições, repercussões bucais, avaliação, manejo básico, manejo avançado,
+prevenção, legislação, tabela de evidências, 12 perguntas de banca respondidas, glossário e
+uma revisão de dez minutos para a véspera.
+
+Diferente de `Guia_de_estudo_Banner_PNE.docx`, que mapeia cada frase do resumo para a
+referência que a sustenta.
