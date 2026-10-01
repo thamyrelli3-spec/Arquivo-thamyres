@@ -100,5 +100,7 @@ partes: as três condições, repercussões bucais, avaliação, manejo básico,
 prevenção, legislação, tabela de evidências, 12 perguntas de banca respondidas, glossário e
 uma revisão de dez minutos para a véspera.
 
+`Guia_Rapido_TEA_TDAH_TAG.docx` é a versão condensada do mesmo conteúdo, em 2 páginas.
+
 Diferente de `Guia_de_estudo_Banner_PNE.docx`, que mapeia cada frase do resumo para a
 referência que a sustenta.
