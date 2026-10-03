@@ -80,3 +80,13 @@ Grade usada em todas as páginas (1920 × 1080):
 Três páginas mantêm molduras de imagem do template, prontas para substituição: pedagogia visual (8) e realidade virtual (10).
 
 **Ajuste manual pendente no Canva:** a API não permite definir a família tipográfica em caixas de texto novas, então os textos criados por ela ficaram na fonte padrão do Canva. Em cada página, `Ctrl+A` e escolher as fontes do template resolve — display `YAFdJtdLX_k`, corpo `YAEnTI0o408`.
+
+## Versão didática (outubro de 2026)
+
+Os slides do Canva e o documento foram reescritos em linguagem simples, com foco no
+equipamento: cada slide responde o que é o aparelho, para que serve, como se usa e o que
+cuidar. Os números saíram da tela e ficaram no roteiro, para usar só se alguém perguntar.
+
+- Deck no Canva: `DAHS6-rhy10` (24 páginas, páginas 2 a 23 reescritas).
+- Documento e PDF: `Seminario-PNE-guia-e-roteiro.pdf` (14 páginas, A4).
+- `index.html` e `ROTEIRO.md` são a versão anterior, mais técnica, e não acompanham esta reescrita.
